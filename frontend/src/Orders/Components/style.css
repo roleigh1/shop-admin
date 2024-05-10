@@ -1,0 +1,55 @@
+.background-container {
+    margin: 0 auto;
+    width: 100%; 
+    padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+    
+        display:flex;
+        flex-direction: column;
+        height: 30rem!important;
+       
+    }
+    .dataGriddiv {
+       
+        height: 20rem;
+        padding-bottom: 2rem;
+        
+    }
+    .select {
+        width: 10rem;
+        margin-top: 0rem!important;
+    }
+
+    .finish {
+        height: 3rem;
+        width: 4rem;
+        margin-top: 4px!important;
+    }
+    .background{
+       height:33rem!important;
+    }
+    .table {
+        width:15rem!important;
+        height: 23rem!important;
+        font-size: 5px;
+    }
+    .actions {
+     
+        position: relative;
+        left:3rem;
+        top:1.5rem
+    }
+    .top-actions {
+        display: flex;
+        justify-content: center;
+      
+        margin-left: -1rem!important;
+    }
+    
+
+ 
+}
+

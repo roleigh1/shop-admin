@@ -1,0 +1,63 @@
+.row {
+    display: flex;
+    justify-content: center;
+
+}
+
+.top {
+    background-color: grey ;
+    color: white;
+    width: 23rem;
+    height: 5rem;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+h2 {
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.body {
+    margin-top: -0.1rem;
+    background-color:  rgb(229, 229, 229) ;
+    width: 23rem;
+    height: 25rem;
+    display: flex;
+    align-items: center;
+    justify-content:  center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    margin-bottom: 5rem;
+}
+
+.email,.pw {
+    margin-top: -2rem;
+    height: 2rem;
+    border-radius: 5px;
+    
+    width: 15rem;
+}
+button {
+    background-color:grey;
+    height: 2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    
+}

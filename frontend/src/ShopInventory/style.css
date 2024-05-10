@@ -1,0 +1,30 @@
+@media screen and (max-width: 768px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .insert-Table {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .background {
+        width: 20rem!important;
+        padding-bottom: 35px;
+        
+    }
+    .backgroundModify {
+        height: 30rem!important;
+        width: 20rem!important;
+    }
+    .modify{
+        display: flex!important;
+        flex-direction: column!important;
+        gap:1rem!important;
+    }
+    .backgroundInsert{
+        height:31rem!important;
+    }
+}

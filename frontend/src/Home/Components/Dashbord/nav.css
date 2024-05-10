@@ -1,0 +1,14 @@
+body {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(179,179,223,1) 0%, rgba(132,147,150,1) 98%);
+}
+
+.navbar {
+    color: white;
+    height: 80px;
+    font-size: 10px;
+    display: inline;
+
+
+}
+
