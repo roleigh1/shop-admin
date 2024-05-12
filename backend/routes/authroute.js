@@ -27,6 +27,7 @@ router.post("/orders" , orders.finishOrder);
 router.post("/vistors", visitors.countVisitors);
 router.get("/vistors", visitors.counterVisitors);
 router.get("/contentData/:whichContent",contentManager.getContentData );
+router.post("/contentEdit",contentManager.postContentEdit); 
 module.exports = router;
 
  

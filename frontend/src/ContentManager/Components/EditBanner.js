@@ -8,37 +8,47 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 export default function Editbanner() {
-  const {fetchEditBanners, which, setWhich ,bannerData,setBannerData } =
+  const {fetchEditBanners, which, setWhich ,bannerData,setBannerData,postContentEdit,editData,setEditData  } =
     useMyContext(MyProvider);
 
   const [header, setHeader] = useState();
   const [text, setText] = useState();
+
   useEffect(() => {
     fetchEditBanners()
-    console.log(bannerData); 
+    console.log(editData); 
   },[which])
 
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
     if(newTable === "Home"){
-      console.log("kaka"); 
+      setEditData(bannerData[0]); 
     } else {
-      console.log("products"); 
+      setEditData(bannerData[1]); 
     }
 
   };
+  const handleInputChange = ( property, value) => {
+    setEditData((prevData) => ({
+      ...prevData,
+      [property]: value,
+    }));
+  }
   const handleFileChange = (event) => {
     let file = event.target.files[0];
   };
- 
+ const formSubmit= (e) => {
+  e.preventDefault();
+  postContentEdit()
+ }
   return (
     <div>
       <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
         Edit Image Banners
       </h3>
       <div>
-        <form
+        <form onSubmit={formSubmit}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -64,8 +74,8 @@ export default function Editbanner() {
           <TextField
             id="outlined-basic"
             label="header"
-            value={header}
-            onChange={(e) => setHeader(e.target.value)}
+            value={editData?.headline || ""}
+            onChange={(e) => handleInputChange('headline', e.target.value)}
             variant="outlined"
             style={{}}
             required
@@ -74,9 +84,10 @@ export default function Editbanner() {
             id="outlined-multiline-static"
             label="Text"
             multiline
-            rows={3}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            style={{width:"20rem"}}
+            rows={4}
+            value={editData?.text||""}
+            onChange={(e) => handleInputChange('text', e.target.value)}
           />
           <Button
             component="label"
@@ -88,23 +99,25 @@ export default function Editbanner() {
               type="file"
               style={{ display: "none" }}
               name="image"
-              required
+      
               onChange={handleFileChange}
             />
           </Button>
+          <div style={{display:"flex",flexDirection:"row",marginLeft:"2rem"}}>
           <Button type="submit" variant="outlined" value="submit">
             Submit
           </Button>
           <svg
             className="watch"
             xmlns="http://www.w3.org/2000/svg"
-            style={{}}
+            style={{position:"relative",left:"2rem",top:"5px"}}
             width="24"
             height="24"
             viewBox="0 0 24 24"
           >
             <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
           </svg>
+          </div>
         </form>
       </div>
     </div>
