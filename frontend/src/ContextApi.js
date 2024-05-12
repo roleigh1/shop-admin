@@ -17,6 +17,7 @@ export const MyProvider = ({ children }) => {
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
   const [visitors, setVisitors] = useState();
+  const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
@@ -26,8 +27,8 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-  const [bannerData,SetBannerData] = useState({}); 
-  
+
+  const [which, setWhich] = useState("Products");
 
   const fetchInventory = () => {
     if (table === "Products") {
@@ -56,6 +57,7 @@ export const MyProvider = ({ children }) => {
       console.error(`Error fetching ${month}`, error);
     }
   };
+
   const months = [
     "jan",
     "feb",
@@ -203,6 +205,19 @@ export const MyProvider = ({ children }) => {
         console.error("Error fetching counter", error);
       });
   };
+  const fetchEditBanners = () => {
+        axios
+          .get("http://localhost:3131/api/contentdata/banners")
+          .then((response) => {
+            setBannerData(response.data.contentData);
+          })
+          .catch((error) => {
+            console.error("Error fetching counter", error);
+          });
+     
+  
+  };
+
   useEffect(() => {
     fetchData();
 
@@ -221,8 +236,8 @@ export const MyProvider = ({ children }) => {
           console.error("Fetch error:", error);
         });
     };
-   // visitorCounter();
-  //  setInterval(visitorCounter, 30000);
+    // visitorCounter();
+    //  setInterval(visitorCounter, 30000);
     fetchLastOrder();
   }, []);
 
@@ -258,7 +273,10 @@ export const MyProvider = ({ children }) => {
         setFlagOrders,
         visitors,
         bannerData,
-        SetBannerData
+        setBannerData,
+        which,
+        setWhich,
+        fetchEditBanners,
       }}
     >
       {children}

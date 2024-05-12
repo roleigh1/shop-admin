@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,24 +8,30 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 export default function Editbanner() {
-  const { bannerData, setBannerData } = useMyContext(MyProvider);
-  const [which, setWhich] = useState();
+  const {fetchEditBanners, which, setWhich ,bannerData,setBannerData } =
+    useMyContext(MyProvider);
+
   const [header, setHeader] = useState();
   const [text, setText] = useState();
-  const handleInputChange = (property, value) => {
-    setBannerData((prevData) => ({
-      ...prevData,
-      [property]: value,
-    }));
-  };
-  console.log("test"); 
+  useEffect(() => {
+    fetchEditBanners()
+    console.log(bannerData); 
+  },[which])
+
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
+    if(newTable === "Home"){
+      console.log("kaka"); 
+    } else {
+      console.log("products"); 
+    }
+
   };
   const handleFileChange = (event) => {
     let file = event.target.files[0];
   };
+ 
   return (
     <div>
       <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
@@ -51,8 +57,8 @@ export default function Editbanner() {
               onChange={handleChange}
               required
             >
-              <MenuItem value={"home"}>Home</MenuItem>
-              <MenuItem value={"products"}>Products</MenuItem>
+              <MenuItem value={"Home"}>Home</MenuItem>
+              <MenuItem value={"Products"}>Products</MenuItem>
             </Select>
           </FormControl>
           <TextField
