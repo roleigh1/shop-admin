@@ -215,18 +215,16 @@ export const MyProvider = ({ children }) => {
             console.error("Error fetching counter", error);
           });
   };
-  const postContentEdit = ()=> {
+  const postContentEdit = () => {
     axios
-    .post("http://localhost:3131/api/contentEdit", {
-      data: editData,
-    })
+    .post("http://localhost:3131/api/contentEdit", editData)
     .then(function(response) {
       console.log(response); 
     })
     .catch(function(error){
       console.log(error); 
     })
-  }
+}
   useEffect(() => {
     fetchData();
 

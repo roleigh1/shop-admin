@@ -6,7 +6,7 @@ const getContentData = async (req, res) => {
     const whichContent = req.params.whichContent;
     switch (whichContent) {
       case "banners":
-        const banner= await BannerData.findAll({
+        const banner = await BannerData.findAll({
           banners: [["id", "DESC"]],
           limit: 2,
         });
@@ -18,7 +18,7 @@ const getContentData = async (req, res) => {
           infos: [["id", "DESC"]],
           limit: 3,
         });
-        res.status(200).json({ contentData:  infoCards});
+        res.status(200).json({ contentData: infoCards });
         break;
       default:
         console.log("default case");
@@ -30,22 +30,21 @@ const getContentData = async (req, res) => {
 };
 const postContentEdit = async (req, res) => {
   try {
-    const data = req.body;
-    console.log("Received data:", data);
-
-    if (!data.headline || !data.text || !data.location) {
+    const { headline, text, location } = req.body;
+    console.log("Received data:", { headline, text, location });
+    if (!headline || !text || !location) {
       throw new Error("Missing required fields in request body");
     }
 
     const [numAffectedRows, affectedRows] = await BannerData.update(
       {
-        headline: data.headline,
-        text: data.text,
+        headline: headline,
+        text: text,
         img: "https://masterapi.gärtnereileitner.at/uploads/products_bg.jpg",
       },
       {
         where: {
-          location: data.location,
+          location: location,
         },
       }
     );
@@ -61,5 +60,5 @@ const postContentEdit = async (req, res) => {
 
 module.exports = {
   getContentData,
-  postContentEdit
+  postContentEdit,
 };
