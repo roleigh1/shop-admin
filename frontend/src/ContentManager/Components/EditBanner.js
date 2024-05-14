@@ -36,33 +36,36 @@ export default function Editbanner() {
 
   const handleFileChange = (event) => {
     let file = event.target.files[0];
-    console.log(file);
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
     if (!supportedImageTypes.includes(file.type)) {
-      alert("Please enter a valid Image");
-    } else {
-      setEditData((prevData) => ({
-        ...prevData,
-        picture: file,
-      }));
+      alert("Please enter a valid image");
+      return;
     }
+    setEditData((prevData) => ({
+      ...prevData,
+      picture: file,
+    }));
+    console.log({ ...editData, picture: file }); 
   };
-
+  
   const formSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('headline', editData.headline);
     formData.append('text', editData.text);
     formData.append('location', which);
-    if (editData.picture) {
-      formData.append('picture', editData.picture);
-    }
+    formData.append('picture', editData.picture);
+    
     postContentEdit(formData);
   };
-
+  
   const postContentEdit = (formData) => {
     axios
-      .post("http://localhost:3131/api/contentEdit", formData)
+      .post('http://localhost:3131/api/contentEdit', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then(function (response) {
         console.log(response);
       })
