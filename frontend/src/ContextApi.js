@@ -29,7 +29,7 @@ export const MyProvider = ({ children }) => {
   const [flagOrders, setFlagOrders] = useState(false);
   const [editData,setEditData] = useState({})
   const [which, setWhich] = useState("Products");
-
+  let formData = new FormData(); 
   const fetchInventory = () => {
     if (table === "Products") {
       fetch("http://localhost:3131/api/inventoryTables/products")
@@ -215,16 +215,7 @@ export const MyProvider = ({ children }) => {
             console.error("Error fetching counter", error);
           });
   };
-  const postContentEdit = () => {
-    axios
-    .post("http://localhost:3131/api/contentEdit", editData)
-    .then(function(response) {
-      console.log(response); 
-    })
-    .catch(function(error){
-      console.log(error); 
-    })
-}
+
   useEffect(() => {
     fetchData();
 
@@ -284,9 +275,10 @@ export const MyProvider = ({ children }) => {
         which,
         setWhich,
         fetchEditBanners,
-        postContentEdit,
+
         editData,
-        setEditData
+        setEditData,
+        formData
       }}
     >
       {children}

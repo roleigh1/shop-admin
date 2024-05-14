@@ -1,5 +1,7 @@
 const { info } = require("console");
 const { BannerData, InfoCard, sequelize } = require("../models/models");
+const path = require("path");
+const multer = require("multer");
 
 const getContentData = async (req, res) => {
   try {
@@ -28,14 +30,35 @@ const getContentData = async (req, res) => {
     res.status(400).json({ message: "Problem getting Content data", message });
   }
 };
+const storage = multer.diskStorage({
+  destination: function (req,file,cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req,file,cb) {
+    cb(null,file.originalname); 
+  }
+})
+
+const upload = multer({
+  storage: storage
+})
+const uploadImage = (req,res) => {
+  upload(req,res,async(err) => {
+    if(err){
+      return res.status(400).json({message: "Upload failed", error:err.message  })
+    }
+  
+  })
+}
 const postContentEdit = async (req, res) => {
   try {
-    const { headline, text, location } = req.body;
-    console.log("Received data:", { headline, text, location });
-    if (!headline || !text || !location) {
+    const { headline, text, location} = req.body;
+    const {picture} = req.file; 
+    console.log("Received data:", { headline, text, location,picture });
+    if (!headline || !text || !location || !picture) {
       throw new Error("Missing required fields in request body");
     }
-
+/*
     const [numAffectedRows, affectedRows] = await BannerData.update(
       {
         headline: headline,
@@ -52,6 +75,7 @@ const postContentEdit = async (req, res) => {
     console.log(numAffectedRows, "banner(s) updated:", affectedRows);
 
     res.status(200).json({ message: `${numAffectedRows} banner(s) updated` });
+    */
   } catch (error) {
     console.log("Error editing contentData", error);
     res.status(500).json({ error: "Internal server error" });
