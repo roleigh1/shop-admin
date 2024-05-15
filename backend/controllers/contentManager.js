@@ -12,7 +12,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
 // Funktion zur Abfrage von Inhaltsdaten
 const getContentData = async (req, res) => {
   try {
@@ -31,9 +30,11 @@ const getContentData = async (req, res) => {
   }
 };
 
-// Funktion zum Hochladen von Daten
+   
 const uploadData = (req, res) => {
-  upload(req, res, async (err) => {
+  const singleUpload = upload.single('picture');
+  
+  singleUpload(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ message: 'Upload failed', error: err.message });
     }
@@ -41,14 +42,25 @@ const uploadData = (req, res) => {
     const { headline, text, location } = req.body;
 
     try {
-      const imagePath = `uploads/${req.file.filename}`;
-      await BannerData.create({
-        headline: headline,
-        text: text,
-        img: imagePath,
-        location: location
-      });
+      let url = "http://localhost:3131/";
+      const imagePath = url +=`uploads/${req.file.filename}`;
 
+      console.log("Image Path:", imagePath);
+      console.log("Headline:", headline);
+      console.log("Text:", text);
+      console.log("Location:", location);
+
+    
+     await BannerData.update(
+      {
+       headline: headline,
+         text: text,
+         img: imagePath,
+     },{
+      where: {
+        location: location
+      }
+     });
       return res.json({ message: 'Upload successful', imageUrl: imagePath });
     } catch (error) {
       console.error('Error saving image locally:', error);

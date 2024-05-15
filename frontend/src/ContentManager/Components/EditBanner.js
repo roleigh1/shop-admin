@@ -25,6 +25,7 @@ export default function Editbanner() {
     } else {
       setEditData(bannerData[1]);
     }
+    console.log(which);
   };
 
   const handleInputChange = (property, value) => {
@@ -32,6 +33,7 @@ export default function Editbanner() {
       ...prevData,
       [property]: value,
     }));
+
   };
 
   const handleFileChange = (event) => {
@@ -60,6 +62,8 @@ export default function Editbanner() {
   };
   
   const postContentEdit = (formData) => {
+
+    /*
     axios
       .post('http://localhost:3131/api/contentEdit', formData, {
         headers: {
@@ -72,6 +76,7 @@ export default function Editbanner() {
       .catch(function (error) {
         console.log(error);
       });
+      */
   };
 
   return (
