@@ -5,21 +5,17 @@ import "./nav.css";
 export default function Navbar() {
   return (
     <div className="navbar" style={{ display: "flex", marginTop: "1rem" }}>
-      <Link to="/contentManager" style={{ textDecoration: "none", color: "white" }}>
+      <Link
+        to="/contentManager"
+        style={{ textDecoration: "none", color: "white" }}
+      >
         <svg
           width="30"
           height="30"
           viewBox="0 0 21 21"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g
-
-fill="none"
-
-            stroke="#ffffff"
-        
-            className="stroke-000000"
-          >
+          <g fill="none" stroke="#ffffff" className="stroke-000000">
             <path d="M5.5 3.5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2z"></path>
             <path
               d="M5.5 5.5h10a2 2 0 0 1 2 2v-2c0-1-.895-2-2-2h-10c-1.105 0-2 1-2 2v2a2 2 0 0 1 2-2z"

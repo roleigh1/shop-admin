@@ -27,9 +27,9 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-  const [editData,setEditData] = useState({})
+  const [editData, setEditData] = useState({});
   const [which, setWhich] = useState("Products");
-  let formData = new FormData(); 
+  let formData = new FormData();
   const fetchInventory = () => {
     if (table === "Products") {
       fetch("http://localhost:3131/api/inventoryTables/products")
@@ -206,14 +206,14 @@ export const MyProvider = ({ children }) => {
       });
   };
   const fetchEditBanners = () => {
-        axios
-          .get("http://localhost:3131/api/contentdata/banners")
-          .then((response) => {
-            setBannerData(response.data.contentData);
-          })
-          .catch((error) => {
-            console.error("Error fetching counter", error);
-          });
+    axios
+      .get("http://localhost:3131/api/contentdata/banners")
+      .then((response) => {
+        setBannerData(response.data.contentData);
+      })
+      .catch((error) => {
+        console.error("Error fetching counter", error);
+      });
   };
 
   useEffect(() => {
@@ -278,7 +278,7 @@ export const MyProvider = ({ children }) => {
 
         editData,
         setEditData,
-        formData
+        formData,
       }}
     >
       {children}

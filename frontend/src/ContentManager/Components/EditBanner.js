@@ -10,22 +10,33 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 
 export default function Editbanner() {
-  const { fetchEditBanners, which, setWhich, bannerData, setBannerData, editData, setEditData } = useMyContext(MyProvider);
+  const {
+    fetchEditBanners,
+    which,
+    setWhich,
+    bannerData,
+    setBannerData,
+    editData,
+    setEditData,
+  } = useMyContext(MyProvider);
 
   useEffect(() => {
     fetchEditBanners();
-    console.log(editData);
-  }, [which]);
+  }, []);
+  useEffect(() => {
+    if (which) {
+      if (which === "Home") {
+        setEditData(bannerData[1]);
+      } else {
+        setEditData(bannerData[0]);
+      }
+    }
+    console.log(which);
+  }, [which, bannerData]);
 
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
-    if (newTable === "Home") {
-      setEditData(bannerData[0]);
-    } else {
-      setEditData(bannerData[1]);
-    }
-    console.log(which);
   };
 
   const handleInputChange = (property, value) => {
@@ -33,7 +44,6 @@ export default function Editbanner() {
       ...prevData,
       [property]: value,
     }));
-
   };
 
   const handleFileChange = (event) => {
@@ -47,22 +57,21 @@ export default function Editbanner() {
       ...prevData,
       picture: file,
     }));
-    console.log({ ...editData, picture: file }); 
+    console.log({ ...editData, picture: file });
   };
-  
+
   const formSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('headline', editData.headline);
-    formData.append('text', editData.text);
-    formData.append('location', which);
-    formData.append('picture', editData.picture);
-    
+    formData.append("headline", editData.headline);
+    formData.append("text", editData.text);
+    formData.append("location", which);
+    formData.append("picture", editData.picture);
+
     postContentEdit(formData);
   };
-  
-  const postContentEdit = (formData) => {
 
+  const postContentEdit = (formData) => {
     /*
     axios
       .post('http://localhost:3131/api/contentEdit', formData, {
@@ -81,7 +90,9 @@ export default function Editbanner() {
 
   return (
     <div>
-      <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>Edit Image Banners</h3>
+      <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
+        Edit Image Banners
+      </h3>
       <div>
         <form
           onSubmit={formSubmit}
@@ -137,7 +148,13 @@ export default function Editbanner() {
               onChange={handleFileChange}
             />
           </Button>
-          <div style={{ display: "flex", flexDirection: "row", marginLeft: "2rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginLeft: "2rem",
+            }}
+          >
             <Button type="submit" variant="outlined" value="submit">
               Submit
             </Button>

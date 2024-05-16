@@ -66,18 +66,18 @@ export default function OrdersTableDB() {
   const handleIdSearch = () => {
     let newId = Number(searchID);
     const data = [...pageState.data]; // Kopie von data erstellen
-  
+
     function binarySearch(data, newId) {
       // Sortiere die Kopie von data nach der ID
       data.sort((a, b) => {
         return a.id - b.id;
       });
-  
+
       let left = 0,
         right = data.length - 1;
       while (left <= right) {
         let mid = Math.floor((left + right) / 2);
-  
+
         if (data[mid].id === newId) {
           setFoundData(data[mid]);
           handleClickOpen();
@@ -93,7 +93,7 @@ export default function OrdersTableDB() {
       setFoundData(null);
       handleClickOpen();
     }
-  
+
     binarySearch(data, newId);
     setSearchID("");
   };
@@ -107,12 +107,9 @@ export default function OrdersTableDB() {
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
-
   }, [newValue, pageState.page, foundData]);
 
-  useEffect(() => {
- 
-  }, []);
+  useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
@@ -171,7 +168,6 @@ export default function OrdersTableDB() {
             checkboxSelection
             className="table"
           />
-        
         </div>
         <div
           className="actions"

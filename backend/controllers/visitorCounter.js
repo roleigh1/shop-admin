@@ -17,7 +17,7 @@ const counterVisitors = async (req, res) => {
       where: { id: 1 },
     });
 
-    res.status(200).json({ counter: visitors.counter }); 
+    res.status(200).json({ counter: visitors.counter });
   } catch (error) {
     console.log("Error getting visitors counter", error);
   }

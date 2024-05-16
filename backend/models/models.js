@@ -251,7 +251,7 @@ const InfoCard = sequelize.define(
     },
     image: {
       type: DataTypes.STRING,
-      allowNull:false,
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -278,5 +278,5 @@ module.exports = {
   FinishedOrders,
   Visitors,
   BannerData,
-  InfoCard
+  InfoCard,
 };

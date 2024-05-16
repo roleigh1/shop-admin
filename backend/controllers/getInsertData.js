@@ -1,32 +1,37 @@
 const multer = require("multer");
-const { ProductsDB, BestSellerItemsDB, sequelize } = require("../models/models");
+const {
+  ProductsDB,
+  BestSellerItemsDB,
+  sequelize,
+} = require("../models/models");
 const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads'); 
+    cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null,file.originalname); 
-  }
+    cb(null, file.originalname);
+  },
 });
 
 const upload = multer({
-  storage: storage
-}).single('image');
+  storage: storage,
+}).single("image");
 
 const uploadImage = (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
-      return res.status(400).json({ message: 'Upload failed', error: err.message });
+      return res
+        .status(400)
+        .json({ message: "Upload failed", error: err.message });
     }
 
     const { type, price, name, where } = req.body;
 
     try {
       let url = "http://localhost:3131/";
-      let imagePath = url += req.file.path; 
-  
+      let imagePath = (url += req.file.path);
 
       console.log("Image received and saved locally:", imagePath);
       console.log("Type:", type);
@@ -36,10 +41,10 @@ const uploadImage = (req, res) => {
 
       await insertNewProduct(where, name, type, price, imagePath);
 
-      return res.json({ message: 'Upload successful', imageUrl: imagePath });
+      return res.json({ message: "Upload successful", imageUrl: imagePath });
     } catch (error) {
-      console.error('Error saving image locally:', error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      console.error("Error saving image locally:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
   });
 };
@@ -47,29 +52,25 @@ const uploadImage = (req, res) => {
 const insertNewProduct = async (where, name, type, price, imagePath) => {
   if (where === "products") {
     const ProductId = await ProductsDB.findOne({
-      attributes: [
-        [sequelize.fn('max', sequelize.col('id')), 'lastId']
-      ],
+      attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
     });
-    let lastId = ProductId.get('lastId') || 0; 
+    let lastId = ProductId.get("lastId") || 0;
     console.log("Last Product ID:", lastId);
-    let newImgPath = imagePath.replace(/\\/g, "/"); 
+    let newImgPath = imagePath.replace(/\\/g, "/");
     const Product = await ProductsDB.create({
       id: lastId + 1,
       name: name,
       price: Number(price),
-      image:  newImgPath,
-      type: type
+      image: newImgPath,
+      type: type,
     });
 
     console.log("Product generated ID:", Product.id);
   } else {
     const lastBestSellerID = await BestSellerItemsDB.findOne({
-      attributes: [
-        [sequelize.fn('max', sequelize.col('id')), 'lastId']
-      ],
+      attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
     });
-    let lastBestseller = lastBestSellerID.get('lastId') || 0; 
+    let lastBestseller = lastBestSellerID.get("lastId") || 0;
     console.log("Last Bestseller ID:", lastBestseller);
 
     const Bestseller = await BestSellerItemsDB.create({
@@ -82,7 +83,7 @@ const insertNewProduct = async (where, name, type, price, imagePath) => {
 
     console.log("Bestseller generated ID:", Bestseller.id);
   }
-}
+};
 
 module.exports = {
   uploadImage,
