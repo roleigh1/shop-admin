@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -9,26 +9,33 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function Editbanner() {
   const {
     fetchEditBanners,
     which,
     setWhich,
     bannerData,
-    setBannerData,
-    editData,
-    setEditData,
+   
   } = useMyContext(MyProvider);
-
+  
+  const [open, setOpen] = useState(false);
+  const [editData, setEditData] = useState("")
   useEffect(() => {
     fetchEditBanners();
   }, []);
+  
   useEffect(() => {
     if (which) {
-      if (which === "Home") {
-        setEditData(bannerData[1]);
-      } else {
+      if (which === "Products") {
         setEditData(bannerData[0]);
+      } else {
+        setEditData(bannerData[1]);
       }
     }
     console.log(which);
@@ -37,6 +44,14 @@ export default function Editbanner() {
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
+  };
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleInputChange = (property, value) => {
@@ -72,7 +87,6 @@ export default function Editbanner() {
   };
 
   const postContentEdit = (formData) => {
-    /*
     axios
       .post('http://localhost:3131/api/contentEdit', formData, {
         headers: {
@@ -85,7 +99,6 @@ export default function Editbanner() {
       .catch(function (error) {
         console.log(error);
       });
-      */
   };
 
   return (
@@ -165,12 +178,51 @@ export default function Editbanner() {
               width="24"
               height="24"
               viewBox="0 0 24 24"
+              onClick={handleClickOpen}
             >
               <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
             </svg>
           </div>
         </form>
       </div>
+      <React.Fragment>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Banner"}
+          </DialogTitle>
+          <DialogContent>
+            <section
+              style={{
+                position: "relative",
+                height: "25rem",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: "center",
+                backgroundImage: `url(${editData?.img ||"" })`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                borderRadius: "10px"
+              }}
+            >
+              <div style={{ color: "black", marginTop: "10rem" }}>
+                <h3 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h3>
+                <p style={{ fontSize: "20px", opacity: "0.7" }}>{editData?.text || ""}</p>
+              </div>
+            </section>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-  const [editData, setEditData] = useState({});
+
   const [which, setWhich] = useState("Products");
   let formData = new FormData();
   const fetchInventory = () => {
@@ -276,8 +276,7 @@ export const MyProvider = ({ children }) => {
         setWhich,
         fetchEditBanners,
 
-        editData,
-        setEditData,
+        
         formData,
       }}
     >

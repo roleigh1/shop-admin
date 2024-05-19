@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./Login/Login";
 import Home from "./Home/Home";
-import { MyProvider, MyContext, useMyContext } from "./ContextApi";
+import { MyProvider, } from "./ContextApi";
 import Inventory from "./ShopInventory/ShopInventory";
 import OrdersSite from "./Orders/Orders";
 import ContentManager from "./ContentManager/ContentManager";
 function App() {
-  const [token, setToken] = useState(null);
+  const [, setToken] = useState(null);
 
   const handleTokenReceived = (receivedToken) => {
     setToken(receivedToken);
