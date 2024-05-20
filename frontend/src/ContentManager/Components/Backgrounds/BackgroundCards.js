@@ -9,7 +9,7 @@ export default function BackgroundCards({ children }) {
         style={{
           backgroundColor: "#ebeceb",
           width: "30rem",
-          height: "28rem",
+          height: "50rem",
           borderTopRightRadius: "10px",
           marginTop: "1.5rem",
           borderBottomRightRadius: "10px",

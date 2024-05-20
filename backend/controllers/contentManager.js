@@ -28,7 +28,8 @@ const getContentData = async (req, res) => {
           order: [["id", "DESC"]],
           limit: 3,
         });
-        res.status(200).json({ contenData: cards });
+        res.status(200).json({ contentData: cards });
+      break;
       default:
         res.status(400).json({ message: "Invalid content type" });
     }

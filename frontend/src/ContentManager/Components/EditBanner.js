@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -180,22 +179,21 @@ export default function Editbanner() {
           </div>
         </form>
       </div>
-      <React.Fragment>
+      <div>
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-       
         >
           <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
-          <DialogContent >
+          <DialogContent>
             <section
               style={{
                 position: "relative",
                 height: "25rem",
                 display: "flex",
-                width:"100%",
+                width: "100%",
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
@@ -205,8 +203,13 @@ export default function Editbanner() {
                 borderRadius: "10px",
               }}
             >
-              <div style={{ color: "black", marginTop: which === "Home" ? "10rem" : " 0rem" }}>
-                <h2 style={{ opacity: "0.7", }}>{editData?.headline || ""}</h2>
+              <div
+                style={{
+                  color: "black",
+                  marginTop: which === "Home" ? "10rem" : " 0rem",
+                }}
+              >
+                <h2 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h2>
                 <p style={{ fontSize: "20px", opacity: "0.7" }}>
                   {editData?.text || ""}
                 </p>
@@ -219,7 +222,7 @@ export default function Editbanner() {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </div>
     </div>
   );
 }
