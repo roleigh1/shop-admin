@@ -1,4 +1,4 @@
-const { BannerData } = require("../models/models");
+const { BannerData, InfoCard } = require("../models/models");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -23,6 +23,12 @@ const getContentData = async (req, res) => {
         });
         res.status(200).json({ contentData: banners });
         break;
+      case "cards":
+        const cards = await InfoCard.findAll({
+          order: [["id", "DESC"]],
+          limit: 3,
+        });
+        res.status(200).json({ contenData: cards });
       default:
         res.status(400).json({ message: "Invalid content type" });
     }

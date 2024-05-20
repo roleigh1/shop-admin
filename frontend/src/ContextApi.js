@@ -27,7 +27,7 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-
+  const [cardsData,setCardsData] = useState({})
   const [which, setWhich] = useState("Products");
   let formData = new FormData();
   const fetchInventory = () => {
@@ -212,9 +212,19 @@ export const MyProvider = ({ children }) => {
         setBannerData(response.data.contentData);
       })
       .catch((error) => {
-        console.error("Error fetching counter", error);
+        console.error("Error fetching content data", error);
       });
   };
+  const fetchEditCards = () => {
+    axios
+    .get("http://localhost:3131/api/contentdata/cards")
+    .then((response) => {
+        setCardsData(response.data.contentData); 
+    })
+    .catch((error) => {
+      console.error("Error fetching Cards data" )
+    })
+  }
 
   useEffect(() => {
     fetchData();

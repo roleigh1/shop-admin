@@ -4,6 +4,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import BackgroundBanner from "./Components/Backgrounds/BackgroundBanner";
 import BackgroundCards from "./Components/Backgrounds/BackgroundCards";
 import Editbanner from "./Components/EditBanner";
+import EditCards from "./Components/EditCards";
 export default function ContentManager() {
   return (
     <Container>
@@ -19,7 +20,7 @@ export default function ContentManager() {
 
         <Col>
         <BackgroundCards>
-
+          <EditCards/>
         </BackgroundCards>
         </Col>
      </Row>
