@@ -1,7 +1,6 @@
 const { BannerData } = require("../models/models");
 const multer = require("multer");
 
-// Multer-Konfiguration für das Speichern von Dateien
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -12,7 +11,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-// Funktion zur Abfrage von Inhaltsdaten
+
 const getContentData = async (req, res) => {
   try {
     const whichContent = req.params.whichContent;

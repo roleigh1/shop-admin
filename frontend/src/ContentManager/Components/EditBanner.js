@@ -9,27 +9,22 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 
-import DialogTitle from '@mui/material/DialogTitle';
+import DialogTitle from "@mui/material/DialogTitle";
 
 export default function Editbanner() {
-  const {
-    fetchEditBanners,
-    which,
-    setWhich,
-    bannerData,
-   
-  } = useMyContext(MyProvider);
-  
+  const { fetchEditBanners, which, setWhich, bannerData } =
+    useMyContext(MyProvider);
+
   const [open, setOpen] = useState(false);
-  const [editData, setEditData] = useState("")
+  const [editData, setEditData] = useState("");
   useEffect(() => {
     fetchEditBanners();
   }, []);
-  
+
   useEffect(() => {
     if (which) {
       if (which === "Products") {
@@ -45,7 +40,7 @@ export default function Editbanner() {
     const newTable = event.target.value;
     setWhich(newTable);
   };
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -88,9 +83,9 @@ export default function Editbanner() {
 
   const postContentEdit = (formData) => {
     axios
-      .post('http://localhost:3131/api/contentEdit', formData, {
+      .post("http://localhost:3131/api/contentEdit", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then(function (response) {
@@ -191,28 +186,30 @@ export default function Editbanner() {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+       
         >
-          <DialogTitle id="alert-dialog-title">
-            {"Banner"}
-          </DialogTitle>
-          <DialogContent>
+          <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
+          <DialogContent >
             <section
               style={{
                 position: "relative",
                 height: "25rem",
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: "flex",
+                width:"100%",
+                alignItems: "center",
+                justifyContent: "center",
                 textAlign: "center",
-                backgroundImage: `url(${editData?.img ||"" })`,
+                backgroundImage: `url(${editData?.img || ""})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: "10px"
+                borderRadius: "10px",
               }}
             >
-              <div style={{ color: "black", marginTop: "10rem" }}>
-                <h3 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h3>
-                <p style={{ fontSize: "20px", opacity: "0.7" }}>{editData?.text || ""}</p>
+              <div style={{ color: "black", marginTop: which === "Home" ? "10rem" : " 0rem" }}>
+                <h2 style={{ opacity: "0.7", }}>{editData?.headline || ""}</h2>
+                <p style={{ fontSize: "20px", opacity: "0.7" }}>
+                  {editData?.text || ""}
+                </p>
               </div>
             </section>
           </DialogContent>
