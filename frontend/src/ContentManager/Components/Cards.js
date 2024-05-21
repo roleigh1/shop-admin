@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useMyContext } from "../../ContextApi";
 
-function CardItem() {
+function CardItem({ editCard }) {
   const { cardsData, choosenCards } = useMyContext();
 
   useEffect(() => {
@@ -28,26 +28,26 @@ function CardItem() {
 
   if (!cardsData.length) return null;
 
-  const card = cardsData.find((card, index) => index === parseInt(choosenCards) - 1);
+ 
 
-  return card ? (
+  return (
     <Card sx={{ maxWidth: 250, height: 400 }}>
       <CardMedia
         component="img"
         alt='140'
         height="160"
-        image={card.image}
+        image={editCard.image}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {card.name}
+          {editCard.name}
         </Typography>
         <Typography variant='body2' color="text.secondary">
-          {card.text}
+          {editCard.text}
         </Typography>
       </CardContent>
     </Card>
-  ) : null;
+  ) ;
 }
 
 export default CardItem;

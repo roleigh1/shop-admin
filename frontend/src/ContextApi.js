@@ -291,6 +291,7 @@ export const MyProvider = ({ children }) => {
         choosenCards,
         setChoosenCards,
         formData,
+        setCardsData
       }}
     >
       {children}
