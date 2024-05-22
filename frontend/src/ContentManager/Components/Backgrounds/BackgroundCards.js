@@ -9,10 +9,11 @@ export default function BackgroundCards({ children }) {
         style={{
           backgroundColor: "#ebeceb",
           width: "30rem",
-          height: "50rem",
+          height: "40%",
           borderTopRightRadius: "10px",
           marginTop: "1.5rem",
           borderBottomRightRadius: "10px",
+          paddingBottom: "1rem",
         }}
       >
         {children}

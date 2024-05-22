@@ -8,16 +8,12 @@ import CardItem from "./Cards";
 import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
+import axios from "axios";
 export default function EditCards() {
-  const {
-    fetchEditCards,
-    cardsData,
-    setCardsData,
-    choosenCards,
-    setChoosenCards,
-  } = useMyContext(MyProvider);
+  const { fetchEditCards, cardsData, choosenCards, setChoosenCards } =
+    useMyContext(MyProvider);
   const [editCard, setEditCard] = useState("");
-  
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     fetchEditCards();
   }, []);
@@ -25,17 +21,20 @@ export default function EditCards() {
     switch (choosenCards) {
       case "1":
         setEditCard(cardsData[0]);
+        setIsVisible(true);
         break;
       case "2":
         setEditCard(cardsData[1]);
+        setIsVisible(true);
         break;
       case "3":
         setEditCard(cardsData[2]);
+        setIsVisible(true);
         break;
       default:
         console.log("Error setting data in the inputs");
     }
-  },[choosenCards,cardsData]);
+  }, [choosenCards, cardsData]);
 
   const handleChange = (event) => {
     const selection = event.target.value;
@@ -48,11 +47,13 @@ export default function EditCards() {
       alert("Please enter a valid image");
       return;
     }
-    setCardsData((prevData) => ({
+    const imageUrl = URL.createObjectURL(file);
+    setEditCard((prevData) => ({
       ...prevData,
-      image: file,
+      image: imageUrl,
+      imageUpload: file,
     }));
-    console.log({ ...cardsData, image: file });
+    console.log({ ...editCard, image: imageUrl, imageUpload: file });
   };
   const handleInputChange = (property, value) => {
     setEditCard((prevData) => ({
@@ -60,69 +61,92 @@ export default function EditCards() {
       [property]: value,
     }));
   };
-
-  
+  const formSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", editCard.name);
+    formData.append("text", editCard.text);
+    formData.append("image", editCard.image);
+    axios
+      .post("http://localhost:3131/api/contentEdit/cards", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
-    <div>
-      <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
-        Edit Content Cards
-      </h3>
-      <form
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-        }}
-      >
-        <FormControl>
-          <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>
-          <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            label="cards"
-            value={choosenCards}
-            style={{ width: "8rem", height: "3rem" }}
-            onChange={handleChange}
-            required
-          >
-            <MenuItem value={"1"}>Card 1</MenuItem>
-            <MenuItem value={"2"}>Card 2</MenuItem>
-            <MenuItem value={"3"}>Card 3</MenuItem>
-          </Select>
-        </FormControl>
-        <CardItem  editCard={editCard}/>
-        <TextField
-          id="outlined-basic"
-          label="Name"
-          value={editCard?.name || ""}
-          onChange={(e) => handleInputChange("name", e.target.value)}
-          variant="outlined"
-          required
-        />
-        <TextField
-          id="outlined-multiline-static"
-          label="Text"
-          multiline
-          style={{ width: "20rem" }}
-          rows={4}
-          value={editCard?.text || ""}
-          onChange={(e) => handleInputChange("text", e.target.value)}
-        />
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
+    <div style={{ position: "relative", top: "2rem" }}>
+      <div>
+        <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
+          Edit Content Cards
+        </h3>
+        <form
+          onSubmit={formSubmit}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+          }}
         >
-          Upload file
-          <input
-            type="file"
-            style={{ display: "none" }}
-            name="image"
-            onChange={handleFileChange}
+          <FormControl>
+            <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              label="cards"
+              value={choosenCards}
+              style={{ width: "8rem", height: "3rem" }}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value={"1"}>Card 1</MenuItem>
+              <MenuItem value={"2"}>Card 2</MenuItem>
+              <MenuItem value={"3"}>Card 3</MenuItem>
+            </Select>
+          </FormControl>
+          {isVisible && <CardItem editCard={editCard} />}
+          <TextField
+            id="outlined-basic"
+            label="Name"
+            value={editCard?.name || ""}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+            variant="outlined"
+            required
           />
-        </Button>
-      </form>
+          <TextField
+            id="outlined-multiline-static"
+            label="Text"
+            multiline
+            style={{ width: "20rem" }}
+            rows={4}
+            value={editCard?.text || ""}
+            onChange={(e) => handleInputChange("text", e.target.value)}
+          />
+          <Button
+            component="label"
+            variant="contained"
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload file
+            <input
+              type="file"
+              style={{ display: "none" }}
+              name="image"
+              onChange={handleFileChange}
+            />
+          </Button>
+          <Button type="submit" variant="outlined" value="submit">
+            Submit
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

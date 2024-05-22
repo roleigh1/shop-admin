@@ -30,6 +30,7 @@ export const MyProvider = ({ children }) => {
   const [cardsData, setCardsData] = useState({});
   const [which, setWhich] = useState("Products");
   const [choosenCards, setChoosenCards] = useState("");
+  
   let formData = new FormData();
   const fetchInventory = () => {
     if (table === "Products") {
