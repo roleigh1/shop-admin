@@ -66,7 +66,7 @@ export default function EditCards() {
     const formData = new FormData();
     formData.append("name", editCard.name);
     formData.append("text", editCard.text);
-    formData.append("image", editCard.image);
+    formData.append("image", editCard.imageUpload);
     axios
       .post("http://localhost:3131/api/contentEdit/cards", formData, {
         headers: {
