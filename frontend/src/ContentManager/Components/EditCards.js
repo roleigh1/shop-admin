@@ -14,9 +14,13 @@ export default function EditCards() {
     useMyContext(MyProvider);
   const [editCard, setEditCard] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [postSucess, setPostSucess] = useState(false);
+  const [fetch] = useState(true);
+
   useEffect(() => {
     fetchEditCards();
   }, []);
+
   useEffect(() => {
     switch (choosenCards) {
       case "1":
@@ -64,9 +68,10 @@ export default function EditCards() {
   const formSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("id", editCard.id);
     formData.append("name", editCard.name);
-    formData.append("text", editCard.text);
-    formData.append("image", editCard.imageUpload);
+    formData.append("cardText", editCard.text);
+    formData.append("picture", editCard.imageUpload);
     axios
       .post("http://localhost:3131/api/contentEdit/cards", formData, {
         headers: {
@@ -75,6 +80,7 @@ export default function EditCards() {
       })
       .then(function (response) {
         console.log(response);
+        setPostSucess(true);
       })
       .catch(function (error) {
         console.log(error);
@@ -118,13 +124,14 @@ export default function EditCards() {
             value={editCard?.name || ""}
             onChange={(e) => handleInputChange("name", e.target.value)}
             variant="outlined"
+            style={{ width: "80%" }}
             required
           />
           <TextField
             id="outlined-multiline-static"
             label="Text"
             multiline
-            style={{ width: "20rem" }}
+            style={{ width: "80%" }}
             rows={4}
             value={editCard?.text || ""}
             onChange={(e) => handleInputChange("text", e.target.value)}

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import Card from "@mui/material/Card";
+
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import { useMyContext } from "../../ContextApi";
 
 function CardItem({ editCard }) {
@@ -28,13 +28,11 @@ function CardItem({ editCard }) {
 
   if (!cardsData.length) return null;
 
- 
-
   return (
     <Card sx={{ maxWidth: 250, height: 400 }}>
       <CardMedia
         component="img"
-        alt='140'
+        alt="140"
         height="160"
         image={editCard.image}
       />
@@ -42,12 +40,12 @@ function CardItem({ editCard }) {
         <Typography gutterBottom variant="h5" component="div">
           {editCard.name}
         </Typography>
-        <Typography variant='body2' color="text.secondary">
+        <Typography variant="body2" color="text.secondary">
           {editCard.text}
         </Typography>
       </CardContent>
     </Card>
-  ) ;
+  );
 }
 
 export default CardItem;

@@ -79,19 +79,25 @@ const uploadData = (req, res) => {
           });
           break;
         case "cards":
-          const { name, cardText } = req.body;
+          const { name, cardText, id } = req.body;
+          console.log("id", id);
           console.log("Image Path:", imagePath);
           console.log("Name:", name);
           console.log("Text:", cardText);
-          /*
+
           await InfoCard.update(
             {
               name: name,
               text: cardText,
-              img: imagePath,
+              image: imagePath,
+            },
+            {
+              where: {
+                id: id,
+              },
             }
-          )
-      */
+          );
+
           return res.json({
             message: "Upload successful",
             imageUrl: imagePath,

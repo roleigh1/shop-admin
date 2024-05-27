@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px) {
+    .backgroundBanner{
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px!important;
+    
+    }
+    .backgroundCards {
+        border-top-right-radius: 0px!important;
+        border-bottom-left-radius: 10px;
+    }
+}

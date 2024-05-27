@@ -12,13 +12,13 @@ import SalesTotal from "./Components/Dashbord/board/SalesTotal";
 export default function Home() {
   return (
     <Container>
-      <Row style={{}}>
+      <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
 
       <Row
         className="topRow"
-        style={{ display: "flex", gap: "1rem", marginTop: "-1rem" }}
+        style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}
       >
         <Col>
           <Background>

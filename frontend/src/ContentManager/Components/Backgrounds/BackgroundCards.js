@@ -5,10 +5,10 @@ export default function BackgroundCards({ children }) {
   return (
     <div>
       <div
-        className="background1"
+        className="backgroundCards"
         style={{
           backgroundColor: "#ebeceb",
-          width: "30rem",
+          width: "100%",
           height: "40%",
           borderTopRightRadius: "10px",
           marginTop: "1.5rem",

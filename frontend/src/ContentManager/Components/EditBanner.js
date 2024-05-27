@@ -17,7 +17,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 export default function Editbanner() {
   const { fetchEditBanners, which, setWhich, bannerData } =
     useMyContext(MyProvider);
-
   const [open, setOpen] = useState(false);
   const [editData, setEditData] = useState("");
   useEffect(() => {
@@ -34,20 +33,16 @@ export default function Editbanner() {
     }
     console.log(which);
   }, [which, bannerData]);
-
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleInputChange = (property, value) => {
     setEditData((prevData) => ({
       ...prevData,
@@ -62,11 +57,13 @@ export default function Editbanner() {
       alert("Please enter a valid image");
       return;
     }
+    const imageUrl = URL.createObjectURL(file);
     setEditData((prevData) => ({
       ...prevData,
-      picture: file,
+      img: imageUrl,
+      imageUpload: file,
     }));
-    console.log({ ...editData, picture: file });
+    console.log({ ...editData, img: imageUrl, imageUpload: file });
   };
 
   const formSubmit = (e) => {
@@ -75,7 +72,7 @@ export default function Editbanner() {
     formData.append("headline", editData.headline);
     formData.append("text", editData.text);
     formData.append("location", which);
-    formData.append("picture", editData.picture);
+    formData.append("picture", editData.imageUpload);
 
     postContentEdit(formData);
   };
@@ -131,13 +128,14 @@ export default function Editbanner() {
             value={editData?.headline || ""}
             onChange={(e) => handleInputChange("headline", e.target.value)}
             variant="outlined"
+            style={{ width: "80%" }}
             required
           />
           <TextField
             id="outlined-multiline-static"
             label="Text"
             multiline
-            style={{ width: "20rem" }}
+            style={{ width: "80%" }}
             rows={4}
             value={editData?.text || ""}
             onChange={(e) => handleInputChange("text", e.target.value)}

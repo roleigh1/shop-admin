@@ -5,16 +5,18 @@ import BackgroundDelete from "./Components/Backgrounds/BackgroundTable";
 import BackgroundInsert from "./Components/Backgrounds/BackgroundInsert";
 import InsertData from "./Components/InsertIntroDb";
 import InventoryTable from "./Components/ShopTables";
-import BackgroundModiTable from "./Components/Backgrounds/BackgroundModify";
-import ModifyData from "./Components/ModifyTableData";
+
 import "./style.css";
 export default function Inventory() {
   return (
     <Container className="container">
-      <Row style={{}}>
+      <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
-      <Row className="insert-Table" style={{ display: "flex", gap: "1rem" }}>
+      <Row
+        className="insert-Table"
+        style={{ display: "flex", gap: "1rem", marginTop: "3.4rem" }}
+      >
         <Col sm={4}>
           <BackgroundInsert>
             <InsertData />
@@ -24,13 +26,6 @@ export default function Inventory() {
           <BackgroundDelete>
             <InventoryTable />
           </BackgroundDelete>
-        </Col>
-      </Row>
-      <Row style={{ marginTop: "1rem" }}>
-        <Col>
-          <BackgroundModiTable>
-            <ModifyData />
-          </BackgroundModiTable>
         </Col>
       </Row>
     </Container>

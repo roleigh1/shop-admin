@@ -1,14 +1,13 @@
 import "./backgrounds.css";
 import React from "react";
-
 export default function BackgroundBanner({ children }) {
   return (
     <div>
       <div
-        className="background1"
+        className="backgroundBanner"
         style={{
           backgroundColor: "#ebeceb",
-          width: "30rem",
+          width: "100%",
           height: "28rem",
           borderTopLeftRadius: "10px",
           borderBottomLeftRadius: "10px",
