@@ -7,8 +7,8 @@ export default function BackgroundBanner({ children }) {
         className="backgroundBanner"
         style={{
           backgroundColor: "#ebeceb",
-          width: "100%",
-          height: "28rem",
+          width: "15rem",
+          height: "40rem",
           borderTopLeftRadius: "10px",
           borderBottomLeftRadius: "10px",
           marginTop: "1.5rem",

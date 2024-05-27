@@ -10,7 +10,7 @@ export default function OrdersSite() {
       <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
-      <Row style={{ marginTop: "3.4rem" }}>
+      <Row style={{ marginTop: "2rem" }}>
         <Col>
           <BackgroundOrders>
             <OrdersTableDB />

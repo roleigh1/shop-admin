@@ -227,6 +227,10 @@ const BannerData = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    top: {
+      type:DataTypes.INTEGER,
+      allowNull:true,
+    }
   },
   {
     tableName: "banners",

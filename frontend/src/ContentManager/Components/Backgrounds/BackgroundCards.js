@@ -8,7 +8,7 @@ export default function BackgroundCards({ children }) {
         className="backgroundCards"
         style={{
           backgroundColor: "#ebeceb",
-          width: "100%",
+          width: "15rem",
           height: "40%",
           borderTopRightRadius: "10px",
           marginTop: "1.5rem",

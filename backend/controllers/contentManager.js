@@ -54,18 +54,20 @@ const uploadData = (req, res) => {
       const imagePath = (url += `uploads/${req.file.filename}`);
       switch (whichContent) {
         case "banner":
-          const { headline, text, location } = req.body;
+          const { headline, text, location,top } = req.body;
 
           console.log("Image Path:", imagePath);
           console.log("Headline:", headline);
           console.log("Text:", text);
           console.log("Location:", location);
+          console.log("Top:", top);
 
           await BannerData.update(
             {
               headline: headline,
               text: text,
               img: imagePath,
+              top: top,
             },
             {
               where: {

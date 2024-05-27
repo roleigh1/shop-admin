@@ -29,7 +29,7 @@ function CardItem({ editCard }) {
   if (!cardsData.length) return null;
 
   return (
-    <Card sx={{ maxWidth: 250, height: 400 }}>
+    <Card sx={{ maxWidth: 200, height: 400 }}>
       <CardMedia
         component="img"
         alt="140"

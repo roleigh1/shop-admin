@@ -12,7 +12,7 @@ export default function ContentManager() {
       <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
-      <Row className="mainContent" style={{ display: "flex", gap: "2rem", marginTop: "2rem" }}>
+      <Row className="mainContent" style={{ display: "flex", gap: "2rem", marginTop: "0.5rem" }}>
         <Col sm={4}> 
           <BackgroundBanner>
             <Editbanner />

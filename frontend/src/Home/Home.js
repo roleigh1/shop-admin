@@ -18,7 +18,7 @@ export default function Home() {
 
       <Row
         className="topRow"
-        style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}
+        style={{ display: "flex", gap: "1rem", marginTop: "0.6rem" }}
       >
         <Col>
           <Background>

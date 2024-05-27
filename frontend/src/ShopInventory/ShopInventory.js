@@ -15,7 +15,7 @@ export default function Inventory() {
       </Row>
       <Row
         className="insert-Table"
-        style={{ display: "flex", gap: "1rem", marginTop: "3.4rem" }}
+        style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}
       >
         <Col sm={4}>
           <BackgroundInsert>
