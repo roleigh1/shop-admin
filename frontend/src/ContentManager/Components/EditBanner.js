@@ -85,7 +85,7 @@ export default function Editbanner() {
     formData.append("bottom", editData.bottom);
 
     console.log(editData);
-     postContentEdit(formData);
+    postContentEdit(formData);
   };
 
   const postContentEdit = (formData) => {
@@ -184,7 +184,6 @@ export default function Editbanner() {
                 value={editData?.top || 0}
                 onChange={(e, value) => handleInputChange("top", value)}
               />
-             
             </Box>
             <svg
               className="watch"
@@ -233,7 +232,6 @@ export default function Editbanner() {
 
                   position: "relative",
                   top: editData?.top || "",
-                  
                 }}
               >
                 <h2 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h2>

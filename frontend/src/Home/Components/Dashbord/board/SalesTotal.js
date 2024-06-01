@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import PointOfSaleTwoToneIcon from "@mui/icons-material/PointOfSaleTwoTone";
 import { MyContext, useMyContext } from "../../../../ContextApi";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
-import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
+
 import "../../../home.css";
 export default function SalesTotal() {
   const { sales, visitors } = useMyContext(MyContext);

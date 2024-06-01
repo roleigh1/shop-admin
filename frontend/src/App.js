@@ -1,8 +1,9 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./Login/Login";
 import Home from "./Home/Home";
-import { MyProvider, } from "./ContextApi";
+import PropTypes from "prop-types";  // Import PropTypes
+import { MyProvider } from "./ContextApi";
 import Inventory from "./ShopInventory/ShopInventory";
 import OrdersSite from "./Orders/Orders";
 import ContentManager from "./ContentManager/ContentManager";
@@ -36,5 +37,8 @@ function AppContent({ onTokenReceived }) {
     </Router>
   );
 }
+AppContent.propTypes = {
+  onTokenReceived: PropTypes.func.isRequired,
+};
 
 export default App;

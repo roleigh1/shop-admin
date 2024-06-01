@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 const counterURL = process.env.REACT_APP_API_COUNTER;
-const counterMondayURL = process.env.REACT_APP_API_COUNTERMONDAY;
+
 const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
 
 export const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
   const [counter, setCounter] = useState();
-  const [token, setToken] = useState("");
+  const [token] = useState("");
   const [lastOrder, setLastOrder] = useState([]);
   const [sales, setSales] = useState({});
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
@@ -16,7 +16,7 @@ export const MyProvider = ({ children }) => {
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
-  const [visitors, setVisitors] = useState();
+
   const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -185,17 +185,7 @@ export const MyProvider = ({ children }) => {
         console.error("Error sending req", error);
       });
   };
-  const visitorCounter = async () => {
-    axios
-      .get("http://localhost:3131/api/vistors")
-      .then((res) => {
-        setVisitors(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching counter", error);
-      });
-  };
-
+  
   const fetchCounter = () => {
     axios
       .get(counterURL)
@@ -224,7 +214,7 @@ export const MyProvider = ({ children }) => {
         setCardsData(response.data.contentData);
       })
       .catch((error) => {
-        console.error("Error fetching Cards data");
+        console.log(error,"Error fetching Cards data");
       });
   };
 
@@ -281,7 +271,6 @@ export const MyProvider = ({ children }) => {
         setTableOrders,
         flagOrders,
         setFlagOrders,
-        visitors,
         bannerData,
         setBannerData,
         which,

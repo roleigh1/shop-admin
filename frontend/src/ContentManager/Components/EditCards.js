@@ -14,8 +14,6 @@ export default function EditCards() {
     useMyContext(MyProvider);
   const [editCard, setEditCard] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-  const [postSucess, setPostSucess] = useState(false);
-  const [fetch] = useState(true);
 
   useEffect(() => {
     fetchEditCards();
@@ -80,7 +78,6 @@ export default function EditCards() {
       })
       .then(function (response) {
         console.log(response);
-        setPostSucess(true);
       })
       .catch(function (error) {
         console.log(error);

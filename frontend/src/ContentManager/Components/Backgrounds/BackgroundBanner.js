@@ -1,5 +1,6 @@
 import "./backgrounds.css";
 import React from "react";
+import PropTypes from "prop-types"; 
 export default function BackgroundBanner({ children }) {
   return (
     <div>
@@ -19,3 +20,6 @@ export default function BackgroundBanner({ children }) {
     </div>
   );
 }
+BackgroundBanner.propTypes = {
+  children: PropTypes.node.isRequired,
+};

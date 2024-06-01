@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -24,7 +24,7 @@ import "./tableStyle.css";
 export default function InventoryTable() {
   const [openDialog, setOpenDialog] = useState(false);
   const [dataDialog, setDataDialog] = useState();
-  const [highlight, setHighlight] = useState(false);
+
 
   const {
     table,

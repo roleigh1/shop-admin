@@ -1,5 +1,6 @@
 
 import React from "react";
+import PropTypes from "prop-types"; 
 import "../../style.css"
 export default function BackgroundInset({children}) {
     return ( 
@@ -10,3 +11,7 @@ export default function BackgroundInset({children}) {
          </div>
     )
 }
+BackgroundInset.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+    

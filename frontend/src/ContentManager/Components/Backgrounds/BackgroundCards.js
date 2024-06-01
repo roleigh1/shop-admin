@@ -1,5 +1,6 @@
 import "./backgrounds.css";
 import React from "react";
+import PropTypes from "prop-types"; 
 
 export default function BackgroundCards({ children }) {
   return (
@@ -18,6 +19,9 @@ export default function BackgroundCards({ children }) {
       >
         {children}
       </div>
-    </div>
+    </div>    
   );
 }
+BackgroundCards.propTypes = {
+  children: PropTypes.node.isRequired,
+};
