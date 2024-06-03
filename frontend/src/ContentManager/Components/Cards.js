@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
-
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -47,5 +47,13 @@ function CardItem({ editCard }) {
     </Card>
   );
 }
+
+CardItem.propTypes = {
+  editCard: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default CardItem;

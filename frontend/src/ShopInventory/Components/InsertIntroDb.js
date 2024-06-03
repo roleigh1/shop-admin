@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,7 +17,6 @@ export default function InsertData() {
   const [price, setPrice] = useState("");
   const [pictureInsert, setPictureInsert] = useState(null);
   const [imgName, setImgName] = useState("");
-
 
   const handleUpload = async (e) => {
     const formData = new FormData();

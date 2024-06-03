@@ -3,6 +3,7 @@ import axios from "axios";
 import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import PropTypes from "prop-types";
 
 export function FormSignIn({ onTokenReceived }) {
   const [toggle, setToggle] = useState("");
@@ -84,3 +85,6 @@ export function FormSignIn({ onTokenReceived }) {
     </Container>
   );
 }
+FormSignIn.propTypes = {
+  onTokenReceived: PropTypes.func.isRequired,
+};

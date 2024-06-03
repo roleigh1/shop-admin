@@ -1,5 +1,6 @@
 import React from "react";
 import "../style.css";
+import PropTypes from "prop-types"; 
 export default function BackgroundOrders({ children }) {
   return (
     <div className="background-container">
@@ -18,3 +19,6 @@ export default function BackgroundOrders({ children }) {
     </div>
   );
 }
+BackgroundOrders.propTypes = {
+  children: PropTypes.node.isRequired,
+};

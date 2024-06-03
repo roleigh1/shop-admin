@@ -1,6 +1,6 @@
 import "../../../../home.css";
 import React from "react";
-
+import PropTypes from "prop-types"; 
 export default function Background({ children }) {
   return (
     <div>
@@ -19,3 +19,6 @@ export default function Background({ children }) {
     </div>
   );
 }
+Background.propTypes = {
+  children: PropTypes.node.isRequired,
+};

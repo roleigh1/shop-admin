@@ -1,5 +1,6 @@
 import React from "react";
 import "../../../../home.css";
+import PropTypes from "prop-types"; 
 export default function BackgroundLastOrdersListed({ children }) {
   return (
     <div>
@@ -17,3 +18,6 @@ export default function BackgroundLastOrdersListed({ children }) {
     </div>
   );
 }
+BackgroundLastOrdersListed.propTypes = {
+  children: PropTypes.node.isRequired,
+};

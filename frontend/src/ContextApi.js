@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import PropTypes from "prop-types"; 
 const counterURL = process.env.REACT_APP_API_COUNTER;
 
 const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
@@ -291,4 +292,7 @@ export const MyProvider = ({ children }) => {
 
 export const useMyContext = () => {
   return useContext(MyContext);
+};
+MyProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
