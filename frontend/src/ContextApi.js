@@ -116,32 +116,6 @@ export const MyProvider = ({ children }) => {
         console.error("Error updating data", error);
       });
   };
-  const getSelectedIdData = async () => {
-    try {
-      setEditAbleData("");
-      const idForSelect = rowSelectionModel;
-      console.log("Frontend Selected id", idForSelect);
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idForSelect, table }),
-      };
-      const response = await fetch(
-        "http://localhost:3131/api/selectID",
-        options
-      );
-      const data = await response.json();
-      if (table === "Bestseller") {
-        setEditAbleData(data.SelectFromBestseller[0]);
-      } else {
-        setEditAbleData(data.SelectFromProducts[0]);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const fetchAllOrders = async () => {
     try {
@@ -255,7 +229,6 @@ export const MyProvider = ({ children }) => {
         setTable,
         editAbleData,
         setEditAbleData,
-        getSelectedIdData,
         updateData,
         sales,
         fetchCounter,

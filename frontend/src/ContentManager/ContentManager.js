@@ -5,21 +5,24 @@ import BackgroundBanner from "./Components/Backgrounds/BackgroundBanner";
 import BackgroundCards from "./Components/Backgrounds/BackgroundCards";
 import Editbanner from "./Components/EditBanner";
 import EditCards from "./Components/EditCards";
-import "./style.css"
+import "./style.css";
 export default function ContentManager() {
   return (
     <Container className="container">
       <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
-      <Row className="mainContent" style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}>
-        <Col sm={4}> 
+      <Row
+        className="mainContent"
+        style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}
+      >
+        <Col sm={4}>
           <BackgroundBanner>
             <Editbanner />
           </BackgroundBanner>
         </Col>
 
-        <Col  sm={8}>
+        <Col sm={8}>
           <BackgroundCards>
             <EditCards />
           </BackgroundCards>
