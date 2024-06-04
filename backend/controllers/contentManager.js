@@ -54,7 +54,7 @@ const uploadData = (req, res) => {
       const imagePath = (url += `uploads/${req.file.filename}`);
       switch (whichContent) {
         case "banner":
-          const { headline, text, location,top } = req.body;
+          const { headline, text, location, top } = req.body;
 
           console.log("Image Path:", imagePath);
           console.log("Headline:", headline);
