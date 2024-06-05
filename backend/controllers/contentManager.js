@@ -15,24 +15,24 @@ const upload = multer({ storage: storage });
 const getContentData = async (req, res) => {
   try {
     const whichContent = req.params.whichContent;
+    let response = {}
     switch (whichContent) {
       case "banners":
-        const banners = await BannerData.findAll({
+        response.banners = await BannerData.findAll({
           order: [["id", "DESC"]],
           limit: 2,
         });
-        res.status(200).json({ contentData: banners });
         break;
       case "cards":
-        const cards = await InfoCard.findAll({
+        response.cards = await InfoCard.findAll({
           order: [["id", "DESC"]],
           limit: 3,
         });
-        res.status(200).json({ contentData: cards });
         break;
       default:
         res.status(400).json({ message: "Invalid content type" });
     }
+    res.status(200).json({ contentData: response });
   } catch (error) {
     console.error("Error getting content data", error);
     res.status(400).json({ message: "Problem getting content data", error });
@@ -52,9 +52,11 @@ const uploadData = (req, res) => {
       const whichContent = req.params.whichContent;
       let url = "http://localhost:3131/";
       const imagePath = (url += `uploads/${req.file.filename}`);
+      const { headline, text, location, top } = req.body;
+      const { name, cardText, id } = req.body;
       switch (whichContent) {
         case "banner":
-          const { headline, text, location, top } = req.body;
+    
 
           console.log("Image Path:", imagePath);
           console.log("Headline:", headline);
@@ -79,9 +81,9 @@ const uploadData = (req, res) => {
             message: "Upload successful",
             imageUrl: imagePath,
           });
-          break;
+   
         case "cards":
-          const { name, cardText, id } = req.body;
+
           console.log("id", id);
           console.log("Image Path:", imagePath);
           console.log("Name:", name);
@@ -104,7 +106,7 @@ const uploadData = (req, res) => {
             message: "Upload successful",
             imageUrl: imagePath,
           });
-          break;
+  
         default:
           return res.status(400).json({ message: "Invalid content type" });
       }

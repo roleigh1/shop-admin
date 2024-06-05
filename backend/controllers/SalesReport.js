@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const { FinishedOrders, Orders } = require("../models/models");
+const { FinishedOrders} = require("../models/models");
 const getTotalMonth = async (req, res) => {
   try {
     const month = req.params.month.toLowerCase();
@@ -21,8 +21,8 @@ const getTotalMonth = async (req, res) => {
     res.json({ [month]: monthTotal });
     console.log(monthTotal);
   } catch (error) {
-    console.error(`Error fetching ${month}`, error);
-    res.status(500).json({ error: `Error fetching ${month}` });
+    console.error(`Error fetching month`, error);
+    res.status(500).json({ error: `Error fetching month` });
   }
 };
 const getMonthDateRange = (month) => {
