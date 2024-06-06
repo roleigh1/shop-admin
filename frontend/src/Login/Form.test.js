@@ -1,4 +1,7 @@
-import { FormSignIn } from "./Form";
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"; 
+import { FormSignIn } from "./Form"; 
+import "@testing-library/jest-dom/extend-expect"; 
 
 describe("FormSignIn", () => {
   it("should render the form", () => {

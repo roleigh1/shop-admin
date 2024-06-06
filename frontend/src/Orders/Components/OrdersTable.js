@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
@@ -40,12 +40,10 @@ export default function OrdersTableDB() {
     orderFinishProcess,
     fetchAllOrders,
     pageState,
-    setPageState,
     tableOrders,
     setTableOrders,
     postIdForDelete,
     setFlagOrders,
-    flagOrders,
   } = useMyContext(MyProvider);
 
   const handlePageChange = () => {

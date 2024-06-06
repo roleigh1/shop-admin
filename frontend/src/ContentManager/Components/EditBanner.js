@@ -8,19 +8,25 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export default function Editbanner() {
   const { fetchEditBanners, which, setWhich, bannerData } =
     useMyContext(MyProvider);
-
   const [open, setOpen] = useState(false);
-  const [editData, setEditData] = useState("");
+  const [editData, setEditData] = useState({
+    headline: "",
+    text: "",
+    img: "",
+    imageUpload: null,
+    top: 50,
+  });
+
   useEffect(() => {
     fetchEditBanners();
   }, []);
@@ -35,20 +41,16 @@ export default function Editbanner() {
     }
     console.log(which);
   }, [which, bannerData]);
-
   const handleChange = (event) => {
     const newTable = event.target.value;
     setWhich(newTable);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleInputChange = (property, value) => {
     setEditData((prevData) => ({
       ...prevData,
@@ -63,11 +65,13 @@ export default function Editbanner() {
       alert("Please enter a valid image");
       return;
     }
+    const imageUrl = URL.createObjectURL(file);
     setEditData((prevData) => ({
       ...prevData,
-      picture: file,
+      img: imageUrl,
+      imageUpload: file,
     }));
-    console.log({ ...editData, picture: file });
+    console.log({ ...editData, img: imageUrl, imageUpload: file });
   };
 
   const formSubmit = (e) => {
@@ -76,14 +80,17 @@ export default function Editbanner() {
     formData.append("headline", editData.headline);
     formData.append("text", editData.text);
     formData.append("location", which);
-    formData.append("picture", editData.picture);
+    formData.append("picture", editData.imageUpload);
+    formData.append("top", editData.top);
+    formData.append("bottom", editData.bottom);
 
+    console.log(editData);
     postContentEdit(formData);
   };
 
   const postContentEdit = (formData) => {
     axios
-      .post("http://localhost:3131/api/contentEdit", formData, {
+      .post("http://localhost:3131/api/contentEdit/banner", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -98,7 +105,7 @@ export default function Editbanner() {
 
   return (
     <div>
-      <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
+      <h3 style={{ textAlign: "center", paddingTop: "3rem" }}>
         Edit Image Banners
       </h3>
       <div>
@@ -132,13 +139,14 @@ export default function Editbanner() {
             value={editData?.headline || ""}
             onChange={(e) => handleInputChange("headline", e.target.value)}
             variant="outlined"
+            style={{ width: "80%" }}
             required
           />
           <TextField
             id="outlined-multiline-static"
             label="Text"
             multiline
-            style={{ width: "20rem" }}
+            style={{ width: "80%" }}
             rows={4}
             value={editData?.text || ""}
             onChange={(e) => handleInputChange("text", e.target.value)}
@@ -159,17 +167,28 @@ export default function Editbanner() {
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              marginLeft: "2rem",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Button type="submit" variant="outlined" value="submit">
-              Submit
-            </Button>
+            <Box sx={{ width: 80 }}>
+              <span style={{ fontSize: "0.8em", marginLeft: "1.9rem" }}>
+                Top:
+              </span>
+              <Slider
+                size="small"
+                min={-100}
+                max={100}
+                aria-label="Small"
+                valueLabelDisplay="auto"
+                value={editData?.top || 0}
+                onChange={(e, value) => handleInputChange("top", value)}
+              />
+            </Box>
             <svg
               className="watch"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ position: "relative", left: "2rem", top: "5px" }}
+              style={{ position: "relative", bottom: "0.5rem" }}
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -177,27 +196,29 @@ export default function Editbanner() {
             >
               <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
             </svg>
+            <Button type="submit" variant="outlined" value="submit">
+              Submit
+            </Button>
           </div>
         </form>
       </div>
-      <React.Fragment>
+      <div>
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-       
         >
           <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
-          <DialogContent >
+          <DialogContent>
             <section
               style={{
                 position: "relative",
                 height: "25rem",
                 display: "flex",
-                width:"100%",
+                width: "100%",
                 alignItems: "center",
-                justifyContent: "center",
+
                 textAlign: "center",
                 backgroundImage: `url(${editData?.img || ""})`,
                 backgroundSize: "cover",
@@ -205,8 +226,15 @@ export default function Editbanner() {
                 borderRadius: "10px",
               }}
             >
-              <div style={{ color: "black", marginTop: which === "Home" ? "10rem" : " 0rem" }}>
-                <h2 style={{ opacity: "0.7", }}>{editData?.headline || ""}</h2>
+              <div
+                style={{
+                  color: "black",
+
+                  position: "relative",
+                  top: editData?.top || "",
+                }}
+              >
+                <h2 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h2>
                 <p style={{ fontSize: "20px", opacity: "0.7" }}>
                   {editData?.text || ""}
                 </p>
@@ -219,7 +247,7 @@ export default function Editbanner() {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </div>
     </div>
   );
 }

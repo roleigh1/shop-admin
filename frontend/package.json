@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@eslint/eslintrc": "^3.1.0",
     "@mui/base": "^5.0.0-beta.20",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
@@ -18,6 +19,7 @@
     "dotenv": "^16.4.1",
     "mdb-react-ui-kit": "^7.2.0",
     "path-browserify": "^1.0.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
@@ -29,13 +31,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint src/",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc.json"
   },
   "browserslist": {
     "production": [
@@ -50,9 +49,15 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.24.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@eslint/compat": "^1.0.3",
+    "@eslint/js": "^9.4.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.2"
+    "eslint-plugin-jest": "^28.5.0",
+    "eslint-plugin-react": "^7.34.2",
+    "globals": "^15.3.0",
+    "prettier": "^3.3.0",
+    "typescript-eslint": "^7.12.0"
   }
 }

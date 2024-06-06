@@ -7,10 +7,10 @@ import OrdersTableDB from "./Components/OrdersTable";
 export default function OrdersSite() {
   return (
     <Container fluid>
-      <Row style={{}}>
+      <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>
-      <Row>
+      <Row style={{ marginTop: "2rem" }}>
         <Col>
           <BackgroundOrders>
             <OrdersTableDB />

@@ -1,42 +1,156 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import { MyProvider, useMyContext } from "../../ContextApi";
+import CardItem from "./Cards";
+import TextField from "@mui/material/TextField";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Button from "@mui/material/Button";
+import axios from "axios";
 export default function EditCards() {
-  const [chooseCards, setChooseCards] = useState("");
-  const handleChange = () => {};
+  const { fetchEditCards, cardsData, choosenCards, setChoosenCards } =
+    useMyContext(MyProvider);
+  const [editCard, setEditCard] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
+    fetchEditCards();
+  }, []);
+
+  useEffect(() => {
+    switch (choosenCards) {
+      case "1":
+        setEditCard(cardsData[0]);
+        setIsVisible(true);
+        break;
+      case "2":
+        setEditCard(cardsData[1]);
+        setIsVisible(true);
+        break;
+      case "3":
+        setEditCard(cardsData[2]);
+        setIsVisible(true);
+        break;
+      default:
+        console.log("Error setting data in the inputs");
+    }
+  }, [choosenCards, cardsData]);
+
+  const handleChange = (event) => {
+    const selection = event.target.value;
+    setChoosenCards(selection);
+  };
+  const handleFileChange = (event) => {
+    let file = event.target.files[0];
+    const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+    if (!supportedImageTypes.includes(file.type)) {
+      alert("Please enter a valid image");
+      return;
+    }
+    const imageUrl = URL.createObjectURL(file);
+    setEditCard((prevData) => ({
+      ...prevData,
+      image: imageUrl,
+      imageUpload: file,
+    }));
+    console.log({ ...editCard, image: imageUrl, imageUpload: file });
+  };
+  const handleInputChange = (property, value) => {
+    setEditCard((prevData) => ({
+      ...prevData,
+      [property]: value,
+    }));
+  };
+  const formSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("id", editCard.id);
+    formData.append("name", editCard.name);
+    formData.append("cardText", editCard.text);
+    formData.append("picture", editCard.imageUpload);
+    axios
+      .post("http://localhost:3131/api/contentEdit/cards", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
-    <React.Fragment>
-      <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
-        Edit Content Cards
-      </h3>
-      <React.Fragment
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <FormControl>
-          <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>
-          <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            label="Which"
-            value={chooseCards}
-            style={{ width: "8rem", height: "3rem" }}
-            onChange={handleChange}
+    <div style={{ position: "relative", top: "2rem" }}>
+      <div>
+        <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
+          Edit Content Cards
+        </h3>
+        <form
+          onSubmit={formSubmit}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          <FormControl>
+            <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              label="cards"
+              value={choosenCards}
+              style={{ width: "8rem", height: "3rem" }}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value={"1"}>Card 1</MenuItem>
+              <MenuItem value={"2"}>Card 2</MenuItem>
+              <MenuItem value={"3"}>Card 3</MenuItem>
+            </Select>
+          </FormControl>
+          {isVisible && <CardItem editCard={editCard} />}
+          <TextField
+            id="outlined-basic"
+            label="Name"
+            value={editCard?.name || ""}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+            variant="outlined"
+            style={{ width: "80%" }}
             required
+          />
+          <TextField
+            id="outlined-multiline-static"
+            label="Text"
+            multiline
+            style={{ width: "80%" }}
+            rows={4}
+            value={editCard?.text || ""}
+            onChange={(e) => handleInputChange("text", e.target.value)}
+          />
+          <Button
+            component="label"
+            variant="contained"
+            startIcon={<CloudUploadIcon />}
           >
-            <MenuItem value={"1"}>Card 1</MenuItem>
-            <MenuItem value={"2"}>Card 2</MenuItem>
-            <MenuItem value={"3"}>Card 3</MenuItem>
-            <MenuItem value={"4"}>Card 4</MenuItem>
-          </Select>
-        </FormControl>
-      </React.Fragment>
-    </React.Fragment>
+            Upload file
+            <input
+              type="file"
+              style={{ display: "none" }}
+              name="image"
+              onChange={handleFileChange}
+            />
+          </Button>
+          <Button type="submit" variant="outlined" value="submit">
+            Submit
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 }

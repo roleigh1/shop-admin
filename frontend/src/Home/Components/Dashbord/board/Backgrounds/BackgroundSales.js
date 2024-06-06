@@ -1,5 +1,6 @@
 import React from "react";
 import "../../../../home.css";
+import PropTypes from "prop-types";
 export default function BackgroundMostlyBuyed({ children }) {
   return (
     <div
@@ -20,3 +21,6 @@ export default function BackgroundMostlyBuyed({ children }) {
     </div>
   );
 }
+BackgroundMostlyBuyed.propTypes = {
+  children: PropTypes.node.isRequired,
+};

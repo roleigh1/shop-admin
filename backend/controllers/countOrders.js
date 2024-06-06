@@ -1,6 +1,5 @@
-const { type } = require("os");
 const { Op } = require("sequelize");
-const { Orders, FinishedOrders } = require("../models/models");
+const { FinishedOrders } = require("../models/models");
 
 const moment = require("moment");
 function getLastMonday() {

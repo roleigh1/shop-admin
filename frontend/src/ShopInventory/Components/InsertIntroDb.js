@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,7 +17,6 @@ export default function InsertData() {
   const [price, setPrice] = useState("");
   const [pictureInsert, setPictureInsert] = useState(null);
   const [imgName, setImgName] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
 
   const handleUpload = async (e) => {
     const formData = new FormData();
@@ -49,7 +48,6 @@ export default function InsertData() {
     let file = event.target.files[0];
     setPictureInsert(file);
     setImgName(file.name);
-    setIsVisible(true);
     console.log(file);
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
 

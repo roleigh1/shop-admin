@@ -1,14 +1,15 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import PropTypes from "prop-types"; 
 const counterURL = process.env.REACT_APP_API_COUNTER;
-const counterMondayURL = process.env.REACT_APP_API_COUNTERMONDAY;
+
 const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
 
 export const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
   const [counter, setCounter] = useState();
-  const [token, setToken] = useState("");
+  const [token] = useState("");
   const [lastOrder, setLastOrder] = useState([]);
   const [sales, setSales] = useState({});
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
@@ -16,7 +17,7 @@ export const MyProvider = ({ children }) => {
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
-  const [visitors, setVisitors] = useState();
+
   const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -27,8 +28,10 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-  const [cardsData,setCardsData] = useState({})
+  const [cardsData, setCardsData] = useState({});
   const [which, setWhich] = useState("Products");
+  const [choosenCards, setChoosenCards] = useState("");
+
   let formData = new FormData();
   const fetchInventory = () => {
     if (table === "Products") {
@@ -113,32 +116,6 @@ export const MyProvider = ({ children }) => {
         console.error("Error updating data", error);
       });
   };
-  const getSelectedIdData = async () => {
-    try {
-      setEditAbleData("");
-      const idForSelect = rowSelectionModel;
-      console.log("Frontend Selected id", idForSelect);
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idForSelect, table }),
-      };
-      const response = await fetch(
-        "http://localhost:3131/api/selectID",
-        options
-      );
-      const data = await response.json();
-      if (table === "Bestseller") {
-        setEditAbleData(data.SelectFromBestseller[0]);
-      } else {
-        setEditAbleData(data.SelectFromProducts[0]);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const fetchAllOrders = async () => {
     try {
@@ -183,17 +160,7 @@ export const MyProvider = ({ children }) => {
         console.error("Error sending req", error);
       });
   };
-  const visitorCounter = async () => {
-    axios
-      .get("http://localhost:3131/api/vistors")
-      .then((res) => {
-        setVisitors(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching counter", error);
-      });
-  };
-
+  
   const fetchCounter = () => {
     axios
       .get(counterURL)
@@ -217,14 +184,14 @@ export const MyProvider = ({ children }) => {
   };
   const fetchEditCards = () => {
     axios
-    .get("http://localhost:3131/api/contentdata/cards")
-    .then((response) => {
-        setCardsData(response.data.contentData); 
-    })
-    .catch((error) => {
-      console.error("Error fetching Cards data" )
-    })
-  }
+      .get("http://localhost:3131/api/contentdata/cards")
+      .then((response) => {
+        setCardsData(response.data.contentData);
+      })
+      .catch((error) => {
+        console.log(error,"Error fetching Cards data");
+      });
+  };
 
   useEffect(() => {
     fetchData();
@@ -262,7 +229,6 @@ export const MyProvider = ({ children }) => {
         setTable,
         editAbleData,
         setEditAbleData,
-        getSelectedIdData,
         updateData,
         sales,
         fetchCounter,
@@ -279,15 +245,17 @@ export const MyProvider = ({ children }) => {
         setTableOrders,
         flagOrders,
         setFlagOrders,
-        visitors,
         bannerData,
         setBannerData,
         which,
         setWhich,
         fetchEditBanners,
-
-        
+        fetchEditCards,
+        cardsData,
+        choosenCards,
+        setChoosenCards,
         formData,
+        setCardsData,
       }}
     >
       {children}
@@ -297,4 +265,7 @@ export const MyProvider = ({ children }) => {
 
 export const useMyContext = () => {
   return useContext(MyContext);
+};
+MyProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
