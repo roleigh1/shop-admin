@@ -9,7 +9,6 @@ const insertData = require("../controllers/getInsertData");
 const displayLastOrder = require("../controllers/DisplayLastOrder");
 const storeInventory = require("../controllers/storeTables");
 const orders = require("../controllers/orders");
-const visitors = require("../controllers/visitorCounter");
 const contentManager = require("../controllers/contentManager");
 
 router.get("/counter", counterDB.countOperation);
@@ -23,4 +22,5 @@ router.get("/orders", orders.getAllOrders);
 router.post("/orders", orders.finishOrder);
 router.get("/contentData/:whichContent", contentManager.getContentData);
 router.post("/contentEdit/:whichContent", contentManager.uploadData);
+
 module.exports = router;

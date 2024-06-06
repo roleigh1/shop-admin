@@ -15,7 +15,7 @@ const upload = multer({ storage: storage });
 const getContentData = async (req, res) => {
   try {
     const whichContent = req.params.whichContent;
-    let response = {}
+    let response = {};
     switch (whichContent) {
       case "banners":
         response.banners = await BannerData.findAll({
@@ -56,8 +56,6 @@ const uploadData = (req, res) => {
       const { name, cardText, id } = req.body;
       switch (whichContent) {
         case "banner":
-    
-
           console.log("Image Path:", imagePath);
           console.log("Headline:", headline);
           console.log("Text:", text);
@@ -81,9 +79,8 @@ const uploadData = (req, res) => {
             message: "Upload successful",
             imageUrl: imagePath,
           });
-   
-        case "cards":
 
+        case "cards":
           console.log("id", id);
           console.log("Image Path:", imagePath);
           console.log("Name:", name);
@@ -106,7 +103,7 @@ const uploadData = (req, res) => {
             message: "Upload successful",
             imageUrl: imagePath,
           });
-  
+
         default:
           return res.status(400).json({ message: "Invalid content type" });
       }

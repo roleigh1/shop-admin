@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const { FinishedOrders} = require("../models/models");
+const { FinishedOrders } = require("../models/models");
 const getTotalMonth = async (req, res) => {
   try {
     const month = req.params.month.toLowerCase();
