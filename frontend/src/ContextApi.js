@@ -137,7 +137,8 @@ export const MyProvider = ({ children }) => {
   const postIdForDelete = () => {
     const idForDelete = rowSelectionModel;
     const idForDeleteOrders = rowSelectionModelOrders;
-    console.log(idForDeleteOrders, tableOrders, flagOrders);
+  
+    console.log(flagOrders,idForDelete,table);
     let options = {
       method: "POST",
       headers: {

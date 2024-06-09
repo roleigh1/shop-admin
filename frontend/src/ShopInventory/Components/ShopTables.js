@@ -33,6 +33,7 @@ export default function InventoryTable() {
     inventoryTable,
     postIdForDelete,
     fetchInventory,
+    setFlagOrders
   } = useMyContext(MyProvider);
 
   useEffect(() => {
@@ -61,6 +62,7 @@ export default function InventoryTable() {
     if (rowSelectionModel.length === 0) {
       return null;
     }
+    setFlagOrders(false); 
     postIdForDelete(rowSelectionModel);
   };
   const handleWatch = () => {
