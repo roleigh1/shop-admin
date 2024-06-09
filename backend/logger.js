@@ -1,6 +1,12 @@
 // logger.js
 const { createLogger, transports, format } = require("winston");
 const expressWinston = require("express-winston");
+const { time } = require("console");
+
+
+const myFormat = format.printf(({level,meta,timestamp}) => {
+    return `${timestamp} ${level} : ${meta.message}`
+})    
 
 const logger = expressWinston.logger({
   transports: [
@@ -16,10 +22,22 @@ const logger = expressWinston.logger({
   ],
   format: format.combine(
     format.json(),
-    format.prettyPrint(),
-    format.timestamp()
+    format.timestamp(),
+    myFormat
   ),
   statusLevels: true,
 });
+const errorLogger = expressWinston.errorLogger({
+    transports:[
+        new transports.File({
+            filename:"logsInternalErrors.log"
+        })
+    ],
+    format: format.combine(
+        format.json(),
+        format.timestamp(), 
+        format.prettyPrint()
+    )
+})
 
-module.exports = logger;
+module.exports = {logger,errorLogger};

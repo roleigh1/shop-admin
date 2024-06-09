@@ -22,5 +22,5 @@ router.get("/orders", orders.getAllOrders);
 router.post("/orders", orders.finishOrder);
 router.get("/contentData/:whichContent", contentManager.getContentData);
 router.post("/contentEdit/:whichContent", contentManager.uploadData);
-
+router.get("/error-test",storeInventory.trow );
 module.exports = router;

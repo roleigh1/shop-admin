@@ -3,15 +3,21 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const passport = require("./controllers/passportController");
+const { logger, errorLogger } = require("./logger");
+
 const app = express();
-const logger = require("./logger");
 
 app.use(express.json());
 app.use(cors());
+
 app.use(logger);
+
 const routes = require("./routes/authroute");
 app.use("/api", routes, passport.initialize());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
+
+// Add errorLogger as middleware to log errors
+app.use(errorLogger);
 
 module.exports = app;
