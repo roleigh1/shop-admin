@@ -177,7 +177,7 @@ export const MyProvider = ({ children }) => {
     axios
       .get("http://localhost:3131/api/contentdata/banners")
       .then((response) => {
-        setBannerData(response.data.contentData);
+        setBannerData(response.data.contentData.banners);
       })
       .catch((error) => {
         console.error("Error fetching content data", error);
@@ -187,7 +187,7 @@ export const MyProvider = ({ children }) => {
     axios
       .get("http://localhost:3131/api/contentdata/cards")
       .then((response) => {
-        setCardsData(response.data.contentData);
+        setCardsData(response.data.contentData.cards);
       })
       .catch((error) => {
         console.log(error,"Error fetching Cards data");
