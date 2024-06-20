@@ -17,7 +17,7 @@ export const MyProvider = ({ children }) => {
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
-
+  const [flagInsertItem,setFlagInsertItem] = useState(false); 
   const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -257,6 +257,8 @@ export const MyProvider = ({ children }) => {
         setChoosenCards,
         formData,
         setCardsData,
+        flagInsertItem,
+        setFlagInsertItem
       }}
     >
       {children}

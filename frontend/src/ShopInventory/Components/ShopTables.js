@@ -24,6 +24,7 @@ import "./tableStyle.css";
 export default function InventoryTable() {
   const [openDialog, setOpenDialog] = useState(false);
   const [dataDialog, setDataDialog] = useState();
+  const [flagDelete, setFlagDelete]  = useState(); 
 
   const {
     table,
@@ -34,12 +35,18 @@ export default function InventoryTable() {
     postIdForDelete,
     fetchInventory,
     setFlagOrders,
+    flagInsertItem,
   } = useMyContext(MyProvider);
 
   useEffect(() => {
     fetchInventory();
   }, [table]);
-
+useEffect(()=>{
+    if(flagInsertItem || flagDelete){
+      fetchInventory(); 
+      console.log("refresh happend ")
+    }
+},[flagInsertItem,flagDelete])
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 130 },
@@ -64,6 +71,7 @@ export default function InventoryTable() {
     }
     setFlagOrders(false);
     postIdForDelete(rowSelectionModel);
+    setFlagDelete(true); 
   };
   const handleWatch = () => {
     if (rowSelectionModel.length < 1) {

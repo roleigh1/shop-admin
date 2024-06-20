@@ -4,8 +4,8 @@ const dbUser = process.env.DBUSER;
 const dbPW = process.env.DBPW;
 const dbHost = process.env.DBHOST;
 
-const sequelize = new Sequelize("robin_", "meister", "OscarAlexa123.", {
-  host: "194.164.203.180",
+const sequelize = new Sequelize(dbName, dbUser, dbPW, {
+  host: dbHost ,
   dialect: "mysql",
   port: "3306",
   logging: (msg) => {

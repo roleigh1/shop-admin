@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import "../style.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
+import { MyProvider, useMyContext } from "../../ContextApi";
 const insertURL = process.env.REACT_APP_API_POSTINSERT;
 
 export default function InsertData() {
@@ -17,7 +17,9 @@ export default function InsertData() {
   const [price, setPrice] = useState("");
   const [pictureInsert, setPictureInsert] = useState(null);
   const [imgName, setImgName] = useState("");
+ 
 
+  const { setFlagInsertItem } = useMyContext(MyProvider);
   const handleUpload = async (e) => {
     const formData = new FormData();
     e.preventDefault();
@@ -39,6 +41,7 @@ export default function InsertData() {
         setPrice("");
         setPictureInsert("");
         setImgName("");
+        setFlagInsertItem(true);
       })
       .catch((error) => {
         console.error("Upload error", error);
