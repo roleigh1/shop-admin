@@ -134,33 +134,7 @@ export const MyProvider = ({ children }) => {
       setPageState((old) => ({ ...old, isLoading: false }));
     }
   };
-  const postIdForDelete = () => {
-    const idForDelete = rowSelectionModel;
-    const idForDeleteOrders = rowSelectionModelOrders;
-  
-    console.log(flagOrders,idForDelete,table);
-    let options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    if (flagOrders) {
-      options.body = JSON.stringify({ idForDeleteOrders, tableOrders });
-    } else {
-      options.body = JSON.stringify({ idForDelete, table });
-    }
-    fetch("http://localhost:3131/api/deleteID", options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("res recived", data);
-
-        console.log(options);
-      })
-      .catch((error) => {
-        console.error("Error sending req", error);
-      });
-  };
+ 
   
   const fetchCounter = () => {
     axios
@@ -223,7 +197,7 @@ export const MyProvider = ({ children }) => {
         counter,
         token,
         lastOrder,
-        postIdForDelete,
+  
         rowSelectionModel,
         setRowSelectionModel,
         table,

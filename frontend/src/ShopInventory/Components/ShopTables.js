@@ -20,21 +20,20 @@ import {
 import { MyProvider, useMyContext } from "../../ContextApi";
 
 import "./tableStyle.css";
+import axios from "axios";
 
 export default function InventoryTable() {
   const [openDialog, setOpenDialog] = useState(false);
   const [dataDialog, setDataDialog] = useState();
-  const [flagDelete, setFlagDelete]  = useState(); 
+  const [flagDelete,setFlagDelete]  = useState(false); 
 
+const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const {
-    table,
+
+    table, 
     setTable,
-    rowSelectionModel,
-    setRowSelectionModel,
     inventoryTable,
-    postIdForDelete,
     fetchInventory,
-    setFlagOrders,
     flagInsertItem,
   } = useMyContext(MyProvider);
 
@@ -68,9 +67,24 @@ useEffect(()=>{
   const handleDelete = () => {
     if (rowSelectionModel.length === 0) {
       return null;
-    }
-    setFlagOrders(false);
-    postIdForDelete(rowSelectionModel);
+    } else {
+      let idForDelete = rowSelectionModel; 
+      let options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({idForDelete,table})
+      }
+      fetch("http://localhost:3131/api/delete/inventory", options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("res recived", data); 
+      })
+      .catch((error) => {
+        console.error("Error sending req", error); 
+      }); 
+    }; 
     setFlagDelete(true); 
   };
   const handleWatch = () => {

@@ -4,7 +4,7 @@ const {
   BestSellerItemsDB,
   sequelize,
 } = require("../models/models");
-
+const currency = require("currency.js"); 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -31,14 +31,14 @@ const uploadImage = (req, res) => {
     try {
       let url = "http://localhost:3131/";
       let imagePath = (url += req.file.path);
-
+      const formattedPrice = currency(price).value; 
       console.log("Image received and saved locally:", imagePath);
       console.log("Type:", type);
-      console.log("Price:", price);
+  
       console.log("Name:", name);
       console.log("Where:", where);
 
-      await insertNewProduct(where, name, type, price, imagePath);
+      await insertNewProduct(where, name, type, formattedPrice, imagePath);
 
       return res.json({ message: "Upload successful", imageUrl: imagePath });
     } catch (error) {
@@ -48,7 +48,7 @@ const uploadImage = (req, res) => {
   });
 };
 
-const insertNewProduct = async (where, name, type, price, imagePath) => {
+const insertNewProduct = async (where, name, type, formattedPrice, imagePath) => {
   if (where === "products") {
     const ProductId = await ProductsDB.findOne({
       attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
@@ -59,7 +59,7 @@ const insertNewProduct = async (where, name, type, price, imagePath) => {
     const Product = await ProductsDB.create({
       id: lastId + 1,
       name: name,
-      price: Number(price),
+      price: formattedPrice,
       image: newImgPath,
       type: type,
     });
@@ -75,7 +75,7 @@ const insertNewProduct = async (where, name, type, price, imagePath) => {
     const Bestseller = await BestSellerItemsDB.create({
       id: lastBestseller + 1,
       name: name,
-      price: Number(price),
+      price: formattedPrice,
       image: imagePath,
       type: type,
     });

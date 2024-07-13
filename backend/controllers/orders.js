@@ -53,19 +53,26 @@ const finishOrder = async (req, res) => {
       }))
     );
     res.status(200).json({ message: "Selected Order", finishedOrders });
-    const deleteFinishedOrder = await Orders.destroy({
-      where: {
-        id: finishOrderId,
-      },
-    });
-    console.log("Finished order is deleted", deleteFinishedOrder);
+    
+
   } catch (error) {
     console.error("Error getting old order", error);
     res.status(400).json({ message: "Error getting old Order", error });
   }
 };
+const deleteOrder = async (req,res) => {
+  let {idForDelete} = req.body; 
+  console.log(" id for Delete ",idForDelete); 
+  const deleteFinishedOrder = await FinishedOrders.destroy({
+    where: {
+      id: idForDelete,
+    },
+  });
+  res.status(200).json({ message: "Order is deleted", deleteFinishedOrder });
+}
 
 module.exports = {
   getAllOrders,
   finishOrder,
+  deleteOrder
 };

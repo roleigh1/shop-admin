@@ -34,6 +34,7 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+
   const {
     rowSelectionModelOrders,
     setRowSelectionModelOrders,
@@ -42,7 +43,7 @@ export default function OrdersTableDB() {
     pageState,
     tableOrders,
     setTableOrders,
-    postIdForDelete,
+
     setFlagOrders,
   } = useMyContext(MyProvider);
 
@@ -63,10 +64,10 @@ export default function OrdersTableDB() {
   };
   const handleIdSearch = () => {
     let newId = Number(searchID);
-    const data = [...pageState.data]; // Kopie von data erstellen
+    const data = [...pageState.data];
 
     function binarySearch(data, newId) {
-      // Sortiere die Kopie von data nach der ID
+   
       data.sort((a, b) => {
         return a.id - b.id;
       });
@@ -100,18 +101,40 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
-    postIdForDelete();
+    let idForDelete = rowSelectionModelOrders;
+    console.log(idForDelete); 
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json", 
+      },
+      body: JSON.stringify({idForDelete})
+    }
+    fetch("http://localhost:3131/api/delete/orders", options)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("res recived" ,data); 
+    })
+    .catch((error) => {
+      console.error("Error sending req",error); 
+    }); 
   };
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
+   
   }, [newValue, pageState.page, foundData]);
 
   useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
+  
   };
+  useEffect(() => {
+         fetchAllOrders();
+
+  },[]); 
   return (
     <div>
       <div

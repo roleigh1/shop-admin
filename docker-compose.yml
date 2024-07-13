@@ -20,5 +20,5 @@ services:
   database:
     image: mysql:5.7         # Verwendetes Docker-Image für die Datenbank
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PW}  # Verwendung von Umgebungsvariablen für das Root-Passwort
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PW}    # Verwendung von Umgebungsvariablen für das Root-Passwort
       MYSQL_DATABASE: robin_

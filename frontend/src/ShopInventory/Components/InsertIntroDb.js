@@ -22,6 +22,9 @@ export default function InsertData() {
   const { setFlagInsertItem } = useMyContext(MyProvider);
   const handleUpload = async (e) => {
     const formData = new FormData();
+
+
+
     e.preventDefault();
     formData.append("type", type);
     formData.append("price", price);
