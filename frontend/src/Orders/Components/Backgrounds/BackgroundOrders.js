@@ -1,24 +1,16 @@
 import React from "react";
-import "../style.css";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
+
 export default function BackgroundOrders({ children }) {
   return (
-    <div className="background-container">
-      <div
-        className="background"
-        style={{
-          backgroundColor: "#ebeceb",
-          borderRadius: "10px",
-          height: "auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+    <div className="flex justify-center items-center h-full p-4">
+      <div className="bg-gray-200 rounded-lg p-4 flex justify-center">
         {children}
       </div>
     </div>
   );
 }
+
 BackgroundOrders.propTypes = {
   children: PropTypes.node.isRequired,
 };

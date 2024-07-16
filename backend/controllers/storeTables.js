@@ -1,8 +1,4 @@
-const {
-  ProductsDB,
-  BestSellerItemsDB,
-
-} = require("../models/models");
+const { ProductsDB, BestSellerItemsDB } = require("../models/models");
 const { Op } = require("sequelize");
 const getInventoryTable = async (req, res) => {
   try {
@@ -30,7 +26,7 @@ const deleteInventory = async (req, res) => {
   try {
     let { idForDelete, table } = req.body;
 
-    console.log("Table recived:", table,idForDelete);
+    console.log("Table recived:", table, idForDelete);
 
     switch (table) {
       case "Bestseller":
@@ -61,14 +57,14 @@ const deleteInventory = async (req, res) => {
     res.status(400).json({ message: "Error sending post request" });
   }
 };
-const trow = async(req,res,next) => {
+const trow = async (req, res, next) => {
   const error = new Error("This is a test error");
   error.status = 500;
   next(error);
-}
+};
 
 module.exports = {
   getInventoryTable,
   deleteInventory,
-  trow
+  trow,
 };

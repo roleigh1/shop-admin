@@ -9,7 +9,7 @@ import InventoryTable from "./Components/ShopTables";
 import "./style.css";
 export default function Inventory() {
   return (
-    <Container className="container">
+    <Container className="container m-auto">
       <Row style={{ marginTop: "2rem" }}>
         <Navbar />
       </Row>

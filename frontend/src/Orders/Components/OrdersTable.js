@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
@@ -10,7 +10,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
+import { POST_DELETE } from "../../config/apiPaths";
 
+const api_Host = process.env.REACT_APP_API_HOST;
 import "./style.css";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -67,7 +69,6 @@ export default function OrdersTableDB() {
     const data = [...pageState.data];
 
     function binarySearch(data, newId) {
-   
       data.sort((a, b) => {
         return a.id - b.id;
       });
@@ -102,39 +103,36 @@ export default function OrdersTableDB() {
 
   const handleDelete = async () => {
     let idForDelete = rowSelectionModelOrders;
-    console.log(idForDelete); 
+    console.log(idForDelete);
     let options = {
       method: "POST",
       headers: {
-        "Content-Type":"application/json", 
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({idForDelete})
-    }
-    fetch("http://localhost:3131/api/delete/orders", options)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("res recived" ,data); 
-    })
-    .catch((error) => {
-      console.error("Error sending req",error); 
-    }); 
+      body: JSON.stringify({ idForDelete }),
+    };
+    fetch(`${api_Host}${POST_DELETE}orders`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("res recived", data);
+      })
+      .catch((error) => {
+        console.error("Error sending req", error);
+      });
   };
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
-   
   }, [newValue, pageState.page, foundData]);
 
   useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
-  
   };
   useEffect(() => {
-         fetchAllOrders();
-
-  },[]); 
+    fetchAllOrders();
+  }, []);
   return (
     <div>
       <div

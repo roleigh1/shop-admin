@@ -8,7 +8,9 @@ import "../style.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { MyProvider, useMyContext } from "../../ContextApi";
-const insertURL = process.env.REACT_APP_API_POSTINSERT;
+import { POST_INSERT } from "../../config/apiPaths";
+
+const api_Host = process.env.REACT_APP_API_HOST;
 
 export default function InsertData() {
   const [type, setType] = useState("");
@@ -17,13 +19,10 @@ export default function InsertData() {
   const [price, setPrice] = useState("");
   const [pictureInsert, setPictureInsert] = useState(null);
   const [imgName, setImgName] = useState("");
- 
 
   const { setFlagInsertItem } = useMyContext(MyProvider);
   const handleUpload = async (e) => {
     const formData = new FormData();
-
-
 
     e.preventDefault();
     formData.append("type", type);
@@ -31,7 +30,7 @@ export default function InsertData() {
     formData.append("name", name);
     formData.append("where", where);
     formData.append("image", pictureInsert);
-    fetch(insertURL, {
+    fetch(`${api_Host}${POST_INSERT}`, {
       method: "POST",
       body: formData,
     })

@@ -1,9 +1,19 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import PropTypes from "prop-types"; 
-const counterURL = process.env.REACT_APP_API_COUNTER;
+import PropTypes from "prop-types";
+import {
+  GET_COUNTER,
+  GET_LASTORDER,
+  GET_TOTAL,
+  GET_INVENTORY_TABLE,
+  POST_FINISH_ORDER,
+  POST_UPDATE_DATA,
+  GET_ALL_ORDERS,
+  GET_BANNER_DATA,
+  GET_CARDS_DATA,
+} from "./config/apiPaths";
+const api_Host = process.env.REACT_APP_API_HOST;
 
-const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
 
 export const MyContext = createContext();
 
@@ -17,7 +27,7 @@ export const MyProvider = ({ children }) => {
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
-  const [flagInsertItem,setFlagInsertItem] = useState(false); 
+  const [flagInsertItem, setFlagInsertItem] = useState(false);
   const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -33,27 +43,19 @@ export const MyProvider = ({ children }) => {
   const [choosenCards, setChoosenCards] = useState("");
 
   let formData = new FormData();
+console.log(`${api_Host}${GET_INVENTORY_TABLE}`)
   const fetchInventory = () => {
-    if (table === "Products") {
-      fetch("http://localhost:3131/api/inventoryTables/products")
-        .then((res) => res.json())
-        .then((data) => {
-          setInventoryTable(data.products);
-        });
-    } else {
-      fetch("http://localhost:3131/api/inventoryTables/bestseller")
-        .then((res) => res.json())
-        .then((data) => {
-          setInventoryTable(data.bestseller);
-        });
-    }
+    const endpoint = table === "Products" ? "products" : "bestseller";
+    fetch(`${api_Host}${GET_INVENTORY_TABLE}${endpoint}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setInventoryTable(data[endpoint]);
+      });
   };
 
   const fetchMonths = async (month) => {
     try {
-      const response = await fetch(
-        `http://localhost:3131/api/totalMonths/${month}`
-      );
+      const response = await fetch(`${api_Host}${GET_TOTAL}${month}`);
       const data = await response.json();
       setSales((prevSales) => ({ ...prevSales, [month]: data[month] }));
     } catch (error) {
@@ -75,11 +77,13 @@ export const MyProvider = ({ children }) => {
     "nov",
     "dec",
   ];
+
   const fetchData = async () => {
     for (const month of months) {
       await fetchMonths(month);
     }
   };
+
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     const options = {
       method: "POST",
@@ -88,7 +92,7 @@ export const MyProvider = ({ children }) => {
       },
       body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
     };
-    fetch("http://localhost:3131/api/orders", options)
+    fetch(`${api_Host}${POST_FINISH_ORDER}`, options)
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
@@ -107,7 +111,7 @@ export const MyProvider = ({ children }) => {
       },
       body: JSON.stringify({ editAbleData, table }),
     };
-    fetch("http://localhost:3131/api/updateData", options)
+    fetch(`${api_Host}${POST_UPDATE_DATA}`, options)
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
@@ -120,7 +124,7 @@ export const MyProvider = ({ children }) => {
   const fetchAllOrders = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3131/api/orders?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
+        `${api_Host}${GET_ALL_ORDERS}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
       const json = await response.json();
       setPageState((old) => ({
@@ -134,11 +138,10 @@ export const MyProvider = ({ children }) => {
       setPageState((old) => ({ ...old, isLoading: false }));
     }
   };
- 
-  
+
   const fetchCounter = () => {
     axios
-      .get(counterURL)
+      .get(`${api_Host}${GET_COUNTER}`)
       .then((response) => {
         setCounter(response.data.counterOp);
         console.log(counter);
@@ -147,9 +150,10 @@ export const MyProvider = ({ children }) => {
         console.error("Error fetching counter", error);
       });
   };
+
   const fetchEditBanners = () => {
     axios
-      .get("http://localhost:3131/api/contentdata/banners")
+      .get(`${api_Host}${GET_BANNER_DATA}`)
       .then((response) => {
         setBannerData(response.data.contentData.banners);
       })
@@ -157,14 +161,15 @@ export const MyProvider = ({ children }) => {
         console.error("Error fetching content data", error);
       });
   };
+
   const fetchEditCards = () => {
     axios
-      .get("http://localhost:3131/api/contentdata/cards")
+      .get(`${api_Host}${GET_CARDS_DATA}`)
       .then((response) => {
         setCardsData(response.data.contentData.cards);
       })
       .catch((error) => {
-        console.log(error,"Error fetching Cards data");
+        console.log(error, "Error fetching Cards data");
       });
   };
 
@@ -172,7 +177,7 @@ export const MyProvider = ({ children }) => {
     fetchData();
 
     const fetchLastOrder = () => {
-      fetch(lastOrderURL)
+      fetch(`${api_Host}${GET_LASTORDER}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -186,8 +191,6 @@ export const MyProvider = ({ children }) => {
           console.error("Fetch error:", error);
         });
     };
-    // visitorCounter();
-    //  setInterval(visitorCounter, 30000);
     fetchLastOrder();
   }, []);
 
@@ -197,7 +200,6 @@ export const MyProvider = ({ children }) => {
         counter,
         token,
         lastOrder,
-  
         rowSelectionModel,
         setRowSelectionModel,
         table,
@@ -232,7 +234,7 @@ export const MyProvider = ({ children }) => {
         formData,
         setCardsData,
         flagInsertItem,
-        setFlagInsertItem
+        setFlagInsertItem,
       }}
     >
       {children}
@@ -243,6 +245,7 @@ export const MyProvider = ({ children }) => {
 export const useMyContext = () => {
   return useContext(MyContext);
 };
+
 MyProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

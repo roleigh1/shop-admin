@@ -9,6 +9,10 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { POST_CONTENT } from "../../config/apiPaths";
+
+const api_Host = process.env.REACT_APP_API_HOST;
+
 export default function EditCards() {
   const { fetchEditCards, cardsData, choosenCards, setChoosenCards } =
     useMyContext(MyProvider);
@@ -71,7 +75,7 @@ export default function EditCards() {
     formData.append("cardText", editCard.text);
     formData.append("picture", editCard.imageUpload);
     axios
-      .post("http://localhost:3131/api/contentEdit/cards", formData, {
+      .post(`${api_Host}${POST_CONTENT}cards`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -84,19 +88,12 @@ export default function EditCards() {
       });
   };
   return (
-    <div style={{ position: "relative", top: "2rem" }}>
+    <div className="relative top-8">
       <div>
-        <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
-          Edit Content Cards
-        </h3>
+        <h3 className="text-center pb-4">Edit Content Cards</h3>
         <form
           onSubmit={formSubmit}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
+          className="flex justify-center items-center gap-4"
         >
           <FormControl>
             <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>
@@ -105,7 +102,7 @@ export default function EditCards() {
               id="demo-simple-select-helper"
               label="cards"
               value={choosenCards}
-              style={{ width: "8rem", height: "3rem" }}
+              className="w-32 h-12"
               onChange={handleChange}
               required
             >
@@ -121,14 +118,14 @@ export default function EditCards() {
             value={editCard?.name || ""}
             onChange={(e) => handleInputChange("name", e.target.value)}
             variant="outlined"
-            style={{ width: "80%" }}
+            className="w-4/5"
             required
           />
           <TextField
             id="outlined-multiline-static"
             label="Text"
             multiline
-            style={{ width: "80%" }}
+            className="w-4/5"
             rows={4}
             value={editCard?.text || ""}
             onChange={(e) => handleInputChange("text", e.target.value)}
@@ -141,7 +138,7 @@ export default function EditCards() {
             Upload file
             <input
               type="file"
-              style={{ display: "none" }}
+              className="hidden"
               name="image"
               onChange={handleFileChange}
             />

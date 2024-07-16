@@ -9,36 +9,34 @@ import LastOrderTable from "./Components/Dashbord/board/ContentTableLastOrder";
 import SalesLineChart from "./Components/Dashbord/board/SalesChart";
 import "./home.css";
 import SalesTotal from "./Components/Dashbord/board/SalesTotal";
+
 export default function Home() {
   return (
-    <Container>
-      <Row style={{ marginTop: "2rem" }}>
+    <Container className="m-auto" >
+      <Row className="mt-8">
         <Navbar />
       </Row>
 
-      <Row
-        className="topRow"
-        style={{ display: "flex", gap: "1rem", marginTop: "0.6rem" }}
-      >
+      <Row className="flex gap-4 mt-2.5 topRow">
         <Col>
           <Background>
             <OrderCounter />
           </Background>
         </Col>
         <Col>
-          <BackgroundLastOrdersListed style={{ width: "1rem" }}>
+          <BackgroundLastOrdersListed>
             <LastOrderTable />
           </BackgroundLastOrdersListed>
         </Col>
       </Row>
-      <Row className="midRow" style={{ marginTop: "1rem" }}>
+      <Row className="mt-4 midRow">
         <BackgroundSales>
           <Col>
             <SalesLineChart />
           </Col>
 
           <Col>
-            <SalesTotal></SalesTotal>
+            <SalesTotal />
           </Col>
         </BackgroundSales>
       </Row>

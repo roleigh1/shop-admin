@@ -18,34 +18,28 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 import { MyProvider, useMyContext } from "../../ContextApi";
-
+import { POST_DELETE } from "../../config/apiPaths";
 import "./tableStyle.css";
-import axios from "axios";
 
+const api_Host = process.env.REACT_APP_API_HOST;
 export default function InventoryTable() {
   const [openDialog, setOpenDialog] = useState(false);
   const [dataDialog, setDataDialog] = useState();
-  const [flagDelete,setFlagDelete]  = useState(false); 
+  const [flagDelete, setFlagDelete] = useState(false);
 
-const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const {
-
-    table, 
-    setTable,
-    inventoryTable,
-    fetchInventory,
-    flagInsertItem,
-  } = useMyContext(MyProvider);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
+  const { table, setTable, inventoryTable, fetchInventory, flagInsertItem } =
+    useMyContext(MyProvider);
 
   useEffect(() => {
     fetchInventory();
   }, [table]);
-useEffect(()=>{
-    if(flagInsertItem || flagDelete){
-      fetchInventory(); 
-      console.log("refresh happend ")
+  useEffect(() => {
+    if (flagInsertItem || flagDelete) {
+      fetchInventory();
+      console.log("refresh happend ");
     }
-},[flagInsertItem,flagDelete])
+  }, [flagInsertItem, flagDelete]);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 130 },
@@ -68,24 +62,24 @@ useEffect(()=>{
     if (rowSelectionModel.length === 0) {
       return null;
     } else {
-      let idForDelete = rowSelectionModel; 
+      let idForDelete = rowSelectionModel;
       let options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({idForDelete,table})
-      }
-      fetch("http://localhost:3131/api/delete/inventory", options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("res recived", data); 
-      })
-      .catch((error) => {
-        console.error("Error sending req", error); 
-      }); 
-    }; 
-    setFlagDelete(true); 
+        body: JSON.stringify({ idForDelete, table }),
+      };
+      fetch(`${api_Host}${POST_DELETE}inventory`, options)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("res recived", data);
+        })
+        .catch((error) => {
+          console.error("Error sending req", error);
+        });
+    }
+    setFlagDelete(true);
   };
   const handleWatch = () => {
     if (rowSelectionModel.length < 1) {

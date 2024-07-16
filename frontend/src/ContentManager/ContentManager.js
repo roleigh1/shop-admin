@@ -8,13 +8,13 @@ import EditCards from "./Components/EditCards";
 import "./style.css";
 export default function ContentManager() {
   return (
-    <Container className="container">
-      <Row style={{ marginTop: "2rem" }}>
+    <Container className="container m-auto">
+      <Row className="mt-9">
         <Navbar />
       </Row>
       <Row
-        className="mainContent"
-        style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}
+        className="mainContent flex gap-5 mt-3"
+      
       >
         <Col sm={4}>
           <BackgroundBanner>
