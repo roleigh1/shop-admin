@@ -5,7 +5,7 @@ import "../../style.css"
 export default function BackgroundInset({children}) {
     return ( 
         <div >
-            <div className="backgroundInsert" style={{backgroundColor:"#ebeceb", borderRadius:"10px",width:"20rem",height:"32rem" }}>
+            <div className="backgroundInsert bg-[#ebeceb] rounded-[10px] w-[20rem] h-[32rem]">
             {children}
             </div>
          </div>

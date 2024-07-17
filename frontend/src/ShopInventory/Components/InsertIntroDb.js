@@ -62,16 +62,11 @@ export default function InsertData() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1rem",
-      }}
+    <div 
+    className="flex justify-center flex-col items-center gap-4"
+
     >
-      <h4 style={{ marginTop: "2.5rem", marginBottom: "0.1rem" }}>
+      <h4 className="mt-5 " >
         Add a Product to the store
       </h4>
 
@@ -79,12 +74,7 @@ export default function InsertData() {
         method="POST"
         action={"/profile-upload-single"}
         encType="multipart/form-data"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-        }}
+        className="flex flex-col items-center gap-5"
         onSubmit={(e) =>
           handleUpload(e, name, type, where, price, pictureInsert)
         }
@@ -95,7 +85,7 @@ export default function InsertData() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           variant="outlined"
-          style={{}}
+          className=" w-[14rem] h-12"
           required
         />
         <FormControl>
@@ -106,8 +96,9 @@ export default function InsertData() {
             label="Where"
             onChange={(e) => setWhere(e.target.value)}
             value={where}
-            style={{ width: "8rem", height: "3rem" }}
+            
             required
+            className=" w-[6rem] h-12"
           >
             <MenuItem value={"products"}>Products</MenuItem>
             <MenuItem value={"bestseller"}>Bestseller</MenuItem>
@@ -121,7 +112,8 @@ export default function InsertData() {
             value={type}
             label="Type"
             onChange={(e) => setType(e.target.value)}
-            style={{ width: "6rem", height: "3rem" }}
+
+              className=" w-[6rem] h-12"
             required
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
@@ -136,7 +128,9 @@ export default function InsertData() {
           id="outlined-basic"
           label="Price"
           variant="outlined"
-          style={{ width: "4rem" }}
+          className=" w-[6rem] h-12"
+   
+        type="number"
           required
         />
         <Button
@@ -149,6 +143,7 @@ export default function InsertData() {
             type="file"
             style={{ display: "none" }}
             name="image"
+      
             required
             onChange={handleFileChange}
           />

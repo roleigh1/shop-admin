@@ -135,14 +135,10 @@ export default function OrdersTableDB() {
   }, []);
   return (
     <div>
-      <div
-        className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em" }}
-      >
-        <div className="top-actions" style={{ marginLeft: "2rem" }}>
+      <div className="main  mt-2 mb-8">
+        <div className="top-actions ml-5 ">
           <Select
-            style={{ marginBottom: "1rem", marginLeft: "1rem" }}
-            className="select"
+            className="select mb-2 ml-2"
             labelId="demo-select-small-label"
             id="demo-select-small"
             value={tableOrders}
@@ -153,10 +149,9 @@ export default function OrdersTableDB() {
             <MenuItem value={"finished"}>Done orders</MenuItem>
           </Select>
           <Button
-            className="finish"
+            className="finish ml-1"
             style={{
               visibility: tableOrders === "finished" ? "hidden" : "visible",
-              marginLeft: "1rem",
             }}
             variant="outlined"
             onClick={handlePageChange}
@@ -166,9 +161,10 @@ export default function OrdersTableDB() {
           </Button>
         </div>
 
-        <div className="dataGriddiv" style={{ width: "60vw", margin: "auto" }}>
+        <div className="dataGriddiv m-auto " style={{ width: "60vw" }}>
           <DataGrid
-            style={{ width: "90%", height: "30rem", margin: "auto" }}
+            style={{ height: "25rem" }}
+            className="w-[90%] m-auto table"
             rows={pageState.data}
             rowCount={pageState.total}
             page={pageState.page}
@@ -185,26 +181,17 @@ export default function OrdersTableDB() {
             rowSelectionModel={rowSelectionModelOrders}
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
-            className="table"
           />
         </div>
-        <div
-          className="actions"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
-            marginLeft: "1rem",
-            marginTop: "0.5rem",
-          }}
-        >
+        <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField
             id="outlined-basic"
             onChange={handleSearchIDChange}
+            className="text-center"
             value={searchID}
             label="Order-ID"
             type="number"
-            style={{ width: "100px", height: "20px", textAlign: "center" }}
+            style={{ width: "100px", height: "20px" }}
             variant="outlined"
           />
           <svg

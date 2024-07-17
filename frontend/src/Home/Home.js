@@ -17,7 +17,7 @@ export default function Home() {
         <Navbar />
       </Row>
 
-      <Row className="flex gap-4 mt-2.5 topRow">
+      <Row className="flex gap-4 mt-2 topRow">
         <Col>
           <Background>
             <OrderCounter />

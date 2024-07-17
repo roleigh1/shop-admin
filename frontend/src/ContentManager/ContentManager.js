@@ -9,11 +9,11 @@ import "./style.css";
 export default function ContentManager() {
   return (
     <Container className="container m-auto">
-      <Row className="mt-9">
+      <Row className="mt-8">
         <Navbar />
       </Row>
       <Row
-        className="mainContent flex gap-5 mt-3"
+        className="mainContent flex gap-5 mt-2"
       
       >
         <Col sm={4}>
