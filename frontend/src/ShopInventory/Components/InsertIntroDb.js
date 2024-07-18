@@ -62,13 +62,8 @@ export default function InsertData() {
   };
 
   return (
-    <div 
-    className="flex justify-center flex-col items-center gap-4"
-
-    >
-      <h4 className="mt-5 " >
-        Add a Product to the store
-      </h4>
+    <div className="flex justify-center flex-col items-center gap-4">
+      <h4 className="mt-5 ">Add a Product to the store</h4>
 
       <form
         method="POST"
@@ -96,7 +91,6 @@ export default function InsertData() {
             label="Where"
             onChange={(e) => setWhere(e.target.value)}
             value={where}
-            
             required
             className=" w-[6rem] h-12"
           >
@@ -112,8 +106,7 @@ export default function InsertData() {
             value={type}
             label="Type"
             onChange={(e) => setType(e.target.value)}
-
-              className=" w-[6rem] h-12"
+            className=" w-[6rem] h-12"
             required
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
@@ -129,8 +122,7 @@ export default function InsertData() {
           label="Price"
           variant="outlined"
           className=" w-[6rem] h-12"
-   
-        type="number"
+          type="number"
           required
         />
         <Button
@@ -143,7 +135,6 @@ export default function InsertData() {
             type="file"
             style={{ display: "none" }}
             name="image"
-      
             required
             onChange={handleFileChange}
           />

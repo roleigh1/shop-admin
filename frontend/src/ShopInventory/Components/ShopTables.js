@@ -96,18 +96,9 @@ export default function InventoryTable() {
     setOpenDialog(false);
   };
   return (
-    <div
-      style={{
-        height: 500,
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        paddingTop: "1rem",
-      }}
-    >
-      <div>
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+    <div className="h-[500px] w-full flex justify-center flex-col pt-6">
+      <div className="flex flex-row  ml-4">
+        <FormControl className="m-1 min-w-[120px]  " size="small">
           <InputLabel id="demo-select-small-label">Table</InputLabel>
           <Select
             labelId="demo-select-small-label"
@@ -121,11 +112,8 @@ export default function InventoryTable() {
           </Select>
         </FormControl>
         <svg
-          className="refresh"
-          style={{ position: "relative", top: "1.2rem" }}
+          className="refresh relative top-3 left-3"
           xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
           width="20"
           height="20"
           viewBox="0 0 30 30"
@@ -134,26 +122,17 @@ export default function InventoryTable() {
           <path d="M 15 3 C 12.031398 3 9.3028202 4.0834384 7.2070312 5.875 A 1.0001 1.0001 0 1 0 8.5058594 7.3945312 C 10.25407 5.9000929 12.516602 5 15 5 C 20.19656 5 24.450989 8.9379267 24.951172 14 L 22 14 L 26 20 L 30 14 L 26.949219 14 C 26.437925 7.8516588 21.277839 3 15 3 z M 4 10 L 0 16 L 3.0507812 16 C 3.562075 22.148341 8.7221607 27 15 27 C 17.968602 27 20.69718 25.916562 22.792969 24.125 A 1.0001 1.0001 0 1 0 21.494141 22.605469 C 19.74593 24.099907 17.483398 25 15 25 C 9.80344 25 5.5490109 21.062074 5.0488281 16 L 8 16 L 4 10 z"></path>
         </svg>
       </div>
+
       <DataGrid
         rows={inventoryTable}
         columns={columns}
-        pageSize={6}
+        pageSize={8}
         checkboxSelection={true}
-        style={{ marginBottom: "1rem" }}
+        className="mt-1 "
         onRowSelectionModelChange={setRowSelectionModel}
         rowSelectionModel={rowSelectionModel}
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignContent: "center",
-          gap: "6px",
-          marginRight: "1rem",
-          marginBottom: "rem",
-        }}
-      >
+      <div className="flex flex-row justify-end items-center gap-1.5 mr-4 mt-5 ">
         <svg
           className="delete"
           onClick={handleDelete}
@@ -166,9 +145,8 @@ export default function InventoryTable() {
         </svg>
         <svg
           onClick={handleWatch}
-          className="watch"
+          className="watch mt-[-0.5]"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ marginTop: "-0.2em" }}
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -183,131 +161,50 @@ export default function InventoryTable() {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          style={{ height: "45rem" }}
+          className="h-[45rem] "
         >
           <DialogContent>
             <MDBContainer
               fluid
-              style={{
-                marginTop: "1.25rem",
-
-                textAlign: "center",
-              }}
+              className="mt-5 text-center  pointer-events-none"
             >
-              <MDBRow
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
+              <MDBRow className="flex justify-center items-center">
                 <MDBCol
                   md="12"
                   lg="7"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignContent: "center",
-                  }}
+                  className="flex justify-center items-center"
                 >
-                  <MDBCard
-                    style={{
-                      height: "23rem",
-                      minWidth: "10rem",
-
-                      borderRadius: "10px",
-                    }}
-                  >
+                  <MDBCard className="h-[23rem] min-w-[10rem] rounded-[10px]">
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"
-                      style={{ width: "100%" }}
+                      className="w-full"
                     >
                       <MDBCardImage
                         src={dataDialog.image}
                         fluid
-                        style={{
-                          height: "6.5rem",
-                          borderRadius: "10px 10px 0px 0px",
-                          objectFit: "cover",
-                          width: "100%",
-                        }}
+                        className="h-[6.5rem] rounded-t-[10px] object-cover w-full"
                       />
                       <a href="#!">
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            opacity: 0,
-                            transition: "opacity 0.3s ease",
-                            backgroundColor: "rgba(0, 0, 0, 0.5)",
-                          }}
-                        >
-                          <div
-                            style={{
-                              backgroundColor: "rgba(251, 251, 251, 0.15)",
-                            }}
-                          ></div>
+                        <div className="absolute inset-0 opacity-0 transition-opacity duration-300 bg-black bg-opacity-50">
+                          <div className="bg-opacity-60"></div>
                         </div>
                       </a>
                     </MDBRipple>
-                    <MDBCardBody
-                      style={{
-                        height: "250px",
-                        overflow: "hidden",
-                        marginTop: "-0.2rem",
-                        borderBottomLeftRadius: "5px",
-                        borderBottomRightRadius: "5px",
-                        boxShadow:
-                          "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
-                      }}
-                    >
-                      <h5
-                        style={{
-                          marginBottom: "-0.5rem",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        {dataDialog.name}
-                      </h5>
-
-                      <p
-                        style={{
-                          position: "relative",
-                          bottom: "4px",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        {dataDialog.type}
-                      </p>
-
-                      <h6 style={{ position: "relative", bottom: "1rem" }}>
-                        €{dataDialog.price}/kg
-                      </h6>
-
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span style={{}}>{dataDialog.price}€</span>
-
+                    <MDBCardBody className="h-[250px] overflow-hidden mt-[-0.5rem] rounded-b-[5px] shadow-xl">
+                      <h5 className="mt-2 underline">{dataDialog.name}</h5>
+                      <p className=" underline">{dataDialog.type}</p>
+                      <div className="flex flex-col">
+                        <span>{dataDialog.price}€</span>
                         <input
                           id="inputValue"
                           readOnly
                           value={1}
-                          style={{
-                            width: "2.8rem",
-                            textAlign: "center",
-                            position: "relative",
-                            display: "block",
-                            margin: "0 auto",
-                            top: "4px",
-                          }}
+                          className="w-[2.8rem] text-center relative block mx-auto top-20"
                           type="number"
                         />
                       </div>
-
-                      <Button variant="contained" style={{ marginTop: "1rem" }}>
+                      <Button variant="contained" className="relative top-20">
                         Add to cart
                       </Button>
                     </MDBCardBody>
@@ -315,7 +212,7 @@ export default function InventoryTable() {
                 </MDBCol>
               </MDBRow>
             </MDBContainer>
-            <DialogActions style={{ marginTop: "3rem" }}>
+            <DialogActions className="mt-12">
               <Button onClick={handleClose} autoFocus>
                 close
               </Button>

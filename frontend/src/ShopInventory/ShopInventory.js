@@ -10,12 +10,12 @@ import "./style.css";
 export default function Inventory() {
   return (
     <Container className="container m-auto">
-      <Row style={{ marginTop: "2rem" }}>
+      <Row className="mt-8" >
         <Navbar />
       </Row>
       <Row
-        className="insert-Table"
-        style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}
+        className="insert-Table flex gap-4 mt-8"
+     
       >
         <Col sm={4}>
           <BackgroundInsert>
