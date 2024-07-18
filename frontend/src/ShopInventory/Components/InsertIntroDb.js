@@ -7,8 +7,10 @@ import Select from "@mui/material/Select";
 import "../style.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { MyProvider, useMyContext } from "../../ContextApi";
+import { POST_INSERT } from "../../config/apiPaths";
 
-const insertURL = process.env.REACT_APP_API_POSTINSERT;
+const api_Host = process.env.REACT_APP_API_HOST;
 
 export default function InsertData() {
   const [type, setType] = useState("");
@@ -18,15 +20,17 @@ export default function InsertData() {
   const [pictureInsert, setPictureInsert] = useState(null);
   const [imgName, setImgName] = useState("");
 
+  const { setFlagInsertItem } = useMyContext(MyProvider);
   const handleUpload = async (e) => {
     const formData = new FormData();
+
     e.preventDefault();
     formData.append("type", type);
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
     formData.append("image", pictureInsert);
-    fetch(insertURL, {
+    fetch(`${api_Host}${POST_INSERT}`, {
       method: "POST",
       body: formData,
     })
@@ -39,6 +43,7 @@ export default function InsertData() {
         setPrice("");
         setPictureInsert("");
         setImgName("");
+        setFlagInsertItem(true);
       })
       .catch((error) => {
         console.error("Upload error", error);
@@ -57,29 +62,14 @@ export default function InsertData() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1rem",
-      }}
-    >
-      <h4 style={{ marginTop: "2.5rem", marginBottom: "0.1rem" }}>
-        Add a Product to the store
-      </h4>
+    <div className="flex justify-center flex-col items-center gap-4">
+      <h4 className="mt-5 ">Add a Product to the store</h4>
 
       <form
         method="POST"
         action={"/profile-upload-single"}
         encType="multipart/form-data"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-        }}
+        className="flex flex-col items-center gap-5"
         onSubmit={(e) =>
           handleUpload(e, name, type, where, price, pictureInsert)
         }
@@ -90,7 +80,7 @@ export default function InsertData() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           variant="outlined"
-          style={{}}
+          className=" w-[14rem] h-12"
           required
         />
         <FormControl>
@@ -101,8 +91,8 @@ export default function InsertData() {
             label="Where"
             onChange={(e) => setWhere(e.target.value)}
             value={where}
-            style={{ width: "8rem", height: "3rem" }}
             required
+            className=" w-[6rem] h-12"
           >
             <MenuItem value={"products"}>Products</MenuItem>
             <MenuItem value={"bestseller"}>Bestseller</MenuItem>
@@ -116,7 +106,7 @@ export default function InsertData() {
             value={type}
             label="Type"
             onChange={(e) => setType(e.target.value)}
-            style={{ width: "6rem", height: "3rem" }}
+            className=" w-[6rem] h-12"
             required
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
@@ -131,7 +121,8 @@ export default function InsertData() {
           id="outlined-basic"
           label="Price"
           variant="outlined"
-          style={{ width: "4rem" }}
+          className=" w-[6rem] h-12"
+          type="number"
           required
         />
         <Button

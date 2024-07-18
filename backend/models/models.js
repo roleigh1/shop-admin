@@ -5,7 +5,7 @@ const dbPW = process.env.DBPW;
 const dbHost = process.env.DBHOST;
 
 const sequelize = new Sequelize(dbName, dbUser, dbPW, {
-  host: dbHost,
+  host: dbHost ,
   dialect: "mysql",
   port: "3306",
   logging: (msg) => {

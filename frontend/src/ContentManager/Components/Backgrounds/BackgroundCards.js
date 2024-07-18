@@ -5,23 +5,13 @@ import PropTypes from "prop-types";
 export default function BackgroundCards({ children }) {
   return (
     <div>
-      <div
-        className="backgroundCards"
-        style={{
-          backgroundColor: "#ebeceb",
-          width: "15rem",
-          height: "40%",
-          borderTopRightRadius: "10px",
-          marginTop: "1.5rem",
-          borderBottomRightRadius: "10px",
-          paddingBottom: "1rem",
-        }}
-      >
+      <div className="backgroundCards bg-[#ebeceb] w-60 h-[40%] rounded-tr-lg rounded-br-lg mt-6 pb-4">
         {children}
       </div>
     </div>    
   );
 }
+
 BackgroundCards.propTypes = {
   children: PropTypes.node.isRequired,
 };

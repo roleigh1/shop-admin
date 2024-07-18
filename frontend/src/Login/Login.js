@@ -1,10 +1,10 @@
 import React from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { FormSignIn } from "./Form";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 export function LoginPage({ onTokenReceived }) {
   return (
-    <Container>
+    <Container className="m-auto">
       <Row>
         <Col>
           <FormSignIn onTokenReceived={onTokenReceived} />
@@ -14,7 +14,6 @@ export function LoginPage({ onTokenReceived }) {
   );
 }
 
-
 LoginPage.propTypes = {
-  onTokenReceived: PropTypes.func.isRequired
+  onTokenReceived: PropTypes.func.isRequired,
 };

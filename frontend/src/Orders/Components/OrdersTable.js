@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
@@ -10,7 +10,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
+import { POST_DELETE } from "../../config/apiPaths";
 
+const api_Host = process.env.REACT_APP_API_HOST;
 import "./style.css";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -34,6 +36,7 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+
   const {
     rowSelectionModelOrders,
     setRowSelectionModelOrders,
@@ -42,7 +45,7 @@ export default function OrdersTableDB() {
     pageState,
     tableOrders,
     setTableOrders,
-    postIdForDelete,
+
     setFlagOrders,
   } = useMyContext(MyProvider);
 
@@ -63,10 +66,9 @@ export default function OrdersTableDB() {
   };
   const handleIdSearch = () => {
     let newId = Number(searchID);
-    const data = [...pageState.data]; // Kopie von data erstellen
+    const data = [...pageState.data];
 
     function binarySearch(data, newId) {
-      // Sortiere die Kopie von data nach der ID
       data.sort((a, b) => {
         return a.id - b.id;
       });
@@ -100,7 +102,23 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
-    postIdForDelete();
+    let idForDelete = rowSelectionModelOrders;
+    console.log(idForDelete);
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idForDelete }),
+    };
+    fetch(`${api_Host}${POST_DELETE}orders`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("res recived", data);
+      })
+      .catch((error) => {
+        console.error("Error sending req", error);
+      });
   };
   useEffect(() => {
     setFlagOrders(true);
@@ -112,16 +130,15 @@ export default function OrdersTableDB() {
     setOpen(false);
     setNotFound(false);
   };
+  useEffect(() => {
+    fetchAllOrders();
+  }, []);
   return (
     <div>
-      <div
-        className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em" }}
-      >
-        <div className="top-actions" style={{ marginLeft: "2rem" }}>
+      <div className="main  mt-2 mb-8">
+        <div className="top-actions ml-5 ">
           <Select
-            style={{ marginBottom: "1rem", marginLeft: "1rem" }}
-            className="select"
+            className="select mb-2 ml-2"
             labelId="demo-select-small-label"
             id="demo-select-small"
             value={tableOrders}
@@ -132,10 +149,9 @@ export default function OrdersTableDB() {
             <MenuItem value={"finished"}>Done orders</MenuItem>
           </Select>
           <Button
-            className="finish"
+            className="finish ml-1"
             style={{
               visibility: tableOrders === "finished" ? "hidden" : "visible",
-              marginLeft: "1rem",
             }}
             variant="outlined"
             onClick={handlePageChange}
@@ -145,9 +161,10 @@ export default function OrdersTableDB() {
           </Button>
         </div>
 
-        <div className="dataGriddiv" style={{ width: "60vw", margin: "auto" }}>
+        <div className="dataGriddiv m-auto " style={{ width: "60vw" }}>
           <DataGrid
-            style={{ width: "90%", height: "30rem", margin: "auto" }}
+            style={{ height: "25rem" }}
+            className="w-[90%] m-auto table"
             rows={pageState.data}
             rowCount={pageState.total}
             page={pageState.page}
@@ -164,26 +181,17 @@ export default function OrdersTableDB() {
             rowSelectionModel={rowSelectionModelOrders}
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
-            className="table"
           />
         </div>
-        <div
-          className="actions"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
-            marginLeft: "1rem",
-            marginTop: "0.5rem",
-          }}
-        >
+        <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField
             id="outlined-basic"
             onChange={handleSearchIDChange}
+            className="text-center"
             value={searchID}
             label="Order-ID"
             type="number"
-            style={{ width: "100px", height: "20px", textAlign: "center" }}
+            style={{ width: "100px", height: "20px" }}
             variant="outlined"
           />
           <svg

@@ -4,7 +4,9 @@ import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import PropTypes from "prop-types";
+import { POST_LOGIN } from "../config/apiPaths";
 
+const api_Host = process.env.REACT_APP_API_HOST;
 export function FormSignIn({ onTokenReceived }) {
   const [toggle, setToggle] = useState("");
   const [email, setEmail] = useState("");
@@ -19,7 +21,7 @@ export function FormSignIn({ onTokenReceived }) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:3131/api/login", {
+      const response = await axios.post(`${api_Host}${POST_LOGIN}`, {
         username: email,
         password: password,
       });
@@ -46,12 +48,8 @@ export function FormSignIn({ onTokenReceived }) {
 
   return (
     <Container
-      style={{
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+ 
+      className="h-screen flex items-center justify-center"
     >
       <Row className="row">
         <Col>
