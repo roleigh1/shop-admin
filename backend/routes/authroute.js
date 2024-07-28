@@ -2,10 +2,10 @@ const express = require("express");
 const logintest = require("../controllers/authController");
 const counterDB = require("../controllers/countOrders");
 const salesReport = require("../controllers/SalesReport");
-const passport = require("passport");
+
 const router = express.Router();
-const multer = require("multer");
-const insertData = require("../controllers/getInsertData");
+
+const insertData = require("../controllers/postInsertGoods");
 const displayLastOrder = require("../controllers/DisplayLastOrder");
 const storeInventory = require("../controllers/storeTables");
 const orders = require("../controllers/orders");

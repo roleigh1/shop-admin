@@ -7,7 +7,7 @@ import OrdersTableDB from "./Components/OrdersTable";
 export default function OrdersSite() {
   return (
     <Container fluid>
-      <Row  className="mt-8">
+      <Row className="mt-8">
         <Navbar />
       </Row>
       <Row className="mt-4">

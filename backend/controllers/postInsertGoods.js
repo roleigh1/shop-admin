@@ -29,7 +29,7 @@ const uploadImage = (req, res) => {
     const { type, price, name, where } = req.body;
 
     try {
-      let url = "http://localhost:3131/";
+      let url = "https://adminapi.gärtnereileitner.at/";
       let imagePath = (url += req.file.path);
       const formattedPrice = currency(price).value; 
       console.log("Image received and saved locally:", imagePath);

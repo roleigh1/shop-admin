@@ -14,7 +14,6 @@ import {
 } from "./config/apiPaths";
 const api_Host = process.env.REACT_APP_API_HOST;
 
-
 export const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
@@ -43,7 +42,7 @@ export const MyProvider = ({ children }) => {
   const [choosenCards, setChoosenCards] = useState("");
 
   let formData = new FormData();
-console.log(`${api_Host}${GET_INVENTORY_TABLE}`)
+  console.log(`${api_Host}${GET_INVENTORY_TABLE}`);
   const fetchInventory = () => {
     const endpoint = table === "Products" ? "products" : "bestseller";
     fetch(`${api_Host}${GET_INVENTORY_TABLE}${endpoint}`)

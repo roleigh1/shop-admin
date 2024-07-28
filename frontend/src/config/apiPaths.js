@@ -1,7 +1,7 @@
-export const POST_INSERT = "/api/insert";
+
 export const GET_COUNTER = "/api/counter";
 export const GET_LASTORDER = "/api/lastOrder";
-export const POST_UPLOAD = "/api/upload";
+export const POST_INSERT = "/api/upload";
 export const GET_TOTAL = "/api/totalMonths/";
 export const GET_INVENTORY_TABLE = "/api/inventoryTables/";
 export const POST_FINISH_ORDER = "/api/orders";

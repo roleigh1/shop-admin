@@ -137,6 +137,7 @@ export default function InsertData() {
             name="image"
             required
             onChange={handleFileChange}
+         
           />
         </Button>
 

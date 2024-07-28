@@ -186,12 +186,12 @@ export default function Editbanner() {
       </form>
     </div>
     <div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+      <Dialog open={open}   onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{height:"100%"}}>
           <section
-            className="relative h-100 flex w-full items-center text-center bg-cover bg-center rounded-lg"
-            style={{ backgroundImage: `url(${editData?.img || ""})` }}
+            className="relative flex w-full items-center text-center bg-cover bg-center rounded-lg"
+            style={{ backgroundImage: `url(${editData?.img || ""})`,height:"20rem" }}
           >
             <div className="relative text-black" style={{ top: editData?.top || "" }}>
               <h2 className="opacity-70">{editData?.headline || ""}</h2>
