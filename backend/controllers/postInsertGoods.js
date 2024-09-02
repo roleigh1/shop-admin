@@ -26,7 +26,7 @@ const uploadImage = (req, res) => {
         .json({ message: "Upload failed", error: err.message });
     }
 
-    const { type, price, name, where } = req.body;
+    const { type, price, name, where, imgNr } = req.body;
 
     try {
       let url = "https://adminapi.gärtnereileitner.at/";
@@ -34,7 +34,7 @@ const uploadImage = (req, res) => {
       const formattedPrice = currency(price).value; 
       console.log("Image received and saved locally:", imagePath);
       console.log("Type:", type);
-  
+      console.log("Nr",imgNr);
       console.log("Name:", name);
       console.log("Where:", where);
 

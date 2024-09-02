@@ -4,7 +4,7 @@ import "../../style.css";
 export default function BackgroundInset({ children }) {
   return (
     <div>
-      <div className="backgroundInsert bg-[#ebeceb] rounded-[10px] w-[20rem] h-[32rem]">
+      <div className="backgroundInsert bg-[#ebeceb] rounded-[10px] w-[20rem] h-[28rem]">
         {children}
       </div>
     </div>

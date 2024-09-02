@@ -50,7 +50,7 @@ const uploadData = (req, res) => {
     }
     try {
       const whichContent = req.params.whichContent;
-      let url = "http://localhost:3131/";
+      let url = "https://adminapi.gärtnereileitner.at/";
       const imagePath = (url += `uploads/${req.file.filename}`);
       const { headline, text, location, top } = req.body;
       const { name, cardText, id } = req.body;

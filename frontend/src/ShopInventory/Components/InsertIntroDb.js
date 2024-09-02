@@ -6,7 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import "../style.css";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import { POST_INSERT } from "../../config/apiPaths";
 
@@ -17,48 +16,59 @@ export default function InsertData() {
   const [name, setName] = useState("");
   const [where, setWhere] = useState("");
   const [price, setPrice] = useState("");
-  const [pictureInsert, setPictureInsert] = useState(null);
-  const [imgName, setImgName] = useState("");
-
+  const [pictures, setPictures] = useState([]); // Store multiple files
+  const [imgNames, setImgNames] = useState([]); // Store file names
   const { setFlagInsertItem } = useMyContext(MyProvider);
-  const handleUpload = async (e) => {
-    const formData = new FormData();
 
+  const handleUpload = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
     formData.append("type", type);
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
-    formData.append("image", pictureInsert);
+
+    // Append each image with a unique key
+    pictures.forEach((picture, index) => {
+      formData.append(`image${index + 1}`, picture); // image1, image2, image3, image4
+    });
+
     fetch(`${api_Host}${POST_INSERT}`, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Upload succsessful:", data);
+        console.log("Upload successful:", data);
         setType("");
         setName("");
         setWhere("");
         setPrice("");
-        setPictureInsert("");
-        setImgName("");
+        setPictures([]);
+        setImgNames([]);
         setFlagInsertItem(true);
       })
       .catch((error) => {
         console.error("Upload error", error);
       });
   };
+
   const handleFileChange = (event) => {
-    let file = event.target.files[0];
-    setPictureInsert(file);
-    setImgName(file.name);
-    console.log(file);
+    const files = Array.from(event.target.files);
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
 
-    if (!supportedImageTypes.includes(file.type)) {
-      alert("Please enter a valid Image");
+    // Filter out unsupported file types and update the state
+    const validFiles = files.filter((file) =>
+      supportedImageTypes.includes(file.type)
+    );
+
+    if (validFiles.length !== files.length) {
+      alert("Some files are not valid images and were not included.");
     }
+
+    setPictures(validFiles); // Set only valid files
+    setImgNames(validFiles.map((file) => file.name)); // Set names for display
   };
 
   return (
@@ -67,12 +77,9 @@ export default function InsertData() {
 
       <form
         method="POST"
-        action={"/profile-upload-single"}
         encType="multipart/form-data"
         className="flex flex-col items-center gap-5"
-        onSubmit={(e) =>
-          handleUpload(e, name, type, where, price, pictureInsert)
-        }
+        onSubmit={handleUpload}
       >
         <TextField
           id="outlined-basic"
@@ -125,25 +132,16 @@ export default function InsertData() {
           type="number"
           required
         />
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload file
-          <input
-            type="file"
-            style={{ display: "none" }}
-            name="image"
-            required
-            onChange={handleFileChange}
-         
-          />
-        </Button>
 
-        <span style={{ color: "black", position: "relative" }}>{imgName}</span>
+        <input
+          type="file"
+          className="w-full text-gray-500 font-medium text-sm bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded"
+          multiple
+          onChange={handleFileChange}
+          accept="image/jpeg, image/jpg, image/png"
+        />
 
-        <Button type="submit" variant="outlined" value="submit">
+        <Button type="submit" variant="outlined">
           Submit
         </Button>
       </form>

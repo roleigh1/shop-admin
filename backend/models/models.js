@@ -110,7 +110,19 @@ const BestSellerItemsDB = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    image: {
+    firstImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },

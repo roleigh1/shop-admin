@@ -45,7 +45,10 @@ export default function InventoryTable() {
     { field: "name", headerName: "Name", width: 130 },
     { field: "price", headerName: "Price", type: "number", width: 90 },
     { field: "type", headerName: "Type", width: 130 },
-    { field: "image", headerName: "ImageURL", width: 800 },
+    { field: "firstImage", headerName: "First image", width: 800 },
+    { field: "secondImage", headerName: "Secound image", width: 800 },
+    { field: "thirdImage", headerName: "Third image", width: 800 },
+    { field: "fourthImage", headerName: "Fourth image", width: 800 },
   ];
 
   const handleChange = (event) => {

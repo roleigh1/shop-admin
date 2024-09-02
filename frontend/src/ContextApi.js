@@ -10,7 +10,7 @@ import {
   POST_UPDATE_DATA,
   GET_ALL_ORDERS,
   GET_BANNER_DATA,
-  GET_CARDS_DATA,
+  GET_CARDS_DATA, 
 } from "./config/apiPaths";
 const api_Host = process.env.REACT_APP_API_HOST;
 
