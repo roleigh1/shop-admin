@@ -16,8 +16,7 @@ export default function InsertData() {
   const [name, setName] = useState("");
   const [where, setWhere] = useState("");
   const [price, setPrice] = useState("");
-  const [pictures, setPictures] = useState([]); // Store multiple files
-  const [imgNames, setImgNames] = useState([]); // Store file names
+  const [pictures, setPictures] = useState([]);
   const { setFlagInsertItem } = useMyContext(MyProvider);
 
   const handleUpload = async (e) => {
@@ -29,10 +28,15 @@ export default function InsertData() {
     formData.append("name", name);
     formData.append("where", where);
 
-    // Append each image with a unique key
-    pictures.forEach((picture, index) => {
-      formData.append(`image${index + 1}`, picture); // image1, image2, image3, image4
+    // Append each image to the "images" key
+    pictures.forEach((picture) => {
+      formData.append("images", picture); // Use "images" as the key
     });
+
+    console.log("FormData contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     fetch(`${api_Host}${POST_INSERT}`, {
       method: "POST",
@@ -46,7 +50,7 @@ export default function InsertData() {
         setWhere("");
         setPrice("");
         setPictures([]);
-        setImgNames([]);
+
         setFlagInsertItem(true);
       })
       .catch((error) => {
@@ -68,7 +72,7 @@ export default function InsertData() {
     }
 
     setPictures(validFiles); // Set only valid files
-    setImgNames(validFiles.map((file) => file.name)); // Set names for display
+
   };
 
   return (

@@ -85,9 +85,21 @@ const ProductsDB = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    image: {
+    firstImage: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
