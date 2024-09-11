@@ -17,6 +17,7 @@ export default function InsertData() {
   const [where, setWhere] = useState("");
   const [price, setPrice] = useState("");
   const [pictures, setPictures] = useState([]);
+  const [errorTextFile, setErrorTextFile] = useState([]);
   const { setFlagInsertItem } = useMyContext(MyProvider);
 
   const handleUpload = async (e) => {
@@ -28,41 +29,44 @@ export default function InsertData() {
     formData.append("name", name);
     formData.append("where", where);
 
-    // Append each image to the "images" key
     pictures.forEach((picture) => {
-      formData.append("images", picture); // Use "images" as the key
+      formData.append("images", picture);
     });
 
     console.log("FormData contents:");
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    fetch(`${api_Host}${POST_INSERT}`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Upload successful:", data);
-        setType("");
-        setName("");
-        setWhere("");
-        setPrice("");
-        setPictures([]);
-
-        setFlagInsertItem(true);
+    console.log(pictures);
+    if (pictures.length === 4) {
+      fetch(`${api_Host}${POST_INSERT}`, {
+        method: "POST",
+        body: formData,
       })
-      .catch((error) => {
-        console.error("Upload error", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Upload successful:", data);
+          setType("");
+          setName("");
+          setWhere("");
+          setPrice("");
+          setPictures([]);
+
+          setFlagInsertItem(true);
+        })
+        .catch((error) => {
+          console.error("Upload error", error);
+        });
+    } else {
+      setErrorTextFile("Upload 4 images to insert a Product");
+    }
+    setErrorTextFile("");
   };
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+    const filesWithoutNumber = [];
+    const filesWithInvalidNumber = [];
 
-    // Filter out unsupported file types and update the state
+    // Filter for valid image types
     const validFiles = files.filter((file) =>
       supportedImageTypes.includes(file.type)
     );
@@ -71,8 +75,41 @@ export default function InsertData() {
       alert("Some files are not valid images and were not included.");
     }
 
-    setPictures(validFiles); // Set only valid files
+    validFiles.forEach((file) => {
+      const match = file.name.match(/\d/);
+      if (!match) {
+        filesWithoutNumber.push(file.name);
+      } else {
+        const number = parseInt(match[0], 10);
+        if (number < 1 || number > 4) {
+          filesWithInvalidNumber.push(file.name);
+        }
+      }
+    });
 
+    if (filesWithoutNumber.length > 0) {
+      alert(
+        `Please give the following files a number between 1 and 4 in their name:\n\n${filesWithoutNumber.join("\n")}`
+      );
+    }
+
+    if (filesWithInvalidNumber.length > 0) {
+      alert(
+        `The following files have numbers outside the valid range (1-4):\n\n${filesWithInvalidNumber.join("\n")}`
+      );
+    }
+
+    validFiles.sort((a, b) => {
+      const getNumberFromName = (file) => {
+        const match = file.name.match(/\d/);
+        return match ? parseInt(match[0], 10) : 0;
+      };
+
+      return getNumberFromName(a) - getNumberFromName(b);
+    });
+
+    console.log(validFiles);
+    setPictures(validFiles);
   };
 
   return (
@@ -144,8 +181,8 @@ export default function InsertData() {
           onChange={handleFileChange}
           accept="image/jpeg, image/jpg, image/png"
         />
-
-        <Button type="submit" variant="outlined">
+        <span className="text-red-500 ">{errorTextFile}</span>
+        <Button type="submit" className="" variant="outlined">
           Submit
         </Button>
       </form>

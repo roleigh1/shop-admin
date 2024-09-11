@@ -26,7 +26,6 @@ export default function Editbanner() {
     text: "",
     img: "",
     imageUpload: null,
-    top: 50,
   });
 
   useEffect(() => {
@@ -83,7 +82,6 @@ export default function Editbanner() {
     formData.append("text", editData.text);
     formData.append("location", which);
     formData.append("picture", editData.imageUpload);
-    formData.append("top", editData.top);
     formData.append("bottom", editData.bottom);
 
     console.log(editData);
@@ -157,18 +155,7 @@ export default function Editbanner() {
           />
         </Button>
         <div className="flex flex-col items-center">
-          <Box sx={{ width: 80 }}>
-            <span className="text-xs ml-7">Top:</span>
-            <Slider
-              size="small"
-              min={-100}
-              max={100}
-              aria-label="Small"
-              valueLabelDisplay="auto"
-              value={editData?.top || 0}
-              onChange={(e, value) => handleInputChange("top", value)}
-            />
-          </Box>
+         
           <svg
             className="relative bottom-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -189,15 +176,20 @@ export default function Editbanner() {
       <Dialog open={open}   onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
         <DialogContent style={{height:"100%"}}>
-          <section
-            className="relative flex w-full items-center text-center bg-cover bg-center rounded-lg"
-            style={{ backgroundImage: `url(${editData?.img || ""})`,height:"20rem" }}
-          >
-            <div className="relative text-black" style={{ top: editData?.top || "" }}>
-              <h2 className="opacity-70">{editData?.headline || ""}</h2>
-              <p className="text-lg opacity-70">{editData?.text || ""}</p>
-            </div>
-          </section>
+        <div className="container my-5 relative max-w-xl mx-auto mt-20">
+    <div className="relative">
+      <img
+        className="h-60 w-[30rem] object-cover rounded-md"
+        src={editData?.img}
+        alt="Banner"
+      />
+      <div className="absolute inset-0 bg-gray-700 opacity-60 rounded-md"></div>
+      <div className="absolute inset-0 text-center flex items-center justify-center flex-col">
+        <h2 className="text-white text-1xl mt-5">{editData?.headline}</h2>
+        <p className="text-white text-xl mb-10">{editData?.text}</p>
+      </div>
+    </div>
+  </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>

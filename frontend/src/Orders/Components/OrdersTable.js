@@ -52,7 +52,7 @@ export default function OrdersTableDB() {
   const handlePageChange = () => {
     console.log(rowSelectionModelOrders);
     orderFinishProcess(rowSelectionModelOrders);
-    window.location.reload();
+
   };
 
   const handleChange = (event) => {
@@ -115,14 +115,18 @@ export default function OrdersTableDB() {
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
+        setRowSelectionModelOrders("")
+        fetchAllOrders()
       })
       .catch((error) => {
         console.error("Error sending req", error);
       });
   };
+
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
+
   }, [newValue, pageState.page, foundData]);
 
   useEffect(() => {}, []);
@@ -149,7 +153,7 @@ export default function OrdersTableDB() {
             <MenuItem value={"finished"}>Done orders</MenuItem>
           </Select>
           <Button
-            className="finish ml-1"
+            className="finish realtive left-3"
             style={{
               visibility: tableOrders === "finished" ? "hidden" : "visible",
             }}

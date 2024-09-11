@@ -848,3 +848,861 @@ Request: {
 Response: {
   "statusCode": 400
 }
+2024-09-03T21:30:14.077Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:30:21.464Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "31",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:30:24.104Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "31",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:31:03.150Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:31:09.550Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:31:10.349Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-03T21:31:22.029Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-04T21:02:16.927Z warn: HTTP POST /api/orders - No message provided
+Request: {
+  "url": "/api/orders",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "22",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/orders",
+  "query": {}
+}
+Response: {
+  "statusCode": 400
+}
+2024-09-04T21:02:58.122Z error: HTTP POST /api/upload - No message provided
+Request: {
+  "url": "/api/upload",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "1294807",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryDxg6HQZA7AR1SJzl",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/upload",
+  "query": {}
+}
+Response: {
+  "statusCode": 500
+}
+2024-09-04T21:05:23.921Z error: HTTP POST /api/upload - No message provided
+Request: {
+  "url": "/api/upload",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "10703439",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "content-type": "multipart/form-data; boundary=----WebKitFormBoundarytKH3cZJMKcNKfQOt",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/upload",
+  "query": {}
+}
+Response: {
+  "statusCode": 500
+}
+2024-09-07T22:58:54.183Z warn: HTTP POST /api/login - No message provided
+Request: {
+  "url": "/api/login",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "42",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "accept": "application/json, text/plain, */*",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "content-type": "application/json",
+    "origin": "http://localhost:3001",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3001/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/login",
+  "query": {}
+}
+Response: {
+  "statusCode": 401
+}
+2024-09-07T22:58:59.032Z warn: HTTP POST /api/login - No message provided
+Request: {
+  "url": "/api/login",
+  "headers": {
+    "host": "localhost:4242",
+    "connection": "keep-alive",
+    "content-length": "42",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "accept": "application/json, text/plain, */*",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-ch-ua-mobile": "?0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "content-type": "application/json",
+    "origin": "http://localhost:3001",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3001/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/login",
+  "query": {}
+}
+Response: {
+  "statusCode": 401
+}
+2024-09-08T01:01:26.089Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:01:26.732Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:01:27.362Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:12:43.934Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:12:53.040Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:13:35.260Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:13:35.926Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:24:37.779Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:43.632Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:43.673Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:43.847Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:44.225Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:45.443Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:45.859Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:25:46.463Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:26:12.953Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}
+2024-09-08T01:27:44.360Z warn: HTTP GET /undefined - No message provided
+Request: {
+  "url": "/undefined",
+  "headers": {
+    "x-forwarded-host": "localhost:3000",
+    "x-forwarded-proto": "http",
+    "x-forwarded-port": "3000",
+    "x-forwarded-for": "127.0.0.1",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "referer": "http://localhost:3000/",
+    "sec-fetch-dest": "image",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-origin",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    "connection": "close",
+    "host": "localhost:4242"
+  },
+  "method": "GET",
+  "httpVersion": "1.1",
+  "originalUrl": "/undefined",
+  "query": {}
+}
+Response: {
+  "statusCode": 404
+}

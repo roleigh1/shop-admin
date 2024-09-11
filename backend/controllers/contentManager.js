@@ -52,7 +52,7 @@ const uploadData = (req, res) => {
       const whichContent = req.params.whichContent;
       let url = "https://adminapi.gärtnereileitner.at/";
       const imagePath = (url += `uploads/${req.file.filename}`);
-      const { headline, text, location, top } = req.body;
+      const { headline, text, location} = req.body;
       const { name, cardText, id } = req.body;
       switch (whichContent) {
         case "banner":
@@ -60,14 +60,14 @@ const uploadData = (req, res) => {
           console.log("Headline:", headline);
           console.log("Text:", text);
           console.log("Location:", location);
-          console.log("Top:", top);
+
 
           await BannerData.update(
             {
               headline: headline,
               text: text,
               img: imagePath,
-              top: top,
+
             },
             {
               where: {

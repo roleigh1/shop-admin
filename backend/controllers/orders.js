@@ -52,7 +52,12 @@ const finishOrder = async (req, res) => {
         location: oldOrder.location,
       }))
     );
-    res.status(200).json({ message: "Selected Order", finishedOrders });
+    const deleteFinishedOrder =  await Orders.destroy({
+      where:{
+        id: finishOrderId,
+      }
+    })
+    res.status(200).json({ message: "Selected Order", finishedOrders,deleteFinishedOrder });
   } catch (error) {
     console.error("Error getting old order", error);
     res.status(400).json({ message: "Error getting old Order", error });

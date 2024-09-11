@@ -52,7 +52,7 @@ const uploadImage = (req, res) => {
 };
 
 const insertNewProduct = async (where, name, type, formattedPrice, imagePaths) => {
-  // Assuming imagePaths contains up to 4 images
+ 
   const [firstImage, secondImage, thirdImage, fourthImage] = imagePaths;
 
   if (where === "products") {
