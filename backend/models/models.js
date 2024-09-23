@@ -1,3 +1,4 @@
+const { describe } = require("node:test");
 const { Sequelize, DataTypes } = require("sequelize");
 const dbName = process.env.TABLE;
 const dbUser = process.env.DBUSER;
@@ -5,7 +6,7 @@ const dbPW = process.env.DBPW;
 const dbHost = process.env.DBHOST;
 
 const sequelize = new Sequelize(dbName, dbUser, dbPW, {
-  host: dbHost ,
+  host: dbHost,
   dialect: "mysql",
   port: "3306",
   logging: (msg) => {
@@ -85,6 +86,14 @@ const ProductsDB = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    unit:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     firstImage: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -121,6 +130,14 @@ const BestSellerItemsDB = sequelize.define(
     price: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    unit:{
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     firstImage: {
       type: DataTypes.STRING,
@@ -251,7 +268,6 @@ const BannerData = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-   
   },
   {
     tableName: "banners",

@@ -12,43 +12,59 @@ import { POST_INSERT } from "../../config/apiPaths";
 const api_Host = process.env.REACT_APP_API_HOST;
 
 export default function InsertData() {
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
-  const [where, setWhere] = useState("");
-  const [price, setPrice] = useState("");
+  const [formData, setFormData] = useState({
+    type: "",
+    name: "",
+    where: "",
+    price: "",
+    text: "",
+    unit: "" ,
+  });
+
   const [pictures, setPictures] = useState([]);
-  const [errorTextFile, setErrorTextFile] = useState([]);
+  const [errorTextFile, setErrorTextFile] = useState("");
   const { setFlagInsertItem } = useMyContext(MyProvider);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("type", type);
-    formData.append("price", price);
-    formData.append("name", name);
-    formData.append("where", where);
+    const uploadData = new FormData();
+    uploadData.append("type", formData.type);
+    uploadData.append("name", formData.name);
+    uploadData.append("where", formData.where);
+    uploadData.append("price", formData.price);
+    uploadData.append("text", formData.text);
+    uploadData.append("unit", formData.text);
 
     pictures.forEach((picture) => {
-      formData.append("images", picture);
+      uploadData.append("images", picture);
     });
 
-    console.log("FormData contents:");
-    console.log(pictures);
     if (pictures.length === 4) {
       fetch(`${api_Host}${POST_INSERT}`, {
         method: "POST",
-        body: formData,
+        body: uploadData,
       })
         .then((response) => response.json())
         .then((data) => {
           console.log("Upload successful:", data);
-          setType("");
-          setName("");
-          setWhere("");
-          setPrice("");
+          setFormData({
+            type: "",
+            name: "",
+            where: "",
+            price: "",
+            text: "",
+            unit: "",
+          });
           setPictures([]);
-
           setFlagInsertItem(true);
         })
         .catch((error) => {
@@ -57,7 +73,6 @@ export default function InsertData() {
     } else {
       setErrorTextFile("Upload 4 images to insert a Product");
     }
-    setErrorTextFile("");
   };
 
   const handleFileChange = (event) => {
@@ -66,7 +81,6 @@ export default function InsertData() {
     const filesWithoutNumber = [];
     const filesWithInvalidNumber = [];
 
-    // Filter for valid image types
     const validFiles = files.filter((file) =>
       supportedImageTypes.includes(file.type)
     );
@@ -108,7 +122,6 @@ export default function InsertData() {
       return getNumberFromName(a) - getNumberFromName(b);
     });
 
-    console.log(validFiles);
     setPictures(validFiles);
   };
 
@@ -125,37 +138,79 @@ export default function InsertData() {
         <TextField
           id="outlined-basic"
           label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
           variant="outlined"
-          className=" w-[14rem] h-12"
+          className=" w-[14rem] "
           required
+          size="small"
         />
+
+        <TextField
+          id="outlined-basic"
+          label="Text"
+          name="text"
+          value={formData.text}
+          onChange={handleInputChange}
+          variant="outlined"
+          className=" w-[15rem] "
+          required
+          size="small"
+          multiline
+          rows={5}
+        />
+         <FormControl>
+          <InputLabel htmlFor="demo-simple-select-label">Unit</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            name="unit"
+            value={formData.unit}
+            label="Where"
+            onChange={handleInputChange}
+            required
+            className=" w-[8rem] "
+            size="small"
+          >
+            <MenuItem value={"1 KG"}>1 KG</MenuItem>
+            <MenuItem value={"1/2 KG"}>1/2 KG</MenuItem>
+            <MenuItem value={"1/4 KG"}>1 /4 KG</MenuItem>
+            <MenuItem value={"100g KG"}>100g KG</MenuItem>
+          </Select>
+        </FormControl>
+
+
         <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Where</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
+            name="where"
+            value={formData.where}
             label="Where"
-            onChange={(e) => setWhere(e.target.value)}
-            value={where}
+            onChange={handleInputChange}
             required
-            className=" w-[6rem] h-12"
+            className=" w-[8rem] "
+            size="small"
           >
             <MenuItem value={"products"}>Products</MenuItem>
             <MenuItem value={"bestseller"}>Bestseller</MenuItem>
           </Select>
         </FormControl>
+
         <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Type</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
-            value={type}
+            name="type"
+            value={formData.type}
             label="Type"
-            onChange={(e) => setType(e.target.value)}
-            className=" w-[6rem] h-12"
+            onChange={handleInputChange}
+            className=" w-[8rem] "
             required
+            size="small"
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
             <MenuItem value={"Mushrooms"}>Mushrooms</MenuItem>
@@ -163,14 +218,17 @@ export default function InsertData() {
             <MenuItem value={"Herbs"}>Herbs</MenuItem>
           </Select>
         </FormControl>
+
         <TextField
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          value={formData.price}
+          name="price"
+          onChange={handleInputChange}
           id="outlined-basic"
           label="Price"
           variant="outlined"
-          className=" w-[6rem] h-12"
+          className=" w-[5rem] "
           type="number"
+          size="small"
           required
         />
 
@@ -181,7 +239,9 @@ export default function InsertData() {
           onChange={handleFileChange}
           accept="image/jpeg, image/jpg, image/png"
         />
+
         <span className="text-red-500 ">{errorTextFile}</span>
+
         <Button type="submit" className="" variant="outlined">
           Submit
         </Button>

@@ -45,6 +45,8 @@ export default function InventoryTable() {
     { field: "name", headerName: "Name", width: 130 },
     { field: "price", headerName: "Price", type: "number", width: 90 },
     { field: "type", headerName: "Type", width: 130 },
+    { field: "text", headerName: "Text", width: 130 },
+    { field: "unit", headerName: "unit", width: 130 },
     { field: "firstImage", headerName: "First image", width: 800 },
     { field: "secondImage", headerName: "Secound image", width: 800 },
     { field: "thirdImage", headerName: "Third image", width: 800 },
