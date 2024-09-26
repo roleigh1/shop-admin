@@ -18,7 +18,7 @@ export default function InsertData() {
     where: "",
     price: "",
     text: "",
-    unit: "" ,
+    unit: "",
   });
 
   const [pictures, setPictures] = useState([]);
@@ -32,7 +32,7 @@ export default function InsertData() {
       [name]: value,
     }));
   };
-
+  
   const handleUpload = async (e) => {
     e.preventDefault();
 
@@ -42,8 +42,8 @@ export default function InsertData() {
     uploadData.append("where", formData.where);
     uploadData.append("price", formData.price);
     uploadData.append("text", formData.text);
-    uploadData.append("unit", formData.text);
-
+    uploadData.append("unit", formData.unit);
+    console.log(uploadData.unit)
     pictures.forEach((picture) => {
       uploadData.append("images", picture);
     });
@@ -160,14 +160,14 @@ export default function InsertData() {
           multiline
           rows={5}
         />
-         <FormControl>
+        <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Unit</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             name="unit"
             value={formData.unit}
-            label="Where"
+            label="Unit"
             onChange={handleInputChange}
             required
             className=" w-[8rem] "
@@ -179,8 +179,6 @@ export default function InsertData() {
             <MenuItem value={"100g KG"}>100g KG</MenuItem>
           </Select>
         </FormControl>
-
-
         <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Where</InputLabel>
           <Select

@@ -88,7 +88,7 @@ const ProductsDB = sequelize.define(
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     unit:{
       type: DataTypes.STRING,
@@ -133,7 +133,7 @@ const BestSellerItemsDB = sequelize.define(
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     unit:{
       type: DataTypes.STRING,

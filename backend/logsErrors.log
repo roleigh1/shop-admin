@@ -172,3 +172,32 @@ Request: {
 Response: {
   "statusCode": 500
 }
+2024-09-25T22:01:49.855Z error: HTTP POST /api/upload - No message provided
+Request: {
+  "url": "/api/upload",
+  "headers": {
+    "host": "localhost:3131",
+    "connection": "keep-alive",
+    "content-length": "13425241",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryuerVeqfRKJo4Aebl",
+    "sec-ch-ua-mobile": "?0",
+    "accept": "*/*",
+    "origin": "http://localhost:3000",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:3000/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9,de;q=0.8"
+  },
+  "method": "POST",
+  "httpVersion": "1.1",
+  "originalUrl": "/api/upload",
+  "query": {}
+}
+Response: {
+  "statusCode": 500
+}

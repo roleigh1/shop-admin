@@ -27,7 +27,7 @@ const uploadImage = (req, res) => {
         .json({ message: "Upload failed", error: err.message });
     }
 
-    const { type, price, name, where ,description,unit} = req.body;
+    const { type, price, name, where ,text,unit} = req.body;
 
     try {
 
@@ -40,10 +40,10 @@ const uploadImage = (req, res) => {
       console.log("Type:", type);
       console.log("Name:", name);
       console.log("Where:", where);
-      console.log("description:", description);
+      console.log("description:", text);
       console.log("Where:",unit);
 
-      await insertNewProduct(where, name, type, formattedPrice, imagePaths,description,unit);
+      await insertNewProduct(where, name, type, formattedPrice, imagePaths,text,unit);
 
       return res.json({ message: "Upload successful", imageUrls: imagePaths });
     } catch (error) {
@@ -53,7 +53,7 @@ const uploadImage = (req, res) => {
   });
 };
 
-const insertNewProduct = async (where, name, type, formattedPrice, imagePaths,description,unit) => {
+const insertNewProduct = async (where, name, type, formattedPrice, imagePaths,text,unit) => {
  
   const [firstImage, secondImage, thirdImage, fourthImage] = imagePaths;
 
@@ -68,7 +68,7 @@ const insertNewProduct = async (where, name, type, formattedPrice, imagePaths,de
       id: lastId + 1,
       name: name,
       price: formattedPrice,
-      description: description,
+      description: text,
       unit:unit,
       firstImage: firstImage || null, 
       secondImage: secondImage || null,
@@ -89,7 +89,7 @@ const insertNewProduct = async (where, name, type, formattedPrice, imagePaths,de
       id: lastBestseller + 1,
       name: name,
       price: formattedPrice,
-      description: description,
+      description: text,
       unit:unit,
       firstImage: firstImage || null, 
       secondImage: secondImage || null,
