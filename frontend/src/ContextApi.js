@@ -10,7 +10,7 @@ import {
   POST_UPDATE_DATA,
   GET_ALL_ORDERS,
   GET_BANNER_DATA,
-  GET_CARDS_DATA, 
+  GET_CARDS_DATA,
 } from "./config/apiPaths";
 const api_Host = process.env.REACT_APP_API_HOST;
 
@@ -33,7 +33,7 @@ export const MyProvider = ({ children }) => {
     data: [],
     total: 0,
     page: 1,
-    pageSize: 1000,
+    pageSize: 10,
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
@@ -121,11 +121,19 @@ export const MyProvider = ({ children }) => {
   };
 
   const fetchAllOrders = async () => {
+    setPageState((old) => ({
+      ...old,
+      isLoading: true,
+    }));
+    const url = `${api_Host}${GET_ALL_ORDERS}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`;
     try {
-      const response = await fetch(
-        `${api_Host}${GET_ALL_ORDERS}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
-      );
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
       const json = await response.json();
+
       setPageState((old) => ({
         ...old,
         isLoading: false,
@@ -134,10 +142,12 @@ export const MyProvider = ({ children }) => {
       }));
     } catch (error) {
       console.error("Error fetching data:", error);
-      setPageState((old) => ({ ...old, isLoading: false }));
+      setPageState((old) => ({
+        ...old,
+        isLoading: false,
+      }));
     }
   };
-
   const fetchCounter = () => {
     axios
       .get(`${api_Host}${GET_COUNTER}`)

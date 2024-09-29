@@ -3,7 +3,13 @@
     width: 100%; 
     padding: 0 20px;
 }
-
+.MuiTablePagination-root{
+    display: none;
+}
+.pagination{
+    position: relative!important;
+    bottom:3rem!important;
+}
 @media screen and (max-width: 768px) {
     .main {
     

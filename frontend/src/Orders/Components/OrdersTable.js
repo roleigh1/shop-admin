@@ -11,7 +11,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 import { POST_DELETE } from "../../config/apiPaths";
-
+import Pagination from "./PaginationComponent";
+import "./style.css"
 const api_Host = process.env.REACT_APP_API_HOST;
 import "./style.css";
 const columns = [
@@ -45,7 +46,7 @@ export default function OrdersTableDB() {
     pageState,
     tableOrders,
     setTableOrders,
-
+    setPageState,
     setFlagOrders,
   } = useMyContext(MyProvider);
 
@@ -128,7 +129,9 @@ export default function OrdersTableDB() {
     fetchAllOrders();
 
   }, [newValue, pageState.page, foundData]);
-
+  useEffect(() => {
+    console.log("Updated pageState:", pageState);
+  }, [pageState]);
   useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
@@ -170,22 +173,18 @@ export default function OrdersTableDB() {
             style={{ height: "25rem" }}
             className="w-[90%] m-auto table"
             rows={pageState.data}
-            rowCount={pageState.total}
-            page={pageState.page}
-            pageSize={pageState.pageSize}
+        
+     
             columns={columns}
             loading={pageState.isLoading}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 5, pageSize: 5 },
-              },
-            }}
+            initialState={{ pagination: {pageState } }}
             pagination
             onRowSelectionModelChange={setRowSelectionModelOrders}
             rowSelectionModel={rowSelectionModelOrders}
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
           />
+          <Pagination pageState={pageState}     setPageState={setPageState} className="pagination"/>
         </div>
         <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField

@@ -173,7 +173,7 @@ export default function InsertData() {
             className=" w-[8rem] "
             size="small"
           >
-            <MenuItem value={"1 KG"}>1 KG</MenuItem>
+            <MenuItem value={"KG"}>1 KG</MenuItem>
             <MenuItem value={"1/2 KG"}>1/2 KG</MenuItem>
             <MenuItem value={"1/4 KG"}>1 /4 KG</MenuItem>
             <MenuItem value={"100g KG"}>100g KG</MenuItem>

@@ -133,6 +133,7 @@ export default function InventoryTable() {
         columns={columns}
         pageSize={8}
         checkboxSelection={true}
+   
         className="mt-1 "
         onRowSelectionModelChange={setRowSelectionModel}
         rowSelectionModel={rowSelectionModel}
