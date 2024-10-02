@@ -18,7 +18,7 @@ const Pagination = ({ pageState, setPageState }) => {
   };
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200bg-gray-200 px-4 py-3 sm:px-6">
+    <div className="flex items-center justify-between border-t border-gray-200bg-gray-200 px-4 py-3 sm:px-6 relative bottom-[3.5rem] w-[80%] m-auto">
       <div className="flex flex-1 justify-between sm:hidden">
         <button
           disabled={currentPage === 1}

@@ -184,7 +184,7 @@ export default function OrdersTableDB() {
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
           />
-          <Pagination pageState={pageState}     setPageState={setPageState} className="pagination"/>
+          <Pagination pageState={pageState}   className=""  setPageState={setPageState} />
         </div>
         <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField

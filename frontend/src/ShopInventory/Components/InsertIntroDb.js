@@ -4,7 +4,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import "../style.css";
 import Button from "@mui/material/Button";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import { POST_INSERT } from "../../config/apiPaths";
@@ -32,95 +31,71 @@ export default function InsertData() {
       [name]: value,
     }));
   };
-  
+
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    const uploadData = new FormData();
-    uploadData.append("type", formData.type);
-    uploadData.append("name", formData.name);
-    uploadData.append("where", formData.where);
-    uploadData.append("price", formData.price);
-    uploadData.append("text", formData.text);
-    uploadData.append("unit", formData.unit);
-    console.log(uploadData.unit)
-    pictures.forEach((picture) => {
-      uploadData.append("images", picture);
+    // Create a FormData object
+    const formDataToSend = new FormData();
+  
+  
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
     });
 
+  
+    pictures.forEach((file) => {
+      formDataToSend.append("images", file);
+    });
+    console.log(formDataToSend); 
+console.log(formDataToSend); 
     if (pictures.length === 4) {
-      fetch(`${api_Host}${POST_INSERT}`, {
-        method: "POST",
-        body: uploadData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Upload successful:", data);
-          setFormData({
-            type: "",
-            name: "",
-            where: "",
-            price: "",
-            text: "",
-            unit: "",
-          });
-          setPictures([]);
-          setFlagInsertItem(true);
-        })
-        .catch((error) => {
-          console.error("Upload error", error);
+      try {
+        const response = await fetch(`${api_Host}${POST_INSERT}`, {
+          method: "POST",
+          body: formDataToSend,
         });
+
+        if (!response.ok) {
+          throw new Error("Bad request");
+        }
+
+        const data = await response.json();
+        console.log("Upload successful:", data);
+
+        // Resetting the form
+        setFormData({
+          type: "",
+          name: "",
+          where: "",
+          price: "",
+          text: "",
+          unit: "",
+        });
+        setPictures([]);
+        setErrorTextFile(""); // Reset error message
+        setFlagInsertItem(true);
+      } catch (error) {
+        console.error("Upload error:", error);
+      }
     } else {
-      setErrorTextFile("Upload 4 images to insert a Product");
+      setErrorTextFile("Please upload 4 images to insert a product");
     }
   };
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
-    const filesWithoutNumber = [];
-    const filesWithInvalidNumber = [];
-
-    const validFiles = files.filter((file) =>
-      supportedImageTypes.includes(file.type)
-    );
+    const validFiles = files.filter((file) => supportedImageTypes.includes(file.type));
 
     if (validFiles.length !== files.length) {
       alert("Some files are not valid images and were not included.");
     }
 
-    validFiles.forEach((file) => {
-      const match = file.name.match(/\d/);
-      if (!match) {
-        filesWithoutNumber.push(file.name);
-      } else {
-        const number = parseInt(match[0], 10);
-        if (number < 1 || number > 4) {
-          filesWithInvalidNumber.push(file.name);
-        }
-      }
-    });
-
-    if (filesWithoutNumber.length > 0) {
-      alert(
-        `Please give the following files a number between 1 and 4 in their name:\n\n${filesWithoutNumber.join("\n")}`
-      );
+    if (validFiles.length > 4) {
+      alert("Please select up to 4 images only.");
+      return;
     }
-
-    if (filesWithInvalidNumber.length > 0) {
-      alert(
-        `The following files have numbers outside the valid range (1-4):\n\n${filesWithInvalidNumber.join("\n")}`
-      );
-    }
-
-    validFiles.sort((a, b) => {
-      const getNumberFromName = (file) => {
-        const match = file.name.match(/\d/);
-        return match ? parseInt(match[0], 10) : 0;
-      };
-
-      return getNumberFromName(a) - getNumberFromName(b);
-    });
 
     setPictures(validFiles);
   };
@@ -175,8 +150,8 @@ export default function InsertData() {
           >
             <MenuItem value={"KG"}>1 KG</MenuItem>
             <MenuItem value={"1/2 KG"}>1/2 KG</MenuItem>
-            <MenuItem value={"1/4 KG"}>1 /4 KG</MenuItem>
-            <MenuItem value={"100g KG"}>100g KG</MenuItem>
+            <MenuItem value={"1/4 KG"}>1/4 KG</MenuItem>
+            <MenuItem value={"100g"}>100g</MenuItem>
           </Select>
         </FormControl>
         <FormControl>
