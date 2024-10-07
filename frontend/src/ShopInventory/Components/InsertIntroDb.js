@@ -149,6 +149,7 @@ console.log(formDataToSend);
             size="small"
           >
             <MenuItem value={"KG"}>1 KG</MenuItem>
+            <MenuItem value={"Bunch"}>Bunch</MenuItem>
             <MenuItem value={"1/2 KG"}>1/2 KG</MenuItem>
             <MenuItem value={"1/4 KG"}>1/4 KG</MenuItem>
             <MenuItem value={"100g"}>100g</MenuItem>

@@ -7,14 +7,14 @@ const {
   sequelize,
 } = require("../models/models");
 const currency = require("currency.js");
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client} = require("@aws-sdk/client-s3");
 
 const s3 = new S3Client({
   credentials: {
     accessKeyId: process.env.IDRIVE_KEY_ID,
     secretAccessKey: process.env.IDRIVE_SECRET_KEY,
   },
-  endpoint: "https://b7y5.fra.idrivee2-8.com",
+  endpoint: process.env.IDRIVE_ENDPOINT,
   forcePathStyle: true,
   region: "eu-central-1",
 });
@@ -34,25 +34,24 @@ const upload = multer({
 }).array("images", 4);
 
 const uploadImage = (req, res) => {
-  // Starte den Upload-Prozess
+
   upload(req, res, async (err) => {
     if (err) {
-      console.error("Multer error:", err); // Log the error for debugging
+      console.error("Multer error:", err); 
       return res
         .status(400)
         .json({ message: "Upload failed", error: err.message });
     }
 
-    // Validierung der Eingabedaten
+  
     const { type, price, name, where, text, unit } = req.body;
     if (!type || !price || !name || !where || !text || !unit) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    console.log("req.body:", req.body); // Check if form fields are present
-    console.log("req.files:", req.files); // Check if images were uploaded
 
-    // Ensure req.files contains the uploaded images
+
+
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: "No images uploaded" });
     }
@@ -99,8 +98,13 @@ const insertNewProduct = async (
   text,
   unit
 ) => {
-  const [firstImage, secondImage, thirdImage, fourthImage] = imagePaths;
 
+  let newImagePaths = imagePaths.map((element) => 
+      element.replace(process.env.IDRIVE_ENDPOINT,"https://c2i3.c17.e2-4.dev") 
+    )
+
+  const [firstImage, secondImage, thirdImage, fourthImage] = newImagePaths;
+  console.log(firstImage); 
   if (where === "products") {
     const ProductId = await ProductsDB.findOne({
       attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],

@@ -10,9 +10,9 @@ export default function SalesLineChart() {
   const width = isSmallScreen ? 300 : 600;
   return (
     <div className="p-4">
-      <h5 className="relative left-14 top-8  text-sm">
-        Monatlicher Recap Report
-      </h5>
+      <h1 className="relative left-14 top-8  text-sm">
+      Monthly Sales Report
+      </h1>
 
       <LineChart
         xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }]}

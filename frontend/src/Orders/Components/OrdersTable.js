@@ -50,9 +50,10 @@ export default function OrdersTableDB() {
     setFlagOrders,
   } = useMyContext(MyProvider);
 
-  const handlePageChange = () => {
-    console.log(rowSelectionModelOrders);
-    orderFinishProcess(rowSelectionModelOrders);
+  const handleFinishOrder =  () => {
+    console.log( "Test",rowSelectionModelOrders);
+   orderFinishProcess(rowSelectionModelOrders);
+
 
   };
 
@@ -74,7 +75,7 @@ export default function OrdersTableDB() {
         return a.id - b.id;
       });
 
-      let left = 0,
+        let left = 0,
         right = data.length - 1;
       while (left <= right) {
         let mid = Math.floor((left + right) / 2);
@@ -161,7 +162,7 @@ export default function OrdersTableDB() {
               visibility: tableOrders === "finished" ? "hidden" : "visible",
             }}
             variant="outlined"
-            onClick={handlePageChange}
+            onClick={handleFinishOrder}
           >
             {" "}
             Finish Order

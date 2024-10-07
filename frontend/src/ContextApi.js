@@ -82,7 +82,34 @@ export const MyProvider = ({ children }) => {
       await fetchMonths(month);
     }
   };
+  const fetchAllOrders = async () => {
+    setPageState((old) => ({
+      ...old,
+      isLoading: true,
+    }));
+    const url = `${api_Host}${GET_ALL_ORDERS}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`;
+    try {
+      const response = await fetch(url);
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+      const json = await response.json();
+      console.log("called")
+      setPageState((old) => ({
+        ...old,
+        isLoading: false,
+        data: json.orders,
+        total: json.total,
+      }));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setPageState((old) => ({
+        ...old,
+        isLoading: false,
+      }));
+    }
+  };
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     const options = {
       method: "POST",
@@ -95,6 +122,7 @@ export const MyProvider = ({ children }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
+        fetchAllOrders()
       })
       .catch((error) => {
         console.error("Error moving data to another table", error);
@@ -120,34 +148,7 @@ export const MyProvider = ({ children }) => {
       });
   };
 
-  const fetchAllOrders = async () => {
-    setPageState((old) => ({
-      ...old,
-      isLoading: true,
-    }));
-    const url = `${api_Host}${GET_ALL_ORDERS}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`;
-    try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch orders");
-      }
-      const json = await response.json();
-
-      setPageState((old) => ({
-        ...old,
-        isLoading: false,
-        data: json.orders,
-        total: json.total,
-      }));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setPageState((old) => ({
-        ...old,
-        isLoading: false,
-      }));
-    }
-  };
+  
   const fetchCounter = () => {
     axios
       .get(`${api_Host}${GET_COUNTER}`)

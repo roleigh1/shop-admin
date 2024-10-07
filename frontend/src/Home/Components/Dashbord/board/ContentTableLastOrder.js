@@ -13,9 +13,9 @@ export default function LastOrderTable() {
 
   return (
     <div>
-      <h5 className="text-center relative top-1  text-sm">
-        eingetroffene Bestellung
-      </h5>
+      <h1 className="text-center relative top-1  text-sm">
+      Newly arrived orders
+      </h1>
       <div className="max-h-72 mt-2 overflow-y-scroll">
         <TableContainer component={Paper} className="bg-[#ebeceb]">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

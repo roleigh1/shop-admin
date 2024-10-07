@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Pagination = ({ pageState, setPageState }) => {
   const totalPages = Math.ceil(pageState.total / pageState.pageSize);
@@ -8,7 +8,9 @@ const Pagination = ({ pageState, setPageState }) => {
   const startPage = Math.max(1, currentPage - 1);
   const endPage = Math.min(totalPages, startPage + 2);
 
-  const result = [...Array(endPage - startPage + 1).keys()].map(i => startPage + i);
+  const result = [...Array(endPage - startPage + 1).keys()].map(
+    (i) => startPage + i
+  );
 
   const goToPage = (page) => {
     setPageState((oldState) => ({
@@ -35,12 +37,20 @@ const Pagination = ({ pageState, setPageState }) => {
           Next
         </button>
       </div>
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <div>
+      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between ">
+        <div className="relative left-20">
           <p className="text-sm text-gray-700">
             Showing
-            <span className="font-medium"> {(currentPage - 1) * pageState.pageSize + 1}</span> to
-            <span className="font-medium"> {Math.min(currentPage * pageState.pageSize, pageState.total)}</span> of
+            <span className="font-medium">
+              {" "}
+              {(currentPage - 1) * pageState.pageSize + 1}
+            </span>{" "}
+            to
+            <span className="font-medium">
+              {" "}
+              {Math.min(currentPage * pageState.pageSize, pageState.total)}
+            </span>{" "}
+            of
             <span className="font-medium"> {pageState.total}</span> results
           </p>
         </div>
@@ -75,8 +85,8 @@ const Pagination = ({ pageState, setPageState }) => {
                 onClick={() => goToPage(number)}
                 className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${
                   currentPage === number
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200'
+                    ? "bg-indigo-600 text-white"
+                    : "bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200"
                 } focus:z-20 focus:outline-offset-0`}
               >
                 {number}

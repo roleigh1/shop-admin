@@ -3,7 +3,7 @@ import Navbar from "./Components/Dashbord/Navbar";
 import Background from "./Components/Dashbord/board/Backgrounds/Background";
 import BackgroundLastOrdersListed from "./Components/Dashbord/board/Backgrounds/BackroundLastOrdersListed";
 import { Row, Col, Container } from "react-bootstrap";
-import OrderCounter from "./Components/Dashbord/board/ContenCount";
+import OrderCounter from "./Components/Dashbord/board/OrderCounter";
 import BackgroundSales from "./Components/Dashbord/board/Backgrounds/BackgroundSales";
 import LastOrderTable from "./Components/Dashbord/board/ContentTableLastOrder";
 import SalesLineChart from "./Components/Dashbord/board/SalesChart";

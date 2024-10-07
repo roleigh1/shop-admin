@@ -1,16 +1,30 @@
 const { BannerData, InfoCard } = require("../models/models");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client } = require("@aws-sdk/client-s3");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
+// S3 Client konfigurieren
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: process.env.IDRIVE_KEY_ID,
+    secretAccessKey: process.env.IDRIVE_SECRET_KEY
   },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
+  endpoint:  process.env.IDRIVE_ENDPOINT, 
+  forcePathStyle: true, 
+  region: "eu-central-1" 
 });
 
-const upload = multer({ storage: storage });
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "shop", 
+    acl: "public-read",
+    key: function (req, file, cb) {
+      cb(null, `uploads/${Date.now().toString()}-${file.originalname}`); 
+    },
+  }),
+});
 
 const getContentData = async (req, res) => {
   try {
@@ -30,7 +44,7 @@ const getContentData = async (req, res) => {
         });
         break;
       default:
-        res.status(400).json({ message: "Invalid content type" });
+        return res.status(400).json({ message: "Invalid content type" });
     }
     res.status(200).json({ contentData: response });
   } catch (error) {
@@ -48,12 +62,13 @@ const uploadData = (req, res) => {
         .status(400)
         .json({ message: "Upload failed", error: err.message });
     }
+
     try {
       const whichContent = req.params.whichContent;
-      let url = "https://adminapi.gärtnereileitner.at/";
-      const imagePath = (url += `uploads/${req.file.filename}`);
-      const { headline, text, location} = req.body;
+      const imagePath = req.file.location; 
+      const { headline, text, location } = req.body;
       const { name, cardText, id } = req.body;
+
       switch (whichContent) {
         case "banner":
           console.log("Image Path:", imagePath);
@@ -61,13 +76,11 @@ const uploadData = (req, res) => {
           console.log("Text:", text);
           console.log("Location:", location);
 
-
           await BannerData.update(
             {
               headline: headline,
               text: text,
               img: imagePath,
-
             },
             {
               where: {
@@ -75,6 +88,7 @@ const uploadData = (req, res) => {
               },
             }
           );
+
           return res.json({
             message: "Upload successful",
             imageUrl: imagePath,
@@ -108,7 +122,7 @@ const uploadData = (req, res) => {
           return res.status(400).json({ message: "Invalid content type" });
       }
     } catch (error) {
-      console.error("Error saving image locally:", error);
+      console.error("Error saving image to S3:", error);
       return res.status(500).json({ message: "Internal Server Error" });
     }
   });
