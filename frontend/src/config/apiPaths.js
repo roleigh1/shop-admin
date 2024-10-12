@@ -12,3 +12,4 @@ export const GET_CARDS_DATA = "/api/contentdata/cards";
 export const POST_CONTENT = "/api/contentEdit/";
 export const POST_LOGIN = "/api/login"; 
 export const POST_DELETE = "/api/delete/"
+export const SEARCH_ORDER = "/api/orderSearch"

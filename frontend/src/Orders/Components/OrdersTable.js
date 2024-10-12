@@ -5,16 +5,13 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Alert from "@mui/material/Alert";
-import { POST_DELETE } from "../../config/apiPaths";
+
+import { POST_DELETE, SEARCH_ORDER } from "../../config/apiPaths";
 import Pagination from "./PaginationComponent";
-import "./style.css"
+import "./style.css";
 const api_Host = process.env.REACT_APP_API_HOST;
 import "./style.css";
+import DialogFoundOrder from "./FoundOrderDialog";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "email", headerName: "Email", width: 200 },
@@ -50,11 +47,9 @@ export default function OrdersTableDB() {
     setFlagOrders,
   } = useMyContext(MyProvider);
 
-  const handleFinishOrder =  () => {
-    console.log( "Test",rowSelectionModelOrders);
-   orderFinishProcess(rowSelectionModelOrders);
-
-
+  const handleFinishOrder = () => {
+    console.log("Test", rowSelectionModelOrders);
+    orderFinishProcess(rowSelectionModelOrders);
   };
 
   const handleChange = (event) => {
@@ -66,38 +61,29 @@ export default function OrdersTableDB() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleIdSearch = () => {
-    let newId = Number(searchID);
-    const data = [...pageState.data];
 
-    function binarySearch(data, newId) {
-      data.sort((a, b) => {
-        return a.id - b.id;
+  const handleIdSearch = async () => {
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchID, tableOrders }),
+    };
+    fetch(`${api_Host}${SEARCH_ORDER}`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("id found", data);
+
+        setFoundData(data);
+        handleClickOpen();
+        setNotFound(false);
+      })
+      .catch((error) => {
+        console.error("Error sending req", error);
+        setNotFound(true);
+        setSearchID("");
       });
-
-        let left = 0,
-        right = data.length - 1;
-      while (left <= right) {
-        let mid = Math.floor((left + right) / 2);
-
-        if (data[mid].id === newId) {
-          setFoundData(data[mid]);
-          handleClickOpen();
-          setNotFound(false);
-          return;
-        } else if (data[mid].id < newId) {
-          left = mid + 1;
-        } else {
-          right = mid - 1;
-        }
-      }
-      setNotFound(true);
-      setFoundData(null);
-      handleClickOpen();
-    }
-
-    binarySearch(data, newId);
-    setSearchID("");
   };
   const handleSearchIDChange = (e) => {
     setSearchID(e.target.value);
@@ -117,8 +103,8 @@ export default function OrdersTableDB() {
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
-        setRowSelectionModelOrders("")
-        fetchAllOrders()
+        setRowSelectionModelOrders("");
+        fetchAllOrders();
       })
       .catch((error) => {
         console.error("Error sending req", error);
@@ -128,7 +114,6 @@ export default function OrdersTableDB() {
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
-
   }, [newValue, pageState.page, foundData]);
   useEffect(() => {
     console.log("Updated pageState:", pageState);
@@ -137,6 +122,7 @@ export default function OrdersTableDB() {
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
+    console.log("test");
   };
   useEffect(() => {
     fetchAllOrders();
@@ -174,18 +160,20 @@ export default function OrdersTableDB() {
             style={{ height: "25rem" }}
             className="w-[90%] m-auto table"
             rows={pageState.data}
-        
-     
             columns={columns}
             loading={pageState.isLoading}
-            initialState={{ pagination: {pageState } }}
+            initialState={{ pagination: { pageState } }}
             pagination
             onRowSelectionModelChange={setRowSelectionModelOrders}
             rowSelectionModel={rowSelectionModelOrders}
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
           />
-          <Pagination pageState={pageState}   className=""  setPageState={setPageState} />
+          <Pagination
+            pageState={pageState}
+            className=""
+            setPageState={setPageState}
+          />
         </div>
         <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField
@@ -226,62 +214,12 @@ export default function OrdersTableDB() {
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
         </div>
-        <Dialog
+        <DialogFoundOrder
           open={open}
+          foundData={foundData}
+          notFound={notFound}
           onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title" style={{ fontWeight: "bold" }}>
-            Order Found
-          </DialogTitle>
-          <DialogContent>
-            <table>
-              <tbody>
-                {foundData &&
-                  Object.entries(foundData).map(([key, value]) => (
-                    <tr key={key}>
-                      <td
-                        style={{
-                          fontWeight: "bold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {key}:
-                      </td>
-                      <td>{value}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              close
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog
-          open={notFound}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="alert-dialog-title"
-            style={{ fontWeight: "bold" }}
-          ></DialogTitle>
-          <DialogContent>
-            <Alert className="notFound" severity="error">
-              Order not found!
-            </Alert>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              close
-            </Button>
-          </DialogActions>
-        </Dialog>
+        />
       </div>
     </div>
   );

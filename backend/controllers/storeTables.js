@@ -57,14 +57,10 @@ const deleteInventory = async (req, res) => {
     res.status(400).json({ message: "Error sending post request" });
   }
 };
-const trow = async (req, res, next) => {
-  const error = new Error("This is a test error");
-  error.status = 500;
-  next(error);
-};
+
 
 module.exports = {
   getInventoryTable,
   deleteInventory,
-  trow,
+
 };

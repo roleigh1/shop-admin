@@ -31,11 +31,10 @@ const getAllOrders = async (req, res) => {
     console.log(req.query.type);
     console.log(orders);
     res.status(200).json({
-      total: totalOrders, 
-      page, 
+      total: totalOrders,
+      page,
       pageSize,
-      orders
-    
+      orders,
     });
   } catch (error) {
     console.error("Error getting all orders", error);
@@ -77,18 +76,46 @@ const finishOrder = async (req, res) => {
   }
 };
 const deleteOrder = async (req, res) => {
-  let { idForDelete } = req.body;
-  console.log(" id for Delete ", idForDelete);
-  const deleteFinishedOrder = await FinishedOrders.destroy({
-    where: {
-      id: idForDelete,
-    },
-  });
-  res.status(200).json({ message: "Order is deleted", deleteFinishedOrder });
+  try {
+    let { idForDelete } = req.body;
+    console.log(" id for Delete ", idForDelete);
+    const deleteFinishedOrder = await FinishedOrders.destroy({
+      where: {
+        id: idForDelete,
+      },
+    });
+    res.status(200).json({ message: "Order is deleted", deleteFinishedOrder });
+  } catch (error) {
+    res.status(400).json({ message: "id not Found", error });
+  }
+};
+const searchOrder = async (req, res) => {
+  try {
+    let { searchID, tableOrders } = req.body;
+    console.log(searchID,tableOrders)
+    let foundOrder;
+    if (tableOrders === "new") {
+      foundOrder = await Orders.findOne({
+        where: {
+          id: searchID,
+        },
+      });
+    } else {
+      foundOrder = await FinishedOrders.findOne({
+        where: {
+          id: searchID,
+        },
+      });
+    }
+    res.status(200).json({ message: "Order found", foundOrder });
+  } catch (error) {
+    res.status(400).json({ message: "Order not found", error });
+  }
 };
 
 module.exports = {
   getAllOrders,
   finishOrder,
   deleteOrder,
+  searchOrder,
 };
