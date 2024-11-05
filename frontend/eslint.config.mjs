@@ -27,5 +27,9 @@ export default [
         version: "detect", // Automatische Erkennung der installierten React-Version
       },
     },
+    rules: {
+      // Deaktivierung der Prop-Types-Validierung
+      "react/prop-types": "off", // oder 0
+    },
   },
 ];

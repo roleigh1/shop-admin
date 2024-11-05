@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -19,7 +19,7 @@ export default function InsertData() {
     text: "",
     unit: "",
   });
-
+  const fileInputRef = useRef(null);
   const [pictures, setPictures] = useState([]);
   const [errorTextFile, setErrorTextFile] = useState("");
   const { setFlagInsertItem } = useMyContext(MyProvider);
@@ -75,6 +75,9 @@ console.log(formDataToSend);
         setPictures([]);
         setErrorTextFile(""); // Reset error message
         setFlagInsertItem(true);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null;
+        }
       } catch (error) {
         console.error("Upload error:", error);
       }
@@ -149,7 +152,6 @@ console.log(formDataToSend);
             size="small"
           >
             <MenuItem value={"KG"}>1 KG</MenuItem>
-            <MenuItem value={"Bunch"}>Bunch</MenuItem>
             <MenuItem value={"1/2 KG"}>1/2 KG</MenuItem>
             <MenuItem value={"1/4 KG"}>1/4 KG</MenuItem>
             <MenuItem value={"100g"}>100g</MenuItem>
@@ -212,6 +214,7 @@ console.log(formDataToSend);
           multiple
           onChange={handleFileChange}
           accept="image/jpeg, image/jpg, image/png"
+          ref={fileInputRef}
         />
 
         <span className="text-red-500 ">{errorTextFile}</span>

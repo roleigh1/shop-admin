@@ -4,7 +4,7 @@ const Pagination = ({ pageState, setPageState }) => {
   const totalPages = Math.ceil(pageState.total / pageState.pageSize);
   const currentPage = pageState.page;
 
-  // Berechne den Start- und Endwert für die Anzeige der Seiten
+
   const startPage = Math.max(1, currentPage - 1);
   const endPage = Math.min(totalPages, startPage + 2);
 
