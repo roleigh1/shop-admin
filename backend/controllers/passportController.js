@@ -5,12 +5,12 @@ const { User } = require("../models/models");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_TOKEN,
+  secretOrKey: process.env.JWT_SECRET,
 };
-
 passport.use(
   new Strategy(options, async (payload, done) => {
     try {
+      
       const user = await User.findByPk(payload.userId);
       if (user) {
         return done(null, user);

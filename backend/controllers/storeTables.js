@@ -1,8 +1,4 @@
-const {
-  ProductsDB,
-  BestSellerItemsDB,
-  FinishedOrders,
-} = require("../models/models");
+const { ProductsDB, BestSellerItemsDB } = require("../models/models");
 const { Op } = require("sequelize");
 const getInventoryTable = async (req, res) => {
   try {
@@ -26,13 +22,11 @@ const getInventoryTable = async (req, res) => {
       .json({ message: "Problem getting Inventory Tables", error });
   }
 };
-const getDeleteID = async (req, res) => {
+const deleteInventory = async (req, res) => {
   try {
-    let { idForDelete, table, idForDeleteOrders, tableOrders } = req.body;
-    if (table === undefined) {
-      table = tableOrders;
-    }
-    console.log("Table recived:", table);
+    let { idForDelete, table } = req.body;
+
+    console.log("Table recived:", table, idForDelete);
 
     switch (table) {
       case "Bestseller":
@@ -53,15 +47,6 @@ const getDeleteID = async (req, res) => {
           },
         });
         break;
-      case "finished":
-        await FinishedOrders.destroy({
-          where: {
-            id: {
-              [Op.in]: idForDeleteOrders,
-            },
-          },
-        });
-        break;
       default:
         console.log("nothing deleted");
     }
@@ -73,7 +58,9 @@ const getDeleteID = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getInventoryTable,
-  getDeleteID,
+  deleteInventory,
+
 };

@@ -1,17 +1,17 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Alert from "@mui/material/Alert";
 
+import { POST_DELETE, SEARCH_ORDER } from "../../config/apiPaths";
+import Pagination from "./PaginationComponent";
 import "./style.css";
+const api_Host = process.env.REACT_APP_API_HOST;
+import "./style.css";
+import DialogFoundOrder from "./FoundOrderDialog";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "email", headerName: "Email", width: 200 },
@@ -34,6 +34,7 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+
   const {
     rowSelectionModelOrders,
     setRowSelectionModelOrders,
@@ -42,14 +43,13 @@ export default function OrdersTableDB() {
     pageState,
     tableOrders,
     setTableOrders,
-    postIdForDelete,
+    setPageState,
     setFlagOrders,
   } = useMyContext(MyProvider);
 
-  const handlePageChange = () => {
-    console.log(rowSelectionModelOrders);
+  const handleFinishOrder = () => {
+    console.log("Test", rowSelectionModelOrders);
     orderFinishProcess(rowSelectionModelOrders);
-    window.location.reload();
   };
 
   const handleChange = (event) => {
@@ -61,67 +61,78 @@ export default function OrdersTableDB() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleIdSearch = () => {
-    let newId = Number(searchID);
-    const data = [...pageState.data]; // Kopie von data erstellen
 
-    function binarySearch(data, newId) {
-      // Sortiere die Kopie von data nach der ID
-      data.sort((a, b) => {
-        return a.id - b.id;
+  const handleIdSearch = async () => {
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchID, tableOrders }),
+    };
+    fetch(`${api_Host}${SEARCH_ORDER}`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("id found", data);
+
+        setFoundData(data);
+        handleClickOpen();
+        setNotFound(false);
+      })
+      .catch((error) => {
+        console.error("Error sending req", error);
+        setNotFound(true);
+        setSearchID("");
       });
-
-      let left = 0,
-        right = data.length - 1;
-      while (left <= right) {
-        let mid = Math.floor((left + right) / 2);
-
-        if (data[mid].id === newId) {
-          setFoundData(data[mid]);
-          handleClickOpen();
-          setNotFound(false);
-          return;
-        } else if (data[mid].id < newId) {
-          left = mid + 1;
-        } else {
-          right = mid - 1;
-        }
-      }
-      setNotFound(true);
-      setFoundData(null);
-      handleClickOpen();
-    }
-
-    binarySearch(data, newId);
-    setSearchID("");
   };
   const handleSearchIDChange = (e) => {
     setSearchID(e.target.value);
   };
 
   const handleDelete = async () => {
-    postIdForDelete();
+    let idForDelete = rowSelectionModelOrders;
+    console.log(idForDelete);
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idForDelete }),
+    };
+    fetch(`${api_Host}${POST_DELETE}orders`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("res recived", data);
+        setRowSelectionModelOrders("");
+        fetchAllOrders();
+      })
+      .catch((error) => {
+        console.error("Error sending req", error);
+      });
   };
+
   useEffect(() => {
     setFlagOrders(true);
     fetchAllOrders();
   }, [newValue, pageState.page, foundData]);
-
+  useEffect(() => {
+    console.log("Updated pageState:", pageState);
+  }, [pageState]);
   useEffect(() => {}, []);
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
+    console.log("test");
   };
+  useEffect(() => {
+    fetchAllOrders();
+  }, []);
   return (
     <div>
-      <div
-        className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em" }}
-      >
-        <div className="top-actions" style={{ marginLeft: "2rem" }}>
+      <div className="main  mt-2 mb-8">
+        <div className="top-actions ml-5 ">
           <Select
-            style={{ marginBottom: "1rem", marginLeft: "1rem" }}
-            className="select"
+            className="select mb-2 ml-2"
             labelId="demo-select-small-label"
             id="demo-select-small"
             value={tableOrders}
@@ -132,58 +143,47 @@ export default function OrdersTableDB() {
             <MenuItem value={"finished"}>Done orders</MenuItem>
           </Select>
           <Button
-            className="finish"
+            className="finish realtive left-3"
             style={{
               visibility: tableOrders === "finished" ? "hidden" : "visible",
-              marginLeft: "1rem",
             }}
             variant="outlined"
-            onClick={handlePageChange}
+            onClick={handleFinishOrder}
           >
             {" "}
             Finish Order
           </Button>
         </div>
 
-        <div className="dataGriddiv" style={{ width: "60vw", margin: "auto" }}>
+        <div className="dataGriddiv m-auto " style={{ width: "60vw" }}>
           <DataGrid
-            style={{ width: "90%", height: "30rem", margin: "auto" }}
+            style={{ height: "25rem" }}
+            className="w-[90%] m-auto table"
             rows={pageState.data}
-            rowCount={pageState.total}
-            page={pageState.page}
-            pageSize={pageState.pageSize}
             columns={columns}
             loading={pageState.isLoading}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 5, pageSize: 5 },
-              },
-            }}
+            initialState={{ pagination: { pageState } }}
             pagination
             onRowSelectionModelChange={setRowSelectionModelOrders}
             rowSelectionModel={rowSelectionModelOrders}
             pageSizeOptions={[5, 40, 60]}
             checkboxSelection
-            className="table"
+          />
+          <Pagination
+            pageState={pageState}
+            className=""
+            setPageState={setPageState}
           />
         </div>
-        <div
-          className="actions"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
-            marginLeft: "1rem",
-            marginTop: "0.5rem",
-          }}
-        >
+        <div className="actions flex flex-row gap-5 ml-2 mt-1">
           <TextField
             id="outlined-basic"
             onChange={handleSearchIDChange}
+            className="text-center"
             value={searchID}
             label="Order-ID"
             type="number"
-            style={{ width: "100px", height: "20px", textAlign: "center" }}
+            style={{ width: "100px", height: "20px" }}
             variant="outlined"
           />
           <svg
@@ -214,62 +214,12 @@ export default function OrdersTableDB() {
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
         </div>
-        <Dialog
+        <DialogFoundOrder
           open={open}
+          foundData={foundData}
+          notFound={notFound}
           onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title" style={{ fontWeight: "bold" }}>
-            Order Found
-          </DialogTitle>
-          <DialogContent>
-            <table>
-              <tbody>
-                {foundData &&
-                  Object.entries(foundData).map(([key, value]) => (
-                    <tr key={key}>
-                      <td
-                        style={{
-                          fontWeight: "bold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {key}:
-                      </td>
-                      <td>{value}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              close
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog
-          open={notFound}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="alert-dialog-title"
-            style={{ fontWeight: "bold" }}
-          ></DialogTitle>
-          <DialogContent>
-            <Alert className="notFound" severity="error">
-              Order not found!
-            </Alert>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              close
-            </Button>
-          </DialogActions>
-        </Dialog>
+        />
       </div>
     </div>
   );

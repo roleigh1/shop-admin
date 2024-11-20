@@ -9,13 +9,10 @@ export default function SalesLineChart() {
   const isSmallScreen = useMediaQuery("(max-width:768px)");
   const width = isSmallScreen ? 300 : 600;
   return (
-    <div className="chartDiv" style={{}}>
-      <h5
-        className="hline"
-        style={{ position: "relative", left: "3rem", top: "2rem" }}
-      >
-        Monatlicher Recap Report{" "}
-      </h5>
+    <div className="p-4">
+      <h1 className="relative left-14 top-8  text-sm">
+      Monthly Sales Report
+      </h1>
 
       <LineChart
         xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }]}

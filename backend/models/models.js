@@ -1,3 +1,4 @@
+const { describe } = require("node:test");
 const { Sequelize, DataTypes } = require("sequelize");
 const dbName = process.env.TABLE;
 const dbUser = process.env.DBUSER;
@@ -85,9 +86,29 @@ const ProductsDB = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    image: {
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    unit:{
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    firstImage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
@@ -110,7 +131,27 @@ const BestSellerItemsDB = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    image: {
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    unit:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    firstImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -227,10 +268,6 @@ const BannerData = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    top: {
-      type:DataTypes.INTEGER,
-      allowNull:true,
-    }
   },
   {
     tableName: "banners",

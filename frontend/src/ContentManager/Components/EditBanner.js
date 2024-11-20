@@ -14,7 +14,9 @@ import DialogContent from "@mui/material/DialogContent";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import DialogTitle from "@mui/material/DialogTitle";
+import { POST_CONTENT } from "../../config/apiPaths";
 
+const api_Host = process.env.REACT_APP_API_HOST;
 export default function Editbanner() {
   const { fetchEditBanners, which, setWhich, bannerData } =
     useMyContext(MyProvider);
@@ -24,7 +26,6 @@ export default function Editbanner() {
     text: "",
     img: "",
     imageUpload: null,
-    top: 50,
   });
 
   useEffect(() => {
@@ -81,7 +82,6 @@ export default function Editbanner() {
     formData.append("text", editData.text);
     formData.append("location", which);
     formData.append("picture", editData.imageUpload);
-    formData.append("top", editData.top);
     formData.append("bottom", editData.bottom);
 
     console.log(editData);
@@ -90,7 +90,7 @@ export default function Editbanner() {
 
   const postContentEdit = (formData) => {
     axios
-      .post("http://localhost:3131/api/contentEdit/banner", formData, {
+      .post(`${api_Host}${POST_CONTENT}banner`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -105,149 +105,99 @@ export default function Editbanner() {
 
   return (
     <div>
-      <h3 style={{ textAlign: "center", paddingTop: "3rem" }}>
-        Edit Image Banners
-      </h3>
-      <div>
-        <form
-          onSubmit={formSubmit}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
-        >
-          <FormControl>
-            <InputLabel htmlFor="demo-simple-select-label">Which</InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              label="Which"
-              value={which}
-              style={{ width: "8rem", height: "3rem" }}
-              onChange={handleChange}
-              required
-            >
-              <MenuItem value={"Home"}>Home</MenuItem>
-              <MenuItem value={"Products"}>Products</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            id="outlined-basic"
-            label="header"
-            value={editData?.headline || ""}
-            onChange={(e) => handleInputChange("headline", e.target.value)}
-            variant="outlined"
-            style={{ width: "80%" }}
+    <h3 className="text-center pb-4 pt-8">Edit Image Banners</h3>
+    <div>
+      <form onSubmit={formSubmit} className="flex justify-center items-center gap-4">
+        <FormControl>
+          <InputLabel htmlFor="demo-simple-select-label">Which</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            label="Which"
+            value={which}
+            className="w-32 h-12"
+            onChange={handleChange}
             required
-          />
-          <TextField
-            id="outlined-multiline-static"
-            label="Text"
-            multiline
-            style={{ width: "80%" }}
-            rows={4}
-            value={editData?.text || ""}
-            onChange={(e) => handleInputChange("text", e.target.value)}
-          />
-          <Button
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
           >
-            Upload file
-            <input
-              type="file"
-              style={{ display: "none" }}
-              name="image"
-              onChange={handleFileChange}
-            />
-          </Button>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ width: 80 }}>
-              <span style={{ fontSize: "0.8em", marginLeft: "1.9rem" }}>
-                Top:
-              </span>
-              <Slider
-                size="small"
-                min={-100}
-                max={100}
-                aria-label="Small"
-                valueLabelDisplay="auto"
-                value={editData?.top || 0}
-                onChange={(e, value) => handleInputChange("top", value)}
-              />
-            </Box>
-            <svg
-              className="watch"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ position: "relative", bottom: "0.5rem" }}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              onClick={handleClickOpen}
-            >
-              <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
-            </svg>
-            <Button type="submit" variant="outlined" value="submit">
-              Submit
-            </Button>
-          </div>
-        </form>
-      </div>
-      <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+            <MenuItem value={"Home"}>Home</MenuItem>
+            <MenuItem value={"Products"}>Products</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          id="outlined-basic"
+          label="Header"
+          value={editData?.headline || ""}
+          onChange={(e) => handleInputChange("headline", e.target.value)}
+          variant="outlined"
+          className="w-4/5"
+          required
+        />
+        <TextField
+          id="outlined-multiline-static"
+          label="Text"
+          multiline
+          className="w-4/5"
+          rows={4}
+          value={editData?.text || ""}
+          onChange={(e) => handleInputChange("text", e.target.value)}
+        />
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
         >
-          <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
-          <DialogContent>
-            <section
-              style={{
-                position: "relative",
-                height: "25rem",
-                display: "flex",
-                width: "100%",
-                alignItems: "center",
-
-                textAlign: "center",
-                backgroundImage: `url(${editData?.img || ""})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                borderRadius: "10px",
-              }}
-            >
-              <div
-                style={{
-                  color: "black",
-
-                  position: "relative",
-                  top: editData?.top || "",
-                }}
-              >
-                <h2 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h2>
-                <p style={{ fontSize: "20px", opacity: "0.7" }}>
-                  {editData?.text || ""}
-                </p>
-              </div>
-            </section>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+          Upload file
+          <input
+            type="file"
+            className="hidden"
+            name="image"
+            onChange={handleFileChange}
+          />
+        </Button>
+        <div className="flex flex-col items-center">
+         
+          <svg
+            className="relative bottom-2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            onClick={handleClickOpen}
+          >
+            <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+          </svg>
+          <Button type="submit" variant="outlined" value="submit">
+            Submit
+          </Button>
+        </div>
+      </form>
+    </div>
+    <div>
+      <Dialog open={open}   onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
+        <DialogContent style={{height:"100%"}}>
+        <div className="container my-5 relative max-w-xl mx-auto mt-20">
+    <div className="relative">
+      <img
+        className="h-60 w-[30rem] object-cover rounded-md"
+        src={editData?.img}
+        alt="Banner"
+      />
+      <div className="absolute inset-0 bg-gray-700 opacity-60 rounded-md"></div>
+      <div className="absolute inset-0 text-center flex items-center justify-center flex-col">
+        <h2 className="text-white text-1xl mt-5">{editData?.headline}</h2>
+        <p className="text-white text-xl mb-10">{editData?.text}</p>
       </div>
     </div>
+  </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  </div>
   );
 }

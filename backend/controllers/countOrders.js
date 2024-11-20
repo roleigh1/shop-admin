@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { FinishedOrders } = require("../models/models");
+const { FinishedOrders,Orders } = require("../models/models");
 
 const moment = require("moment");
 function getLastMonday() {
@@ -16,17 +16,11 @@ let lastMonday = getLastMonday();
 console.log(lastMonday);
 const countOperation = async (lastMonday, res) => {
   try {
-    const ordersCountLastMonday = await FinishedOrders.count({
-      where: {
-        createdAt: {
-          [Op.gte]: lastMonday,
-        },
-      },
-    });
+    const newArrivedOrders = await Orders.count();
     const countOrder = await FinishedOrders.count();
 
     const counterOp = {
-      ordersCountLastMonday,
+      newArrivedOrders,
       countOrder,
     };
     res.json({ counterOp });

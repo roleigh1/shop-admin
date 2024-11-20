@@ -1,25 +1,17 @@
 import "./backgrounds.css";
 import React from "react";
 import PropTypes from "prop-types"; 
+
 export default function BackgroundBanner({ children }) {
   return (
     <div>
-      <div
-        className="backgroundBanner"
-        style={{
-          backgroundColor: "#ebeceb",
-          width: "15rem",
-          height: "40rem",
-          borderTopLeftRadius: "10px",
-          borderBottomLeftRadius: "10px",
-          marginTop: "1.5rem",
-        }}
-      >
+      <div className="backgroundBanner bg-[#ebeceb] w-60 h-[31rem] rounded-tl-lg rounded-bl-lg mt-6">
         {children}
       </div>
     </div>
   );
 }
+
 BackgroundBanner.propTypes = {
   children: PropTypes.node.isRequired,
 };

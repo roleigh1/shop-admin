@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.0",
     "bootstrap": "^5.3.3",
+    "currency.js": "^2.0.4",
     "dotenv": "^16.4.1",
     "mdb-react-ui-kit": "^7.2.0",
     "path-browserify": "^1.0.1",
@@ -49,15 +50,24 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.24.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
     "@eslint/compat": "^1.0.3",
     "@eslint/js": "^9.4.0",
+    "autoprefixer": "^10.4.19",
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jest": "^28.5.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.34.2",
-    "globals": "^15.3.0",
+    "globals": "^15.4.0",
+    "postcss": "^8.4.39",
     "prettier": "^3.3.0",
+    "tailwindcss": "^3.4.5",
     "typescript-eslint": "^7.12.0"
   }
 }

@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Kopiere den Ordner mit den Bildern in das Arbeitsverzeichnis im Container
-COPY uploads /app/uploads
+
 # Exponiere den Port, auf dem der Server läuft
 EXPOSE 3131
 
