@@ -16,9 +16,9 @@ import Slider from "@mui/material/Slider";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export default function Editbanner() {
-  const { fetchEditBanners, which, setWhich, bannerData } =
-    useMyContext(MyProvider);
+  const { fetchEditBanners, which, setWhich } = useMyContext(MyProvider);
   const [open, setOpen] = useState(false);
+  const [bannerData, setBannerData] = useState([]);
   const [editData, setEditData] = useState({
     headline: "",
     text: "",
@@ -26,20 +26,30 @@ export default function Editbanner() {
     imageUpload: null,
     top: 50,
   });
-
   useEffect(() => {
+    const fetchEditBanners = () => {
+      axios
+        .get("http://localhost:3131/api/contentdata/banners")
+        .then((response) => {
+          setBannerData(response.data.contentData.banners);
+        })
+        .catch((error) => {
+          console.error("Error fetching content data", error);
+        });
+    };
     fetchEditBanners();
-  }, []);
+
+  }, [which]);
 
   useEffect(() => {
-    if (which) {
+    if (bannerData && bannerData.length > 0 && which) {
       if (which === "Products") {
         setEditData(bannerData[0]);
       } else {
         setEditData(bannerData[1]);
       }
     }
-    console.log(which);
+
   }, [which, bannerData]);
   const handleChange = (event) => {
     const newTable = event.target.value;
@@ -96,7 +106,7 @@ export default function Editbanner() {
         },
       })
       .then(function (response) {
-        console.log(response);
+        alert("Data edited")
       })
       .catch(function (error) {
         console.log(error);

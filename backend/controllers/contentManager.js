@@ -1,17 +1,10 @@
 const { BannerData, InfoCard } = require("../models/models");
-const multer = require("multer");
+const upload = require("../multer/upload");
+const fs = require("fs");
+const path = require("path");
+const AWS = require("aws-sdk");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-
+const s3 = new AWS.S3();
 const getContentData = async (req, res) => {
   try {
     const whichContent = req.params.whichContent;
@@ -39,68 +32,65 @@ const getContentData = async (req, res) => {
   }
 };
 
-const uploadData = (req, res) => {
-  const singleUpload = upload.single("picture");
+const uploadData = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded");
+  }
 
-  singleUpload(req, res, async (err) => {
+  const fileStream = fs.createReadStream(req.file.path);
+
+  const params = {
+    Bucket: "shop",
+    Key: req.file.filename,
+    Body: fileStream,
+    ACL: "public-read",
+  };
+
+  s3.upload(params, async (err, data) => {
+    fs.unlinkSync(req.file.path);
+
     if (err) {
-      return res
-        .status(400)
-        .json({ message: "Upload failed", error: err.message });
+      console.error("Error uploading to S3", err);
+      return res.status(500).send("Error uploading file to bucket");
     }
+
     try {
       const whichContent = req.params.whichContent;
-      let url = "http://localhost:3131/";
-      const imagePath = (url += `uploads/${req.file.filename}`);
-      const { headline, text, location, top } = req.body;
-      const { name, cardText, id } = req.body;
+
+      const imagePath = data.Location;
+      const { headline, text, location, top, name, cardText, id } = req.body;
+
       switch (whichContent) {
         case "banner":
-          console.log("Image Path:", imagePath);
-          console.log("Headline:", headline);
-          console.log("Text:", text);
-          console.log("Location:", location);
-          console.log("Top:", top);
-
           await BannerData.update(
             {
-              headline: headline,
-              text: text,
+              headline,
+              text,
               img: imagePath,
-              top: top,
+              top,
             },
             {
-              where: {
-                location: location,
-              },
+              where: { location },
             }
           );
           return res.json({
-            message: "Upload successful",
+            message: "Banner upload successful",
             imageUrl: imagePath,
           });
 
         case "cards":
-          console.log("id", id);
-          console.log("Image Path:", imagePath);
-          console.log("Name:", name);
-          console.log("Text:", cardText);
-
           await InfoCard.update(
             {
-              name: name,
+              name,
               text: cardText,
               image: imagePath,
             },
             {
-              where: {
-                id: id,
-              },
+              where: { id },
             }
           );
-
           return res.json({
-            message: "Upload successful",
+            message: "Card upload successful",
             imageUrl: imagePath,
           });
 
@@ -108,7 +98,7 @@ const uploadData = (req, res) => {
           return res.status(400).json({ message: "Invalid content type" });
       }
     } catch (error) {
-      console.error("Error saving image locally:", error);
+      console.error("Error updating database:", error);
       return res.status(500).json({ message: "Internal Server Error" });
     }
   });

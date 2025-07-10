@@ -172,16 +172,7 @@ export const MyProvider = ({ children }) => {
         console.error("Error fetching counter", error);
       });
   };
-  const fetchEditBanners = () => {
-    axios
-      .get("http://localhost:3131/api/contentdata/banners")
-      .then((response) => {
-        setBannerData(response.data.contentData);
-      })
-      .catch((error) => {
-        console.error("Error fetching content data", error);
-      });
-  };
+ 
   const fetchEditCards = () => {
     axios
       .get("http://localhost:3131/api/contentdata/cards")
@@ -249,7 +240,6 @@ export const MyProvider = ({ children }) => {
         setBannerData,
         which,
         setWhich,
-        fetchEditBanners,
         fetchEditCards,
         cardsData,
         choosenCards,

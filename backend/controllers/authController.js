@@ -24,7 +24,25 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Login failed", error: err });
   }
 };
+const register = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = await User.create({
+      username,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({ message: "User created", userId: newUser.id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Registration failed" });
+  }
+};
 
 module.exports = {
   login,
+  register,
 };
