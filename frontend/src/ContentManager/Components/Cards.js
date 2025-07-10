@@ -7,26 +7,8 @@ import Typography from "@mui/material/Typography";
 import { useMyContext } from "../../ContextApi";
 
 function CardItem({ editCard }) {
-  const { cardsData, choosenCards } = useMyContext();
 
-  useEffect(() => {
-    switch (choosenCards) {
-      case "1":
-        console.log("1");
-        break;
-      case "2":
-        console.log("2");
-        break;
-      case "3":
-        console.log("3");
-        break;
-      default:
-        console.log("error");
-        break;
-    }
-  }, [choosenCards]);
 
-  if (!cardsData.length) return null;
 
   return (
     <Card sx={{ maxWidth: 200, height: 400 }}>

@@ -28,9 +28,9 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-  const [cardsData, setCardsData] = useState({});
+
   const [which, setWhich] = useState("Products");
-  const [choosenCards, setChoosenCards] = useState("");
+
 
   let formData = new FormData();
   const fetchInventory = () => {
@@ -173,16 +173,7 @@ export const MyProvider = ({ children }) => {
       });
   };
  
-  const fetchEditCards = () => {
-    axios
-      .get("http://localhost:3131/api/contentdata/cards")
-      .then((response) => {
-        setCardsData(response.data.contentData);
-      })
-      .catch((error) => {
-        console.log(error,"Error fetching Cards data");
-      });
-  };
+ 
 
   useEffect(() => {
     fetchData();
@@ -240,12 +231,8 @@ export const MyProvider = ({ children }) => {
         setBannerData,
         which,
         setWhich,
-        fetchEditCards,
-        cardsData,
-        choosenCards,
-        setChoosenCards,
-        formData,
-        setCardsData,
+
+        formData
       }}
     >
       {children}

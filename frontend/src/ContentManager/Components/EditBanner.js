@@ -29,7 +29,7 @@ export default function Editbanner() {
   useEffect(() => {
     const fetchEditBanners = () => {
       axios
-        .get("http://localhost:3131/api/contentdata/banners")
+        .get("http://localhost:3131/api/contentData/banners")
         .then((response) => {
           setBannerData(response.data.contentData.banners);
         })

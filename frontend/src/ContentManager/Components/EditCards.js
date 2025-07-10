@@ -10,32 +10,37 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
 export default function EditCards() {
-  const { fetchEditCards, cardsData, choosenCards, setChoosenCards } =
-    useMyContext(MyProvider);
-  const [editCard, setEditCard] = useState("");
+  const [editCard, setEditCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-
+  const [choosenCards, setChoosenCards] = useState("");
+  const [cardsData, setCardsData] = useState([]);
   useEffect(() => {
+    const fetchEditCards = () => {
+      axios
+        .get("http://localhost:3131/api/contentdata/cards")
+        .then((response) => {
+          setCardsData(response.data.contentData.cards);
+        })
+        .catch((error) => {
+          console.log(error, "Error fetching Cards data");
+        });
+    };
     fetchEditCards();
+    console.log(cardsData);
   }, []);
 
   useEffect(() => {
-    switch (choosenCards) {
-      case "1":
-        setEditCard(cardsData[0]);
+    if (!choosenCards || cardsData.length === 0)  return; 
+      const selected = cardsData.find(
+        (card) => card.id === parseInt(choosenCards)
+      )
+      if (selected) {
+        setEditCard(selected);
         setIsVisible(true);
-        break;
-      case "2":
-        setEditCard(cardsData[1]);
-        setIsVisible(true);
-        break;
-      case "3":
-        setEditCard(cardsData[2]);
-        setIsVisible(true);
-        break;
-      default:
+      } else {
         console.log("Error setting data in the inputs");
-    }
+      }
+    
   }, [choosenCards, cardsData]);
 
   const handleChange = (event) => {
