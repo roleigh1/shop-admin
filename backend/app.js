@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 
 const routes = require("./routes/authroute");
-const { Tier } = require("@aws-sdk/client-s3");
+
 
 app.use("/api", routes, passport.initialize());
 app.use(express.static("public"));

@@ -25,8 +25,9 @@ export default function InsertData() {
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
-    formData.append("image", pictureInsert);
-    fetch(insertURL, {
+    formData.append("picture", pictureInsert);
+    console.log(insertURL)
+    fetch(insertURL , {
       method: "POST",
       body: formData,
     })

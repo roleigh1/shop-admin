@@ -1,4 +1,10 @@
-const { BannerData, InfoCard } = require("../models/models");
+const {
+  BannerData,
+  InfoCard,
+  BestSellerItemsDB,
+  ProductsDB,
+  sequelize,
+} = require("../models/models");
 const upload = require("../multer/upload");
 const fs = require("fs");
 const path = require("path");
@@ -22,6 +28,7 @@ const getContentData = async (req, res) => {
           limit: 3,
         });
         break;
+  
       default:
         res.status(400).json({ message: "Invalid content type" });
     }
@@ -58,7 +65,18 @@ const uploadData = async (req, res) => {
       const whichContent = req.params.whichContent;
 
       const imagePath = data.Location;
-      const { headline, text, location, top, name, cardText, id } = req.body;
+      const {
+        headline,
+        text,
+        location,
+        top,
+        name,
+        cardText,
+        id,
+        where,
+        type,
+        price,
+      } = req.body;
 
       switch (whichContent) {
         case "banner":
@@ -93,7 +111,47 @@ const uploadData = async (req, res) => {
             message: "Card upload successful",
             imageUrl: imagePath,
           });
+        case "inventory":
+          console.log(name,price,type)
+          if (where === "products") {
+            
+            const ProductId = await ProductsDB.findOne({
+              attributes: [
+                [sequelize.fn("max", sequelize.col("id")), "lastId"],
+              ],
+            });
+            let lastId = ProductId.get("lastId") || 0;
+            console.log("last Product ID", lastId);
+            const Product = await ProductsDB.create({
+              id: lastId + 1,
+              name: name,
+              price: Number(price),
+              image: imagePath,
+              type: type,
+            });
+            console.log("Product generated ID:", Product.id);
+          } else {
+            const lastBestsellerID = await BestSellerItemsDB.findOne({
+              attributes: [
+                [sequelize.fn("max", sequelize.col("id")), "lastId"],
+              ],
+            });
+            let lastBestseller = lastBestsellerID.get("lastId") || 0;
+            console.log("Last Bestseller ID:", lastBestseller);
 
+            const Bestseller = await BestSellerItemsDB.create({
+              id: lastBestseller + 1,
+              name: name,
+              price: Number(price),
+              image: imagePath,
+              type: type,
+            });
+            console.log("Bestseller generated ID:", Bestseller.id);
+          }
+          return res.json({
+            message: "Inventory upload successful",
+            imageUrl: imagePath,
+          });
         default:
           return res.status(400).json({ message: "Invalid content type" });
       }

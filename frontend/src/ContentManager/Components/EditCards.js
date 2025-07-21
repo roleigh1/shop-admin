@@ -83,6 +83,7 @@ export default function EditCards() {
       })
       .then(function (response) {
         console.log(response);
+        alert("Data edited")
       })
       .catch(function (error) {
         console.log(error);
