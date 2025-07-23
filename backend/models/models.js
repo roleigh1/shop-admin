@@ -81,13 +81,29 @@ const ProductsDB = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    unit:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    image: {
+   firstImage: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
@@ -106,11 +122,27 @@ const BestSellerItemsDB = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    unit:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     price: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    image: {
+    firstImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    secondImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    thirdImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    fourthImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -5,9 +5,9 @@ const {
   ProductsDB,
   sequelize,
 } = require("../models/models");
-const upload = require("../multer/upload");
+
 const fs = require("fs");
-const path = require("path");
+
 const AWS = require("aws-sdk");
 
 const s3 = new AWS.S3();
@@ -76,6 +76,7 @@ const uploadData = async (req, res) => {
         where,
         type,
         price,
+        unity
       } = req.body;
 
       switch (whichContent) {
@@ -125,6 +126,7 @@ const uploadData = async (req, res) => {
             const Product = await ProductsDB.create({
               id: lastId + 1,
               name: name,
+              unity: unity,
               price: Number(price),
               image: imagePath,
               type: type,
@@ -142,6 +144,7 @@ const uploadData = async (req, res) => {
             const Bestseller = await BestSellerItemsDB.create({
               id: lastBestseller + 1,
               name: name,
+              unity: unity,
               price: Number(price),
               image: imagePath,
               type: type,

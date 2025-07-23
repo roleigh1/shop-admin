@@ -15,7 +15,8 @@ export default function InsertData() {
   const [name, setName] = useState("");
   const [where, setWhere] = useState("");
   const [price, setPrice] = useState("");
-  const [pictureInsert, setPictureInsert] = useState(null);
+  const [files,setFiles] = useState([]);
+  const [unity, setUnity] = useState(""); 
   const [imgName, setImgName] = useState("");
 
   const handleUpload = async (e) => {
@@ -25,7 +26,8 @@ export default function InsertData() {
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
-    formData.append("picture", pictureInsert);
+    formData.append("unity",unity)
+    formData.append("picture", files);
     console.log(insertURL)
     fetch(insertURL , {
       method: "POST",
@@ -34,28 +36,33 @@ export default function InsertData() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Upload succsessful:", data);
-        setType("");
-        setName("");
-        setWhere("");
-        setPrice("");
-        setPictureInsert("");
-        setImgName("");
+   
       })
       .catch((error) => {
         console.error("Upload error", error);
       });
   };
-  const handleFileChange = (event) => {
-    let file = event.target.files[0];
-    setPictureInsert(file);
-    setImgName(file.name);
-    console.log(file);
-    const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+  const handleFileChange = (e) => {
+      const selectedFiles = [...e.target.files]; 
+      setFiles(selectedFiles); 
+    
+      
+      const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"]; 
+      for(const file of selectedFiles){
+        if(!supportedImageTypes.includes(file.type) ) {
+          alert("Pleas select valid image files (jpg,jpeg,png"); 
+          break; 
+        }
+      }
+      if(selectedFiles.length > 4){
+        console.log("trigger")
+      }
+      if(selectedFiles.length > 0) {
+        setImgName(selectedFiles.map(file => file.name).join(","))
+      }
+        console.log(selectedFiles);
+  }
 
-    if (!supportedImageTypes.includes(file.type)) {
-      alert("Please enter a valid Image");
-    }
-  };
 
   return (
     <div
@@ -135,6 +142,23 @@ export default function InsertData() {
           style={{ width: "4rem" }}
           required
         />
+         <FormControl>
+          <InputLabel htmlFor="demo-simple-select-label">Type</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={unity}
+            label="Type"
+            onChange={(e) => setUnity(e.target.value)}
+            style={{ width: "6rem", height: "3rem" }}
+            required
+          >
+            <MenuItem value={"1kg"}>1 kg</MenuItem>
+            <MenuItem value={"500g"}>500g</MenuItem>
+            <MenuItem value={"100g"}>100g</MenuItem>
+            <MenuItem value={"piece"}>piece</MenuItem>
+          </Select>
+        </FormControl>
         <Button
           component="label"
           variant="contained"
@@ -146,10 +170,19 @@ export default function InsertData() {
             style={{ display: "none" }}
             name="image"
             required
+            multiple
             onChange={handleFileChange}
           />
         </Button>
-
+        {
+          files.length > 0 && (
+            <ul> 
+              {files.map((file,index) => {
+                <li key={index}>{file.name}</li>
+              })}
+            </ul>
+           
+          )}
         <span style={{ color: "black", position: "relative" }}>{imgName}</span>
 
         <Button type="submit" variant="outlined" value="submit">
