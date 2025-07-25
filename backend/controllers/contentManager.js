@@ -113,7 +113,10 @@ const uploadData = async (req, res) => {
             imageUrl: imagePath,
           });
         case "inventory":
-          console.log(name,price,type)
+          console.log(name,price,type,imagePath
+    
+          )
+          /*
           if (where === "products") {
             
             const ProductId = await ProductsDB.findOne({
@@ -132,6 +135,7 @@ const uploadData = async (req, res) => {
               type: type,
             });
             console.log("Product generated ID:", Product.id);
+          
           } else {
             const lastBestsellerID = await BestSellerItemsDB.findOne({
               attributes: [
@@ -155,6 +159,8 @@ const uploadData = async (req, res) => {
             message: "Inventory upload successful",
             imageUrl: imagePath,
           });
+            */
+           break;
         default:
           return res.status(400).json({ message: "Invalid content type" });
       }

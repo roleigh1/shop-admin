@@ -26,8 +26,10 @@ export default function InsertData() {
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
-    formData.append("unity",unity)
-    formData.append("picture", files);
+    formData.append("unity",unity) 
+    files.forEach((file) => {
+      formData.append("gallery",file); 
+    })
     console.log(insertURL)
     fetch(insertURL , {
       method: "POST",
@@ -44,6 +46,13 @@ export default function InsertData() {
   };
   const handleFileChange = (e) => {
       const selectedFiles = [...e.target.files]; 
+      const sortedSelectedFiles = selectedFiles.sort((a,b) => {
+        const getNumber = (filename) => {
+          const match = filename.match(/\d+/); 
+          return match ? parseInt(match[0],10) : 0; 
+        }; 
+        return getNumber(a.name) - getNumber(b.name); 
+      }); 
       setFiles(selectedFiles); 
     
       
@@ -52,10 +61,12 @@ export default function InsertData() {
         if(!supportedImageTypes.includes(file.type) ) {
           alert("Pleas select valid image files (jpg,jpeg,png"); 
           break; 
-        }
+        
+        } 
       }
       if(selectedFiles.length > 4){
-        console.log("trigger")
+        alert("To many Images selected please chose 4 Images"); 
+       return; 
       }
       if(selectedFiles.length > 0) {
         setImgName(selectedFiles.map(file => file.name).join(","))
@@ -80,7 +91,7 @@ export default function InsertData() {
 
       <form
         method="POST"
-        action={"/profile-upload-single"}
+
         encType="multipart/form-data"
         style={{
           display: "flex",
@@ -88,9 +99,7 @@ export default function InsertData() {
           alignItems: "center",
           gap: "1rem",
         }}
-        onSubmit={(e) =>
-          handleUpload(e, name, type, where, price, pictureInsert)
-        }
+        onSubmit={(e) => handleUpload(e)}
       >
         <TextField
           id="outlined-basic"
@@ -168,7 +177,7 @@ export default function InsertData() {
           <input
             type="file"
             style={{ display: "none" }}
-            name="image"
+            name="gallery"
             required
             multiple
             onChange={handleFileChange}

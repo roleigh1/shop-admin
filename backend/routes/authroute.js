@@ -22,7 +22,14 @@ router.post("/orders", orders.finishOrder);
 router.get("/contentData/:whichContent", contentManager.getContentData);
 router.post(
   "/contentEdit/:whichContent",
-  upload.single("picture"),
+  upload.fields([
+    {
+      name: "picture", maxCount: 1
+    },
+    {
+      name:"gallery", maxCount: 4
+    }
+  ]),
   contentManager.uploadData
 );
 
