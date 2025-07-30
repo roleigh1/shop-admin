@@ -883,3 +883,147 @@
     '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
   timestamp: '2025-07-25T22:16:01.042Z'
 }
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-27T20:37:53.940Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-28T20:37:43.337Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-28T20:56:28.051Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-28T21:53:57.652Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-28T21:59:14.818Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-28T22:00:25.483Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-30T21:11:25.645Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-30T21:20:14.555Z'
+}
+{
+  level: 'error',
+  message: 'An error log 504',
+  stack: 'Error: 504\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\app.js:22:31)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)\n' +
+    '    at Module.load (node:internal/modules/cjs/loader:1212:32)\n' +
+    '    at Module._load (node:internal/modules/cjs/loader:1028:12)\n' +
+    '    at Module.require (node:internal/modules/cjs/loader:1237:19)\n' +
+    '    at require (node:internal/modules/helpers:176:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Robin\\Documents\\GitHub\\shop-admin\\backend\\server.js:1:13)\n' +
+    '    at Module._compile (node:internal/modules/cjs/loader:1378:14)\n' +
+    '    at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)',
+  timestamp: '2025-07-30T21:21:25.099Z'
+}

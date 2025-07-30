@@ -26,52 +26,58 @@ export default function InsertData() {
     formData.append("price", price);
     formData.append("name", name);
     formData.append("where", where);
-    formData.append("unity",unity) 
+    formData.append("unity", unity)
     files.forEach((file) => {
-      formData.append("gallery",file); 
+      formData.append("gallery", file);
     })
     console.log(insertURL)
-    fetch(insertURL , {
+    fetch(insertURL, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("Upload succsessful:", data);
-   
+        setType("");
+        setName("");
+        setWhere("");
+        setPrice("");
+        setFiles([]);
+        setUnity("");
+    
       })
       .catch((error) => {
         console.error("Upload error", error);
       });
   };
   const handleFileChange = (e) => {
-      const selectedFiles = [...e.target.files]; 
-      const sortedSelectedFiles = selectedFiles.sort((a,b) => {
-        const getNumber = (filename) => {
-          const match = filename.match(/\d+/); 
-          return match ? parseInt(match[0],10) : 0; 
-        }; 
-        return getNumber(a.name) - getNumber(b.name); 
-      }); 
-      setFiles(selectedFiles); 
-    
-      
-      const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"]; 
-      for(const file of selectedFiles){
-        if(!supportedImageTypes.includes(file.type) ) {
-          alert("Pleas select valid image files (jpg,jpeg,png"); 
-          break; 
-        
-        } 
+    const selectedFiles = [...e.target.files];
+    const sortedSelectedFiles = selectedFiles.sort((a, b) => {
+      const getNumber = (filename) => {
+        const match = filename.match(/\d+/);
+        return match ? parseInt(match[0], 10) : 0;
+      };
+      return getNumber(a.name) - getNumber(b.name);
+    });
+    setFiles(selectedFiles);
+
+
+    const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+    for (const file of selectedFiles) {
+      if (!supportedImageTypes.includes(file.type)) {
+        alert("Pleas select valid image files (jpg,jpeg,png");
+        break;
+
       }
-      if(selectedFiles.length > 4){
-        alert("To many Images selected please chose 4 Images"); 
-       return; 
-      }
-      if(selectedFiles.length > 0) {
-        setImgName(selectedFiles.map(file => file.name).join(","))
-      }
-        console.log(selectedFiles);
+    }
+    if (selectedFiles.length > 4) {
+      alert("To many Images selected please chose 4 Images");
+      return;
+    }
+    if (selectedFiles.length > 0) {
+      setImgName(selectedFiles.map(file => file.name).join(","))
+    }
+    console.log(selectedFiles);
   }
 
 
@@ -151,7 +157,7 @@ export default function InsertData() {
           style={{ width: "4rem" }}
           required
         />
-         <FormControl>
+        <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Type</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
@@ -186,13 +192,13 @@ export default function InsertData() {
         {
           files.length > 0 && (
             <ul> 
-              {files.map((file,index) => {
-                <li key={index}>{file.name}</li>
-              })}
+              {files.map((file,index) =>(
+                <li className="text-sm" key={index}>{file.name}</li>
+              ))}
             </ul>
-           
+
           )}
-        <span style={{ color: "black", position: "relative" }}>{imgName}</span>
+
 
         <Button type="submit" variant="outlined" value="submit">
           Submit

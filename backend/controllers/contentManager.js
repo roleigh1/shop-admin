@@ -5,10 +5,11 @@ const {
   ProductsDB,
   sequelize,
 } = require("../models/models");
-
+const upload = require("../multer/upload");
 const fs = require("fs");
 
 const AWS = require("aws-sdk");
+
 
 const s3 = new AWS.S3();
 const getContentData = async (req, res) => {
@@ -28,7 +29,7 @@ const getContentData = async (req, res) => {
           limit: 3,
         });
         break;
-  
+
       default:
         res.status(400).json({ message: "Invalid content type" });
     }
@@ -40,138 +41,172 @@ const getContentData = async (req, res) => {
 };
 
 const uploadData = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).send("No file uploaded");
-  }
+  const whichContent = req.params.whichContent;
 
-  const fileStream = fs.createReadStream(req.file.path);
+  try {
+    // Inventory: Mehrere Dateien erlaubt
+    if (whichContent === "inventory") {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).send("No files uploaded");
+      }
 
-  const params = {
-    Bucket: "shop",
-    Key: req.file.filename,
-    Body: fileStream,
-    ACL: "public-read",
-  };
-
-  s3.upload(params, async (err, data) => {
-    fs.unlinkSync(req.file.path);
-
-    if (err) {
-      console.error("Error uploading to S3", err);
-      return res.status(500).send("Error uploading file to bucket");
-    }
-
-    try {
-      const whichContent = req.params.whichContent;
-
-      const imagePath = data.Location;
       const {
-        headline,
-        text,
-        location,
-        top,
         name,
-        cardText,
-        id,
-        where,
-        type,
         price,
-        unity
+        type,
+        unity,
+        where,
       } = req.body;
 
-      switch (whichContent) {
-        case "banner":
-          await BannerData.update(
-            {
-              headline,
-              text,
-              img: imagePath,
-              top,
-            },
-            {
-              where: { location },
-            }
-          );
-          return res.json({
-            message: "Banner upload successful",
-            imageUrl: imagePath,
-          });
+      const uploadedImageURLs = [];
 
-        case "cards":
-          await InfoCard.update(
-            {
-              name,
-              text: cardText,
-              image: imagePath,
-            },
-            {
-              where: { id },
-            }
-          );
-          return res.json({
-            message: "Card upload successful",
-            imageUrl: imagePath,
-          });
-        case "inventory":
-          console.log(name,price,type,imagePath
-    
-          )
-          /*
-          if (where === "products") {
-            
-            const ProductId = await ProductsDB.findOne({
-              attributes: [
-                [sequelize.fn("max", sequelize.col("id")), "lastId"],
-              ],
-            });
-            let lastId = ProductId.get("lastId") || 0;
-            console.log("last Product ID", lastId);
-            const Product = await ProductsDB.create({
-              id: lastId + 1,
-              name: name,
-              unity: unity,
-              price: Number(price),
-              image: imagePath,
-              type: type,
-            });
-            console.log("Product generated ID:", Product.id);
-          
-          } else {
-            const lastBestsellerID = await BestSellerItemsDB.findOne({
-              attributes: [
-                [sequelize.fn("max", sequelize.col("id")), "lastId"],
-              ],
-            });
-            let lastBestseller = lastBestsellerID.get("lastId") || 0;
-            console.log("Last Bestseller ID:", lastBestseller);
+      // Alle Bilder hochladen
+      for (const file of req.files) {
+        const fileStream = fs.createReadStream(file.path);
 
-            const Bestseller = await BestSellerItemsDB.create({
-              id: lastBestseller + 1,
-              name: name,
-              unity: unity,
-              price: Number(price),
-              image: imagePath,
-              type: type,
-            });
-            console.log("Bestseller generated ID:", Bestseller.id);
-          }
-          return res.json({
-            message: "Inventory upload successful",
-            imageUrl: imagePath,
-          });
-            */
-           break;
-        default:
-          return res.status(400).json({ message: "Invalid content type" });
+        const params = {
+          Bucket: "shop", 
+          Key: file.filename,
+          Body: fileStream,
+          ACL: "public-read",
+        };
+
+        const uploadResult = await s3.upload(params).promise();
+        fs.unlinkSync(file.path);
+
+        uploadedImageURLs.push(uploadResult.Location);
       }
-    } catch (error) {
-      console.error("Error updating database:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+
+
+   const firstImage = uploadedImageURLs[0];
+        const secondImage = uploadedImageURLs[1];
+        const thirdImage = uploadedImageURLs[2];
+        const fourthImage = uploadedImageURLs[3];
+
+   
+      if (where === "products") {
+        const ProductId = await ProductsDB.findOne({
+          attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
+        });
+        let lastId = ProductId.get("lastId") || 0;
+
+        const Product = await ProductsDB.create({
+          id: lastId + 1,
+          name: name,
+          unity: unity,
+          price: Number(price),
+          firstImage: firstImage,
+            secondImage: secondImage,
+            thirdImage: thirdImage,
+            fourthImage: fourthImage,
+          type: type,
+        });
+
+        console.log("Product created:", Product.id);
+      } else {
+        const lastBestsellerID = await BestSellerItemsDB.findOne({
+          attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
+        });
+        let lastBestseller = lastBestsellerID.get("lastId") || 0;
+
+        const Bestseller = await BestSellerItemsDB.create({
+          id: lastBestseller + 1,
+          name: name,
+          unity: unity,
+          price: Number(price),
+           firstImage: firstImage,
+            secondImage: secondImage,
+            thirdImage: thirdImage,
+            fourthImage: fourthImage,
+          type: type,
+        });
+
+        console.log("Bestseller created:", Bestseller.id);
+      }
+
+      return res.json({
+        message: "Inventory upload successful",
+        images: uploadedImageURLs,
+      });
     }
-  });
+
+    // Banner
+    if (whichContent === "banner") {
+      if (!req.file) return res.status(400).send("No file uploaded");
+
+      const fileStream = fs.createReadStream(req.file.path);
+      const params = {
+        Bucket: "shop",
+        Key: req.file.filename,
+        Body: fileStream,
+        ACL: "public-read",
+      };
+
+      const uploadResult = await s3.upload(params).promise();
+      fs.unlinkSync(req.file.path);
+
+      const { headline, text, location, top } = req.body;
+
+      await BannerData.update(
+        {
+          headline,
+          text,
+          img: uploadResult.Location,
+          top,
+        },
+        {
+          where: { location },
+        }
+      );
+
+      return res.json({
+        message: "Banner upload successful",
+        imageUrl: uploadResult.Location,
+      });
+    }
+
+    // Cards
+    if (whichContent === "cards") {
+      if (!req.file) return res.status(400).send("No file uploaded");
+
+      const fileStream = fs.createReadStream(req.file.path);
+      const params = {
+        Bucket: "shop",
+        Key: req.file.filename,
+        Body: fileStream,
+        ACL: "public-read",
+      };
+
+      const uploadResult = await s3.upload(params).promise();
+      fs.unlinkSync(req.file.path);
+
+      const { name, cardText, id } = req.body;
+
+      await InfoCard.update(
+        {
+          name,
+          text: cardText,
+          image: uploadResult.Location,
+        },
+        {
+          where: { id },
+        }
+      );
+
+      return res.json({
+        message: "Card upload successful",
+        imageUrl: uploadResult.Location,
+      });
+    }
+
+    return res.status(400).json({ message: "Invalid content type" });
+  } catch (error) {
+    console.error("Error handling content upload:", error);
+    return res.status(500).json({ message: "Internal Server Error", error });
+  }
 };
 
 module.exports = {
-  getContentData,
   uploadData,
+   getContentData 
 };

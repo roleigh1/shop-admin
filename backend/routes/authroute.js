@@ -7,12 +7,11 @@ const displayLastOrder = require("../controllers/DisplayLastOrder");
 const storeInventory = require("../controllers/storeTables");
 const orders = require("../controllers/orders");
 const contentManager = require("../controllers/contentManager");
-const upload = require("../multer/upload")
-
+const upload = require("../multer/upload");
 
 router.get("/counter", counterDB.countOperation);
 router.post("/login", logintest.login);
-router.post("/register",logintest.register);
+router.post("/register", logintest.register);
 router.get("/lastOrder", displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", salesReport.getTotalMonth);
 router.post("/deleteID", storeInventory.getDeleteID);
@@ -20,17 +19,21 @@ router.get("/inventoryTables/:tables", storeInventory.getInventoryTable);
 router.get("/orders", orders.getAllOrders);
 router.post("/orders", orders.finishOrder);
 router.get("/contentData/:whichContent", contentManager.getContentData);
-router.post(
-  "/contentEdit/:whichContent",
-  upload.fields([
-    {
-      name: "picture", maxCount: 1
-    },
-    {
-      name:"gallery", maxCount: 4
-    }
-  ]),
-  contentManager.uploadData
-);
+
+router.post("/contentEdit/:whichContent", (req,res) => {
+  const whichContent = req.params.whichContent; 
+  if(whichContent === "inventory"){
+    upload.array("gallery",4)(req,res,function (err){
+      if(err) return res.status(400).json({error: err.message});
+        contentManager.uploadData(req, res);
+    })
+  } else {
+    upload.single("picture")(req,res, function (err){
+      if(err)  return res.status(400).json({error: err.message}); 
+      contentManager.uploadData(req,res); 
+    })
+  }
+})
+  
 
 module.exports = router;
