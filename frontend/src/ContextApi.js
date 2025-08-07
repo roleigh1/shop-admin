@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import PropTypes from "prop-types"; 
 const counterURL = process.env.REACT_APP_API_COUNTER;
-
+const shopItemsURL = process.env.REACT_APP_API_CONTENTDATA
 const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
 
 export const MyContext = createContext();
@@ -34,17 +34,18 @@ export const MyProvider = ({ children }) => {
 
   let formData = new FormData();
   const fetchInventory = () => {
+
     if (table === "Products") {
-      fetch("http://localhost:3131/api/inventoryTables/products")
+      fetch(`${shopItemsURL}products`)
         .then((res) => res.json())
         .then((data) => {
-          setInventoryTable(data.products);
+          setInventoryTable(data.contentData.products);
         });
     } else {
-      fetch("http://localhost:3131/api/inventoryTables/bestseller")
+      fetch(`${shopItemsURL}bestseller`)
         .then((res) => res.json())
         .then((data) => {
-          setInventoryTable(data.bestseller);
+          setInventoryTable(data.contentData.bestseller);
         });
     }
   };

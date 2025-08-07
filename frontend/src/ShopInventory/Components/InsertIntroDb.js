@@ -189,18 +189,28 @@ export default function InsertData() {
             onChange={handleFileChange}
           />
         </Button>
-        {
-          files.length > 0 && (
-            <ul> 
-              {files.map((file,index) =>(
-                <li className="text-sm" key={index}>{file.name}</li>
-              ))}
-            </ul>
+       
+         <ul 
+  style={{ 
+    listStyleType: 'none', 
+    paddingLeft: 0, 
+    fontSize: '12px',
+    minHeight: '2rem',
 
-          )}
+  }}
+>
+  {files.length > 0 
+    ? files.map((file, index) => (
+        <li key={index}>{file.name}</li>
+      ))
+    : <li style={{ color: '#999' }}>Keine Dateien ausgewählt</li> // Optionaler Platzhalter
+  }
+</ul>
+
+       
 
 
-        <Button type="submit" variant="outlined" value="submit">
+        <Button type="submit" variant="outlined" value="submit" style={{ marginTop:"-1rem"}}>
           Submit
         </Button>
       </form>

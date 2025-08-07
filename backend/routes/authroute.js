@@ -15,7 +15,6 @@ router.post("/register", logintest.register);
 router.get("/lastOrder", displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", salesReport.getTotalMonth);
 router.post("/deleteID", storeInventory.getDeleteID);
-router.get("/inventoryTables/:tables", storeInventory.getInventoryTable);
 router.get("/orders", orders.getAllOrders);
 router.post("/orders", orders.finishOrder);
 router.get("/contentData/:whichContent", contentManager.getContentData);

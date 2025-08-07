@@ -25,11 +25,15 @@ const getContentData = async (req, res) => {
         break;
       case "cards":
         response.cards = await InfoCard.findAll({
-          order: [["id", "DESC"]],
           limit: 3,
         });
         break;
-
+      case "bestseller":
+        response.bestseller = await BestSellerItemsDB.findAll();
+        break;
+      case "products":
+        response.products = await ProductsDB.findAll();
+        break;
       default:
         res.status(400).json({ message: "Invalid content type" });
     }
@@ -65,7 +69,7 @@ const uploadData = async (req, res) => {
         const fileStream = fs.createReadStream(file.path);
 
         const params = {
-          Bucket: "shop", 
+          Bucket: "shop",
           Key: file.filename,
           Body: fileStream,
           ACL: "public-read",
@@ -78,12 +82,12 @@ const uploadData = async (req, res) => {
       }
 
 
-   const firstImage = uploadedImageURLs[0];
-        const secondImage = uploadedImageURLs[1];
-        const thirdImage = uploadedImageURLs[2];
-        const fourthImage = uploadedImageURLs[3];
+      const firstImage = uploadedImageURLs[0];
+      const secondImage = uploadedImageURLs[1];
+      const thirdImage = uploadedImageURLs[2];
+      const fourthImage = uploadedImageURLs[3];
 
-   
+
       if (where === "products") {
         const ProductId = await ProductsDB.findOne({
           attributes: [[sequelize.fn("max", sequelize.col("id")), "lastId"]],
@@ -96,9 +100,9 @@ const uploadData = async (req, res) => {
           unity: unity,
           price: Number(price),
           firstImage: firstImage,
-            secondImage: secondImage,
-            thirdImage: thirdImage,
-            fourthImage: fourthImage,
+          secondImage: secondImage,
+          thirdImage: thirdImage,
+          fourthImage: fourthImage,
           type: type,
         });
 
@@ -114,10 +118,10 @@ const uploadData = async (req, res) => {
           name: name,
           unity: unity,
           price: Number(price),
-           firstImage: firstImage,
-            secondImage: secondImage,
-            thirdImage: thirdImage,
-            fourthImage: fourthImage,
+          firstImage: firstImage,
+          secondImage: secondImage,
+          thirdImage: thirdImage,
+          fourthImage: fourthImage,
           type: type,
         });
 
@@ -208,5 +212,5 @@ const uploadData = async (req, res) => {
 
 module.exports = {
   uploadData,
-   getContentData 
+  getContentData
 };
