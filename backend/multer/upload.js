@@ -12,11 +12,6 @@ AWS.config.update({
   signatureVersion: "v4",
 });
 
-console.log("S3 Credentials:", {
-  accessKeyId: process.env.S3_ACCESS_KEY,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

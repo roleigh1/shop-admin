@@ -65,6 +65,7 @@ export default function InventoryTable() {
     if (rowSelectionModel.length === 0) {
       return null;
     }
+    console.log("here",rowSelectionModel)
     postIdForDelete(rowSelectionModel);
   };
   const handleWatch = () => {

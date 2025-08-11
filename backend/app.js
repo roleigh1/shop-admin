@@ -9,18 +9,22 @@ const app = express();
 // log file
 const logger = winston.createLogger({
   level: "debug",
-  format: combine(timestamp(), json(), prettyPrint(),errors({stack:true})),
+  format: combine(
+    errors({ stack: true }),
+    timestamp(),
+    prettyPrint() 
+  ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: "app.log", level: "error" }),
+    new winston.transports.File({
+      filename: "app.log",
+      level: "error",
+      format: combine(errors({ stack: true }), timestamp(), json()) // in Datei JSON
+    }),
   ],
 });
-const requestLog = { method: "GET", istAuthenticated: false };
-const childLogger = logger.child(requestLog);
 
-logger.info("An info log");
-logger.error("An error log" , new Error("504"));
-
+logger.error(new Error("504"))
 app.use(express.json());
 app.use(cors());
 
