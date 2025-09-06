@@ -27,6 +27,7 @@ export default function InsertData() {
     formData.append("name", name);
     formData.append("where", where);
     formData.append("unity", unity)
+
     files.forEach((file) => {
       formData.append("gallery", file);
     })
@@ -168,7 +169,7 @@ export default function InsertData() {
             style={{ width: "6rem", height: "3rem" }}
             required
           >
-            <MenuItem value={"1kg"}>1 kg</MenuItem>
+            <MenuItem value={"KG"}>1 kg</MenuItem>
             <MenuItem value={"500g"}>500g</MenuItem>
             <MenuItem value={"100g"}>100g</MenuItem>
             <MenuItem value={"piece"}>piece</MenuItem>

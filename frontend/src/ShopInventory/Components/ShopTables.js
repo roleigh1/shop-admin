@@ -37,6 +37,7 @@ export default function InventoryTable() {
 
   useEffect(() => {
     fetchInventory();
+    console.log(inventoryTable)
   }, [table]);
 
   const columns = [

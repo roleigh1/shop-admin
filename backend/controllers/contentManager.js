@@ -3,9 +3,11 @@ const {
   InfoCard,
   BestSellerItemsDB,
   ProductsDB,
-  FinishedOrders
+  FinishedOrders, 
+  sequelize
 } = require("../models/models");
 const { Op, fn, col } = require("sequelize");
+
 const upload = require("../multer/upload");
 const fs = require("fs");
 
@@ -62,7 +64,7 @@ const uploadData = async (req, res) => {
         unity,
         where,
       } = req.body;
-
+      console.log("untiy" , unity)
       const uploadedImageURLs = [];
 
       // Alle Bilder hochladen
@@ -98,7 +100,7 @@ const uploadData = async (req, res) => {
         const Product = await ProductsDB.create({
           id: lastId + 1,
           name: name,
-          unity: unity,
+          unit: unity,
           price: Number(price),
           firstImage: firstImage,
           secondImage: secondImage,
@@ -117,7 +119,7 @@ const uploadData = async (req, res) => {
         const Bestseller = await BestSellerItemsDB.create({
           id: lastBestseller + 1,
           name: name,
-          unity: unity,
+          unit: unity,
           price: Number(price),
           firstImage: firstImage,
           secondImage: secondImage,
