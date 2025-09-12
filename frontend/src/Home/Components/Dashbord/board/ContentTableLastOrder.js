@@ -13,13 +13,13 @@ export default function LastOrderTable() {
   const { lastOrder } = useMyContext(MyProvider);
 
   return (
-    <div style={{}}>
-      <h5 style={{ textAlign: "center", position: "relative", top: "1rem" }}>
+    <div >
+      <h5 className="text-center relative top-4">
         eingetroffene Bestellung
       </h5>
-      <div style={{ maxHeight: "300px", overflowY: "scroll" }}>
+      <div className="max-h-[300px] overflow-y-scroll" >
         <TableContainer
-          style={{ backgroundColor: "#ebeceb" }}
+          className="bg-[#ebeceb] mt-6"
           component={Paper}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

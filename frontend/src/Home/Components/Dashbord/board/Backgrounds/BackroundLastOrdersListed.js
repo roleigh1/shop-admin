@@ -5,13 +5,8 @@ export default function BackgroundLastOrdersListed({ children }) {
   return (
     <div>
       <div
-        className="backgroundLast"
-        style={{
-          backgroundColor: "#ebeceb",
-          width: "50vw",
-          height: "20rem",
-          borderTopRightRadius: "10px",
-        }}
+        className="backgroundLast bg-[#ebeceb] w-[50vw] h-[20rem] rounded-tr-[10px]"
+
       >
         {children}
       </div>

@@ -1,13 +1,11 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
-import "./nav.css";
 export default function Navbar() {
   return (
-    <div className="navbar" style={{ display: "flex", marginTop: "1rem" }}>
+    <div className=" flex flex-row items-center justify-center">
       <Link
         to="/contentManager"
-        style={{ textDecoration: "none", color: "white" }}
+ className="text-white"
       >
         <svg
           width="30"
@@ -26,7 +24,7 @@ export default function Navbar() {
           </g>
         </svg>
       </Link>
-      <Link to="/orders" style={{ textDecoration: "none", color: "white" }}>
+      <Link to="/orders" className="text-white">
         <svg
           width="30"
           height="30"
@@ -45,7 +43,7 @@ export default function Navbar() {
         </svg>
       </Link>
 
-      <Link to="/inventory" style={{ textDecoration: "none", color: "white" }}>
+      <Link to="/inventory" className="text-white">
         <svg
           width="30"
           height="30"
@@ -63,7 +61,7 @@ export default function Navbar() {
           />
         </svg>
       </Link>
-      <Link to="/home" style={{ textDecoration: "none", color: "white" }}>
+      <Link to="/home"  className="text-white">
         <svg
           width="30"
           height="30"
@@ -81,7 +79,7 @@ export default function Navbar() {
           />
         </svg>
       </Link>
-      <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+      <Link to="/"  className="text-white">
         <svg
           width="30"
           height="30"

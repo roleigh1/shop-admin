@@ -1,16 +1,13 @@
 import React from "react";
-import { Col, Row, Container } from "react-bootstrap";
 import { FormSignIn } from "./Form";
 import PropTypes from "prop-types"; 
 export function LoginPage({ onTokenReceived }) {
   return (
-    <Container>
-      <Row>
-        <Col>
+    <div>
+    
           <FormSignIn onTokenReceived={onTokenReceived} />
-        </Col>
-      </Row>
-    </Container>
+     
+    </div>
   );
 }
 

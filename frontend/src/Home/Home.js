@@ -11,37 +11,35 @@ import "./home.css";
 import SalesTotal from "./Components/Dashbord/board/SalesTotal";
 export default function Home() {
   return (
-    <Container>
-      <Row style={{ marginTop: "2rem" }}>
+    <div>
+      <div className="mt-10">
         <Navbar />
-      </Row>
+      </div>
 
-      <Row
-        className="topRow"
-        style={{ display: "flex", gap: "1rem", marginTop: "0.6rem" }}
-      >
-        <Col>
+      <div
+        className="topRow flex items-center justify-center gap-4 mt-3">
+        <div>
           <Background>
             <OrderCounter />
           </Background>
-        </Col>
-        <Col>
-          <BackgroundLastOrdersListed style={{ width: "1rem" }}>
+        </div>
+        <div>
+          <BackgroundLastOrdersListed >
             <LastOrderTable />
           </BackgroundLastOrdersListed>
-        </Col>
-      </Row>
-      <Row className="midRow" style={{ marginTop: "1rem" }}>
+        </div>
+      </div>
+      <div className="midRow flex items-center justify-center mt-4" >
         <BackgroundSales>
-          <Col>
+          <div>
             <SalesLineChart />
-          </Col>
+          </div>
 
           <Col>
             <SalesTotal></SalesTotal>
           </Col>
         </BackgroundSales>
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 }

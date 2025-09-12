@@ -7,21 +7,16 @@ export default function OrderCounter() {
     fetchCounter();
   }, []);
   return (
-    <div className="order-counter">
+    <div className="order-counter flex flex-col text-center opacity-100">
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "center",
-          opacity: "1",
-        }}
-      >
-        <h5 style={{ marginTop: "2.7rem" }}>Sales</h5>
-        <span>{counter && counter.countOrder}</span>
-        <hr style={{ width: "98%", marginTop: "4rem", opacity: "0.4" }} />
 
-        <h5 style={{ marginTop: "2rem" }}>
-          Bestellungen in der Datenbank seit Montag
+      >
+        <h5  className="mt-11">Sales</h5>
+        <span>{counter && counter.countOrder}</span>
+        <hr className="w-[98%] mt-16 opacity-5"/>
+
+        <h5 className="mt-8">
+        Orders received since Monday
         </h5>
         <span>{counter && counter.ordersCountLastMonday}</span>
       </div>

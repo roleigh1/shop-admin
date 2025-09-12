@@ -11,7 +11,7 @@ export default function SalesLineChart() {
   return (
     <div className="chartDiv" style={{}}>
       <h5
-        className="hline"
+        className="hline "
         style={{ position: "relative", left: "3rem", top: "2rem" }}
       >
         Monatlicher Recap Report{" "}
