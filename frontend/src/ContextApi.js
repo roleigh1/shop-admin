@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import PropTypes from "prop-types"; 
+import { apiConfig } from "./config/apiConfig"
 const counterURL = process.env.REACT_APP_API_COUNTER;
 const shopItemsURL = process.env.REACT_APP_API_CONTENTDATA
 const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
@@ -36,13 +37,13 @@ export const MyProvider = ({ children }) => {
   const fetchInventory = () => {
 
     if (table === "Products") {
-      fetch(`${shopItemsURL}products`)
+      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.products}`)
         .then((res) => res.json())
         .then((data) => {
           setInventoryTable(data.contentData.products);
         });
     } else {
-      fetch(`${shopItemsURL}bestseller`)
+      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.bestsellers}`)
         .then((res) => res.json())
         .then((data) => {
           setInventoryTable(data.contentData.bestseller);
@@ -53,7 +54,7 @@ export const MyProvider = ({ children }) => {
   const fetchMonths = async (month) => {
     try {
       const response = await fetch(
-        `http://localhost:3131/api/totalMonths/${month}`
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`
       );
       const data = await response.json();
       setSales((prevSales) => ({ ...prevSales, [month]: data[month] }));
@@ -89,7 +90,7 @@ export const MyProvider = ({ children }) => {
       },
       body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
     };
-    fetch("http://localhost:3131/api/orders", options)
+    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, options)
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
@@ -108,7 +109,7 @@ export const MyProvider = ({ children }) => {
       },
       body: JSON.stringify({ editAbleData, table }),
     };
-    fetch("http://localhost:3131/api/updateData", options)
+    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.update}`, options)
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
@@ -121,7 +122,7 @@ export const MyProvider = ({ children }) => {
   const fetchAllOrders = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3131/api/orders?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
       const json = await response.json();
       setPageState((old) => ({
@@ -150,7 +151,7 @@ export const MyProvider = ({ children }) => {
     } else {
       options.body = JSON.stringify({ idForDelete, table });
     }
-    fetch("http://localhost:3131/api/deleteID", options)
+    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, options)
       .then((res) => res.json())
       .then((data) => {
         console.log("res recived", data);
@@ -164,7 +165,7 @@ export const MyProvider = ({ children }) => {
   
   const fetchCounter = () => {
     axios
-      .get(counterURL)
+      .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
       .then((response) => {
         setCounter(response.data.counterOp);
         console.log(counter);

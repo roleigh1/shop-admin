@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { MyProvider, useMyContext } from "../../../../ContextApi";
+
 export default function OrderCounter() {
   const { counter, fetchCounter } = useMyContext(MyProvider);
 

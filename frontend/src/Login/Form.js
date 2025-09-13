@@ -71,7 +71,7 @@ export function FormSignIn({ onTokenReceived }) {
 
                 className="mt-[-2rem] h-[2rem] rounded-sm bg-white w-[15rem]"
               />
-              <button className="bg-grey h-[2rem] rounded-sm font-size text-base font-semibold text-white " onClick={handleToggle}>Login</button>
+              <button className="bg-grey h-[2rem] rounded-sm font-size text-base font-semibold text-black " onClick={handleToggle}>Login</button>
             </form>
           </div>
  

@@ -9,7 +9,7 @@ export default function SalesLineChart() {
   const isSmallScreen = useMediaQuery("(max-width:768px)");
   const width = isSmallScreen ? 300 : 600;
   return (
-    <div className="chartDiv" style={{}}>
+    <div className="" style={{}}>
       <h5
         className="hline "
         style={{ position: "relative", left: "3rem", top: "2rem" }}

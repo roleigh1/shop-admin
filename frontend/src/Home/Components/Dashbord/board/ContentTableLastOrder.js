@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Paper } from "@mui/material";
 import { MyProvider, useMyContext } from "../../../../ContextApi";
-import "./content.css";
+
 
 export default function LastOrderTable() {
   const { lastOrder } = useMyContext(MyProvider);

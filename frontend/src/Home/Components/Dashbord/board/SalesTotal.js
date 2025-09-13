@@ -5,6 +5,7 @@ import PointOfSaleTwoToneIcon from "@mui/icons-material/PointOfSaleTwoTone";
 import { MyContext, useMyContext } from "../../../../ContextApi";
 
 import "../../../home.css";
+import { styled } from "@mui/material";
 export default function SalesTotal() {
   const { sales } = useMyContext(MyContext);
   const sumAllSales = Object.values(sales)
@@ -13,32 +14,16 @@ export default function SalesTotal() {
   console.log(sumAllSales);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        "& > :not(style)": {
-          m: 1,
-          width: 128,
-          height: 128,
-        },
-      }}
-      className="box"
+
+    <div
+      className="bg-white w-[8rem] h-[8rem]  flex flex-col justify-center items-center"
     >
-      <Paper
-        elevation={3}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <PointOfSaleTwoToneIcon style={{ marginBottom: "-1.5rem" }} />
+        <PointOfSaleTwoToneIcon />
         <h6>Total </h6>
-        <span style={{ marginTop: "-1.8rem", textDecoration: "underline" }}>
+        <span >
           €{sumAllSales}
         </span>
-      </Paper>
-    </Box>
+
+    </div>
   );
 }
