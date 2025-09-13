@@ -1,5 +1,5 @@
 export const apiConfig = {
-  BASE_URL: "http://localhost:3131/api", 
+  BASE_URL: process.env.REACT_APP_API_URL , 
   endpoints: {
     banners: "/banners",        
     products: "/products", 

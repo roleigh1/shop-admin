@@ -9,25 +9,25 @@ import InventoryTable from "./Components/ShopTables";
 import "./style.css";
 export default function Inventory() {
   return (
-    <Container className="container">
-      <Row style={{ marginTop: "2rem" }}>
+    <div className="">
+      <div style={{ marginTop: "2rem" }}>
         <Navbar />
-      </Row>
-      <Row
-        className="insert-Table"
-        style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}
+      </div>
+      <div
+        className="insert-Table flex justify-center items-center gap-4 mt-8"
+      
       >
-        <Col sm={4}>
+        <div >
           <BackgroundInsert>
             <InsertData />
           </BackgroundInsert>
-        </Col>
-        <Col sm={8}>
+        </div>
+        <div >
           <BackgroundDelete>
             <InventoryTable />
           </BackgroundDelete>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -84,15 +84,10 @@ export default function InsertData() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1rem",
-      }}
+    className="flex justify-center flex-col items-center g-4"
+
     >
-      <h4 style={{ marginTop: "2.5rem", marginBottom: "0.1rem" }}>
+      <h4 className="mt-10 mb-[1rem]" >
         Add a Product to the store
       </h4>
 
@@ -100,16 +95,13 @@ export default function InsertData() {
         method="POST"
 
         encType="multipart/form-data"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-        }}
+        className="flex-col flex gap-2 justify-center items-center"
+
         onSubmit={(e) => handleUpload(e)}
       >
         <TextField
           id="outlined-basic"
+          className="w-[14rem]"
           label="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -125,7 +117,7 @@ export default function InsertData() {
             label="Where"
             onChange={(e) => setWhere(e.target.value)}
             value={where}
-            style={{ width: "8rem", height: "3rem" }}
+            className="w-[8rem] h-[3rem]"
             required
           >
             <MenuItem value={"products"}>Products</MenuItem>
@@ -137,10 +129,10 @@ export default function InsertData() {
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
+            className="w-[6rem] h-[3rem]"
             value={type}
             label="Type"
             onChange={(e) => setType(e.target.value)}
-            style={{ width: "6rem", height: "3rem" }}
             required
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
@@ -155,7 +147,8 @@ export default function InsertData() {
           id="outlined-basic"
           label="Price"
           variant="outlined"
-          style={{ width: "4rem" }}
+
+          className="w-[5rem]"
           required
         />
         <FormControl>
@@ -166,7 +159,7 @@ export default function InsertData() {
             value={unity}
             label="Type"
             onChange={(e) => setUnity(e.target.value)}
-            style={{ width: "6rem", height: "3rem" }}
+            className="w-[6rem] h-[3rem]"
             required
           >
             <MenuItem value={"KG"}>1 kg</MenuItem>
@@ -183,8 +176,9 @@ export default function InsertData() {
           Upload file
           <input
             type="file"
-            style={{ display: "none" }}
+
             name="gallery"
+            className="flex-none"
             required
             multiple
             onChange={handleFileChange}
@@ -192,13 +186,7 @@ export default function InsertData() {
         </Button>
        
          <ul 
-  style={{ 
-    listStyleType: 'none', 
-    paddingLeft: 0, 
-    fontSize: '12px',
-    minHeight: '2rem',
 
-  }}
 >
   {files.length > 0 
     ? files.map((file, index) => (
