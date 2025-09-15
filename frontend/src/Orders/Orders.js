@@ -6,17 +6,17 @@ import OrdersTableDB from "./Components/OrdersTable";
 
 export default function OrdersSite() {
   return (
-    <Container fluid>
-      <Row style={{ marginTop: "2rem" }}>
+    <div fluid>
+      <div className="mt-10">
         <Navbar />
-      </Row>
-      <Row style={{ marginTop: "2rem" }}>
-        <Col>
+      </div>
+      <div        className="topRow flex items-center justify-center gap-4 mt-3">
+        <div>
           <BackgroundOrders>
             <OrdersTableDB />
           </BackgroundOrders>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }

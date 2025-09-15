@@ -6,16 +6,8 @@ export default function BackgroundCards({ children }) {
   return (
     <div>
       <div
-        className="backgroundCards"
-        style={{
-          backgroundColor: "#ebeceb",
-          width: "15rem",
-          height: "40%",
-          borderTopRightRadius: "10px",
-          marginTop: "1.5rem",
-          borderBottomRightRadius: "10px",
-          paddingBottom: "1rem",
-        }}
+        className="backgroundCards bg-[#ebeceb] w-[15rem] h-[55rem] rounded-tr-lg rounded-br-lg mt-6"
+ 
       >
         {children}
       </div>

@@ -181,7 +181,7 @@ export const MyProvider = ({ children }) => {
     fetchData();
 
     const fetchLastOrder = () => {
-      fetch(lastOrderURL)
+      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.lastOrder}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -189,6 +189,7 @@ export const MyProvider = ({ children }) => {
           return response.json();
         })
         .then((data) => {
+          console.log(data)
           setLastOrder(data);
         })
         .catch((error) => {

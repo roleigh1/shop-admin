@@ -5,15 +5,8 @@ export default function BackgroundBanner({ children }) {
   return (
     <div>
       <div
-        className="backgroundBanner"
-        style={{
-          backgroundColor: "#ebeceb",
-          width: "15rem",
-          height: "40rem",
-          borderTopLeftRadius: "10px",
-          borderBottomLeftRadius: "10px",
-          marginTop: "1.5rem",
-        }}
+        className=" backgroundBanner -mt-[13.5rem] bg-[#ebeceb]  w-[15rem] h-[40rem] rounded-tl-lg rounded-bl-lg "
+       
       >
         {children}
       </div>

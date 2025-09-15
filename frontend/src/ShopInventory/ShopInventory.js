@@ -10,11 +10,11 @@ import "./style.css";
 export default function Inventory() {
   return (
     <div className="">
-      <div style={{ marginTop: "2rem" }}>
+      <div className="mt-10">
         <Navbar />
       </div>
       <div
-        className="insert-Table flex justify-center items-center gap-4 mt-8"
+        className="insert-Table flex justify-center items-center gap-4 "
       
       >
         <div >

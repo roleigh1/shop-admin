@@ -90,19 +90,14 @@ export default function EditCards() {
       });
   };
   return (
-    <div style={{ position: "relative", top: "2rem" }}>
+    <div >
       <div>
-        <h3 style={{ textAlign: "center", paddingTop: "1rem" }}>
+        <h3 className="text-center pt-5 ">
           Edit Content Cards
         </h3>
         <form
           onSubmit={formSubmit}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
+          className="flex justify-center items-center gap-4 flex-col pt-5"
         >
           <FormControl>
             <InputLabel htmlFor="demo-simple-select-label">Cards</InputLabel>

@@ -31,7 +31,7 @@ const getContentData = async (req, res) => {
           limit: 3,
         });
         break;
-      case "bestseller":
+      case "bestsellers":
         response.bestseller = await BestSellerItemsDB.findAll();
         break;
       case "products":

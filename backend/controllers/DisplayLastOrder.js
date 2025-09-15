@@ -1,4 +1,4 @@
-const { Orders } = require("../models/models");
+const { Orders,FinishedOrders } = require("../models/models");
 
 const getlastOrder = async (req, res) => {
   try {

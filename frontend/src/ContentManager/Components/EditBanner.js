@@ -114,19 +114,15 @@ export default function Editbanner() {
   };
 
   return (
-    <div>
-      <h3 style={{ textAlign: "center", paddingTop: "3rem" }}>
+    <div >
+      <h3 className="text-center pt-[3rem] " >
         Edit Image Banners
       </h3>
       <div>
         <form
           onSubmit={formSubmit}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
+          className="flex justify-center items-center gap-4 flex-col mt-14"
+      
         >
           <FormControl>
             <InputLabel htmlFor="demo-simple-select-label">Which</InputLabel>
@@ -195,17 +191,7 @@ export default function Editbanner() {
                 onChange={(e, value) => handleInputChange("top", value)}
               />
             </Box>
-            <svg
-              className="watch"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ position: "relative", bottom: "0.5rem" }}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              onClick={handleClickOpen}
-            >
-              <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
-            </svg>
+            
             <Button type="submit" variant="outlined" value="submit">
               Submit
             </Button>
@@ -213,50 +199,7 @@ export default function Editbanner() {
         </form>
       </div>
       <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Banner"}</DialogTitle>
-          <DialogContent>
-            <section
-              style={{
-                position: "relative",
-                height: "25rem",
-                display: "flex",
-                width: "100%",
-                alignItems: "center",
-
-                textAlign: "center",
-                backgroundImage: `url(${editData?.img || ""})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                borderRadius: "10px",
-              }}
-            >
-              <div
-                style={{
-                  color: "black",
-
-                  position: "relative",
-                  top: editData?.top || "",
-                }}
-              >
-                <h2 style={{ opacity: "0.7" }}>{editData?.headline || ""}</h2>
-                <p style={{ fontSize: "20px", opacity: "0.7" }}>
-                  {editData?.text || ""}
-                </p>
-              </div>
-            </section>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+      
       </div>
     </div>
   );

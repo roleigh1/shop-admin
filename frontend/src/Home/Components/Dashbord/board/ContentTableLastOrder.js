@@ -11,15 +11,15 @@ import { MyProvider, useMyContext } from "../../../../ContextApi";
 
 export default function LastOrderTable() {
   const { lastOrder } = useMyContext(MyProvider);
-
+  
   return (
     <div >
       <h5 className="text-center relative top-4">
-        eingetroffene Bestellung
+         order received
       </h5>
       <div className="max-h-[300px] overflow-y-scroll" >
         <TableContainer
-          className="bg-[#ebeceb] mt-6"
+          className="bg-[#ebeceb] mt-6 h-[15rem]"
           component={Paper}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

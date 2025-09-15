@@ -5,14 +5,8 @@ export default function BackgroundOrders({ children }) {
   return (
     <div className="background-container">
       <div
-        className="background"
-        style={{
-          backgroundColor: "#ebeceb",
-          borderRadius: "10px",
-          height: "auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
+        className="background bg-[#ebeceb] rounded-lg h-auto flex justify-center w-[100%]"
+
       >
         {children}
       </div>

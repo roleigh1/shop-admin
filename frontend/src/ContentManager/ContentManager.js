@@ -1,6 +1,5 @@
-import React from "react";
+
 import Navbar from "../Home/Components/Dashbord/Navbar";
-import { Row, Col, Container } from "react-bootstrap";
 import BackgroundBanner from "./Components/Backgrounds/BackgroundBanner";
 import BackgroundCards from "./Components/Backgrounds/BackgroundCards";
 import Editbanner from "./Components/EditBanner";
@@ -8,26 +7,26 @@ import EditCards from "./Components/EditCards";
 import "./style.css";
 export default function ContentManager() {
   return (
-    <Container className="container">
-      <Row style={{ marginTop: "2rem" }}>
+    <div className=" ">
+      <div className="mt-8" >
         <Navbar />
-      </Row>
-      <Row
-        className="mainContent"
-        style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}
+      </div>
+      <div
+        className="mainContent  flex flex-row justify-center items-center gap-4 "
+       
       >
-        <Col sm={4}>
-          <BackgroundBanner>
+        <div >
+          <BackgroundBanner >
             <Editbanner />
           </BackgroundBanner>
-        </Col>
+        </div>
 
-        <Col sm={8}>
+        <div >
           <BackgroundCards>
             <EditCards />
           </BackgroundCards>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }

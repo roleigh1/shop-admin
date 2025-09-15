@@ -1,9 +1,5 @@
 @media screen and (max-width: 768px) {
-    .container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center!important;
-    }
+
     .mainContent{
         display: flex;
         flex-direction: column;

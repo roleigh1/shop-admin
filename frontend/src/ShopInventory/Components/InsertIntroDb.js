@@ -15,8 +15,8 @@ export default function InsertData() {
   const [name, setName] = useState("");
   const [where, setWhere] = useState("");
   const [price, setPrice] = useState("");
-  const [files,setFiles] = useState([]);
-  const [unity, setUnity] = useState(""); 
+  const [files, setFiles] = useState([]);
+  const [unity, setUnity] = useState("");
   const [imgName, setImgName] = useState("");
 
   const handleUpload = async (e) => {
@@ -45,7 +45,7 @@ export default function InsertData() {
         setPrice("");
         setFiles([]);
         setUnity("");
-    
+
       })
       .catch((error) => {
         console.error("Upload error", error);
@@ -84,7 +84,7 @@ export default function InsertData() {
 
   return (
     <div
-    className="flex justify-center flex-col items-center g-4"
+      className="flex justify-center flex-col items-center g-4"
 
     >
       <h4 className="mt-10 mb-[1rem]" >
@@ -106,7 +106,6 @@ export default function InsertData() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           variant="outlined"
-          style={{}}
           required
         />
         <FormControl>
@@ -168,40 +167,18 @@ export default function InsertData() {
             <MenuItem value={"piece"}>piece</MenuItem>
           </Select>
         </FormControl>
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload file
-          <input
-            type="file"
-
-            name="gallery"
-            className="flex-none"
-            required
-            multiple
-            onChange={handleFileChange}
-          />
-        </Button>
-       
-         <ul 
-
->
-  {files.length > 0 
-    ? files.map((file, index) => (
-        <li key={index}>{file.name}</li>
-      ))
-    : <li style={{ color: '#999' }}>Keine Dateien ausgewählt</li> // Optionaler Platzhalter
-  }
-</ul>
-
-       
-
-
-        <Button type="submit" variant="outlined" value="submit" style={{ marginTop:"-1rem"}}>
-          Submit
-        </Button>
+<div className="w-full flex flex-col items-center gap-4 mt-5">
+  <input
+    id="multiple_files"
+    type="file"
+    multiple
+    onChange={handleFileChange}
+    className="block text-center  w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+  />
+  <Button type="submit" variant="outlined">
+    Submit
+  </Button>
+</div>
       </form>
     </div>
   );
