@@ -1,4 +1,4 @@
-const { Orders,FinishedOrders } = require("../models/models");
+const { Orders } = require("../models/models");
 
 const getlastOrder = async (req, res) => {
   try {
@@ -15,7 +15,7 @@ const getlastOrder = async (req, res) => {
       pickupdate: record.pickupdate,
       created: record.createdAt,
     }));
-    console.log(lastOrderDetails);
+
     res.json(lastOrderDetails);
   } catch (error) {
     console.error("Error:", error);

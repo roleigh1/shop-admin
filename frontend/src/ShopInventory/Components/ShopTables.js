@@ -34,6 +34,7 @@ export default function InventoryTable({ onClick }) {
     { field: "secondImage", headerName: "2.ImageURL", width: 800 },
     { field: "thirdImage", headerName: "3.ImageURL", width: 800 },
     { field: "fourthImage", headerName: "4.ImageURL", width: 800 },
+    { field: "description", headerName: "Description", width: 1000 },
   ];
 
   const handleChange = (event) => {

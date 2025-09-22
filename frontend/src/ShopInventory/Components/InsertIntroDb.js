@@ -6,45 +6,60 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import "../style.css";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 
 const insertURL = process.env.REACT_APP_API_POSTINSERT;
 
 export default function InsertData() {
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
-  const [where, setWhere] = useState("");
-  const [price, setPrice] = useState("");
-  const [files, setFiles] = useState([]);
-  const [unity, setUnity] = useState("");
+  const [formdata, setFormdata] = useState({
+    type: "",
+    name: "",
+    description: "",
+    where: "",
+    price: "",
+    file: "",
+    unity: "",
+    files: ""
+  })
   const [imgName, setImgName] = useState("");
 
-  const handleUpload = async (e) => {
-    const formData = new FormData();
-    e.preventDefault();
-    formData.append("type", type);
-    formData.append("price", price);
-    formData.append("name", name);
-    formData.append("where", where);
-    formData.append("unity", unity)
+  const handleChange = (key, value) => {
+    setFormdata((prev) => ({
+      ...prev,
+      [key]: value,
+    }))
+  }
 
-    files.forEach((file) => {
-      formData.append("gallery", file);
-    })
-    console.log(insertURL)
+  const handleUpload = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("type", formdata.type);
+    data.append("price", formdata.price);
+    data.append("name", formdata.name);
+    data.append("where", formdata.where);
+    data.append("unity", formdata.unity);
+    data.append("description", formdata.description);
+
+    formdata.files.forEach((file) => {
+      data.append("gallery", file);
+    });
     fetch(insertURL, {
       method: "POST",
-      body: formData,
+      body: data,
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("Upload succsessful:", data);
-        setType("");
-        setName("");
-        setWhere("");
-        setPrice("");
-        setFiles([]);
-        setUnity("");
+        setFormdata({
+          type: "",
+          name: "",
+          description: "",
+          where: "",
+          price: "",
+          unity: "",
+          files: [],
+        });
 
       })
       .catch((error) => {
@@ -60,7 +75,7 @@ export default function InsertData() {
       };
       return getNumber(a.name) - getNumber(b.name);
     });
-    setFiles(selectedFiles);
+    handleChange("files", selectedFiles)
 
 
     const supportedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -78,7 +93,7 @@ export default function InsertData() {
     if (selectedFiles.length > 0) {
       setImgName(selectedFiles.map(file => file.name).join(","))
     }
-    console.log(selectedFiles);
+
   }
 
 
@@ -103,10 +118,18 @@ export default function InsertData() {
           id="outlined-basic"
           className="w-[14rem]"
           label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formdata.name}
+          onChange={(e) => handleChange("name", e.target.value)}
           variant="outlined"
           required
+        />
+        <TextField
+          id="outlined-multiline-static"
+          label="Description"
+          multiline
+          rows={4}
+          onChange={(e) => handleChange("description", e.target.value)}
+          value={formdata.description}
         />
         <FormControl>
           <InputLabel htmlFor="demo-simple-select-label">Where</InputLabel>
@@ -114,8 +137,8 @@ export default function InsertData() {
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             label="Where"
-            onChange={(e) => setWhere(e.target.value)}
-            value={where}
+            onChange={(e) => handleChange("where", e.target.value)}
+            value={formdata.where}
             className="w-[8rem] h-[3rem]"
             required
           >
@@ -129,9 +152,9 @@ export default function InsertData() {
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             className="w-[6rem] h-[3rem]"
-            value={type}
+            value={formdata.type}
             label="Type"
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => handleChange("type", e.target.value)}
             required
           >
             <MenuItem value={"Fruits"}>Fruits</MenuItem>
@@ -141,8 +164,8 @@ export default function InsertData() {
           </Select>
         </FormControl>
         <TextField
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          value={formdata.price}
+          onChange={(e) => handleChange("price", e.target.value)}
           id="outlined-basic"
           label="Price"
           variant="outlined"
@@ -155,9 +178,9 @@ export default function InsertData() {
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
-            value={unity}
-            label="Type"
-            onChange={(e) => setUnity(e.target.value)}
+            value={formdata.unity}
+            label="Unity"
+            onChange={(e) => handleChange("unity", e.target.value)}
             className="w-[6rem] h-[3rem]"
             required
           >
@@ -167,18 +190,18 @@ export default function InsertData() {
             <MenuItem value={"piece"}>piece</MenuItem>
           </Select>
         </FormControl>
-<div className="w-full flex flex-col items-center gap-4 mt-5">
-  <input
-    id="multiple_files"
-    type="file"
-    multiple
-    onChange={handleFileChange}
-    className="block text-center  w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-  />
-  <Button type="submit" variant="outlined">
-    Submit
-  </Button>
-</div>
+        <div className="w-full flex flex-col items-center gap-4 mt-5">
+          <input
+            id="multiple_files"
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            className="block text-center  w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+          />
+          <Button type="submit" variant="outlined">
+            Submit
+          </Button>
+        </div>
       </form>
     </div>
   );

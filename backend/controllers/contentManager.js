@@ -6,7 +6,8 @@ const {
   FinishedOrders, 
   sequelize
 } = require("../models/models");
-const { Op, fn, col } = require("sequelize");
+const { Op } = require("sequelize");
+
 
 const upload = require("../multer/upload");
 const fs = require("fs");
@@ -51,7 +52,7 @@ const uploadData = async (req, res) => {
   const whichContent = req.params.whichContent;
 
   try {
-    // Inventory: Mehrere Dateien erlaubt
+
     if (whichContent === "inventory") {
       if (!req.files || req.files.length === 0) {
         return res.status(400).send("No files uploaded");
@@ -63,6 +64,7 @@ const uploadData = async (req, res) => {
         type,
         unity,
         where,
+        description, 
       } = req.body;
       console.log("untiy" , unity)
       const uploadedImageURLs = [];
@@ -102,6 +104,7 @@ const uploadData = async (req, res) => {
           name: name,
           unit: unity,
           price: Number(price),
+          description: description,
           firstImage: firstImage,
           secondImage: secondImage,
           thirdImage: thirdImage,
@@ -121,6 +124,7 @@ const uploadData = async (req, res) => {
           name: name,
           unit: unity,
           price: Number(price),
+          description: description, 
           firstImage: firstImage,
           secondImage: secondImage,
           thirdImage: thirdImage,
