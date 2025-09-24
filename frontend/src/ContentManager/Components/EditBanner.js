@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,12 +8,9 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import DialogTitle from "@mui/material/DialogTitle";
+import { apiConfig } from "../../config/apiConfig";
 
 export default function Editbanner() {
   const { fetchEditBanners, which, setWhich } = useMyContext(MyProvider);
@@ -28,8 +25,9 @@ export default function Editbanner() {
   });
   useEffect(() => {
     const fetchEditBanners = () => {
+
       axios
-        .get("http://localhost:3131/api/contentData/banners")
+        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.banners}`)
         .then((response) => {
           setBannerData(response.data.contentData.banners);
         })
@@ -55,12 +53,7 @@ export default function Editbanner() {
     const newTable = event.target.value;
     setWhich(newTable);
   };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   const handleInputChange = (property, value) => {
     setEditData((prevData) => ({
       ...prevData,
@@ -115,14 +108,14 @@ export default function Editbanner() {
 
   return (
     <div >
-      <h3 className="text-center pt-[3rem] " >
+      <h3 className="text-center pt-[1rem] " >
         Edit Image Banners
       </h3>
       <div>
         <form
           onSubmit={formSubmit}
-          className="flex justify-center items-center gap-4 flex-col mt-14"
-      
+          className="flex justify-center items-center gap-4 flex-col mt-5"
+
         >
           <FormControl>
             <InputLabel htmlFor="demo-simple-select-label">Which</InputLabel>
@@ -191,7 +184,7 @@ export default function Editbanner() {
                 onChange={(e, value) => handleInputChange("top", value)}
               />
             </Box>
-            
+
             <Button type="submit" variant="outlined" value="submit">
               Submit
             </Button>
@@ -199,7 +192,7 @@ export default function Editbanner() {
         </form>
       </div>
       <div>
-      
+
       </div>
     </div>
   );

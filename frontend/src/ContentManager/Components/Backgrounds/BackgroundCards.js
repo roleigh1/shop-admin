@@ -6,7 +6,7 @@ export default function BackgroundCards({ children }) {
   return (
     <div>
       <div
-        className="backgroundCards bg-[#ebeceb] w-[15rem] h-[55rem] rounded-tr-lg rounded-br-lg mt-6"
+        className="backgroundCards bg-[#ebeceb] w-[15rem] h-[100%] rounded-tr-lg rounded-br-lg pb-5 mb-5"
  
       >
         {children}

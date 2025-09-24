@@ -5,7 +5,7 @@ export default function BackgroundBanner({ children }) {
   return (
     <div>
       <div
-        className=" backgroundBanner -mt-[13.5rem] bg-[#ebeceb]  w-[15rem] h-[40rem] rounded-tl-lg rounded-bl-lg "
+        className=" backgroundBanner  bg-[#ebeceb]  w-[15rem] h-[32rem] rounded-tl-lg rounded-bl-lg  "
        
       >
         {children}

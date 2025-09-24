@@ -4,7 +4,7 @@ import BackgroundBanner from "./Components/Backgrounds/BackgroundBanner";
 import BackgroundCards from "./Components/Backgrounds/BackgroundCards";
 import Editbanner from "./Components/EditBanner";
 import EditCards from "./Components/EditCards";
-import "./style.css";
+
 export default function ContentManager() {
   return (
     <div className=" ">
@@ -12,7 +12,7 @@ export default function ContentManager() {
         <Navbar />
       </div>
       <div
-        className="mainContent  flex flex-row justify-center items-center gap-4 "
+        className="mainContent  flex flex-row justify-center items-start gap-4 mt-20 "
        
       >
         <div >
@@ -22,7 +22,7 @@ export default function ContentManager() {
         </div>
 
         <div >
-          <BackgroundCards>
+          <BackgroundCards >
             <EditCards />
           </BackgroundCards>
         </div>

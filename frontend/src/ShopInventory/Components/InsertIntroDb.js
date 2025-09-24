@@ -99,7 +99,7 @@ export default function InsertData() {
 
   return (
     <div
-      className="flex justify-center flex-col items-center g-4"
+      className="flex justify-center flex-col items-center g-4 "
 
     >
       <h4 className="mt-10 mb-[1rem]" >

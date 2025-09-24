@@ -1,7 +1,7 @@
 const { Op } = require("sequelize");
 const { FinishedOrders } = require("../models/models");
-
 const moment = require("moment");
+
 function getLastMonday() {
   let today = moment();
   let dayOfWeek = today.day();
@@ -11,11 +11,12 @@ function getLastMonday() {
   return lastmonday.format("YYYY-MM-DD");
 }
 
-let lastMonday = getLastMonday();
 
-console.log(lastMonday);
-const countOperation = async (lastMonday, res) => {
+
+
+const countOperation = async (req, res) => {
   try {
+    let lastMonday = getLastMonday();
     const ordersCountLastMonday = await FinishedOrders.count({
       where: {
         createdAt: {
@@ -28,11 +29,12 @@ const countOperation = async (lastMonday, res) => {
     const counterOp = {
       ordersCountLastMonday,
       countOrder,
+      lastMonday, 
     };
     res.json({ counterOp });
   } catch (error) {
     console.error("Error Counting ", error);
-    res.status(400).json({ message: error });
+    res.status(400).json({ "Error counting orders": error });
   }
 };
 

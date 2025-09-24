@@ -10,11 +10,7 @@
         align-items: center;
     }
 
-    .background {
-        width: 20rem!important;
-        height: 20rem!important; 
-        
-    }
+    
     .backgroundModify {
         height: 30rem!important;
         width: 20rem!important;
@@ -24,7 +20,5 @@
         flex-direction: column!important;
         gap:1rem!important;
     }
-    .backgroundInsert{
-        height:31rem!important;
-    }
+   
 }

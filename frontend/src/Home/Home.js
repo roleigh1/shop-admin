@@ -17,7 +17,7 @@ export default function Home() {
       </div>
 
       <div
-        className="topRow flex items-center justify-center gap-4 mt-3">
+        className="topRow flex items-center justify-center gap-4 mt-20">
         <div>
           <Background>
             <OrderCounter />
@@ -35,9 +35,9 @@ export default function Home() {
             <SalesLineChart />
           </div>
 
-          <Col>
-            <SalesTotal></SalesTotal>
-          </Col>
+          <div>
+            <SalesTotal />
+          </div>
         </BackgroundSales>
       </div>
     </div>

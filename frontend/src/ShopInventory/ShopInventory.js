@@ -14,19 +14,23 @@ export default function Inventory() {
         <Navbar />
       </div>
       <div
-        className="insert-Table flex justify-center items-center gap-4 "
-      
+        className="insert-Table flex flex-row justify-center items-center gap-4  "
+
       >
-        <div >
-          <BackgroundInsert>
+        <div>
+          <BackgroundInsert >
             <InsertData />
           </BackgroundInsert>
         </div>
-        <div >
+
+        <div>
           <BackgroundDelete>
             <InventoryTable />
           </BackgroundDelete>
         </div>
+
+
+
       </div>
     </div>
   );

@@ -7,18 +7,21 @@ const displayLastOrder = require("../controllers/DisplayLastOrder");
 const orders = require("../controllers/orders");
 const contentManager = require("../controllers/contentManager");
 const upload = require("../multer/upload");
+const { authenticateJWT, logRequest } = require("../middleware/auth");
 
-router.get("/counter", counterDB.countOperation);
+
+router.use(logRequest);
+
+router.get("/counter", authenticateJWT.counterDB.countOperation);
 router.post("/login", logintest.login);
-router.post("/register", logintest.register);
-router.get("/lastOrder", displayLastOrder.getlastOrder);
-router.get("/totalMonths/:month", salesReport.getTotalMonth);
-router.post("/deleteID", contentManager.deleteStoreItemID);
-router.get("/orders", orders.getAllOrders);
-router.post("/orders", orders.finishOrder);
-router.get("/contentData/:whichContent", contentManager.getContentData);
+router.get("/lastOrder", authenticateJWT.displayLastOrder.getlastOrder);
+router.get("/totalMonths/:month", authenticateJWT.salesReport.getTotalMonth);
+router.post("/deleteID", authenticateJWT.contentManager.deleteStoreItemID);
+router.get("/orders", authenticateJWT.orders.getAllOrders);
+router.post("/orders", authenticateJWT.orders.finishOrder);
+router.get("/contentData/:whichContent", authenticateJWT.contentManager.getContentData);
 
-router.post("/contentEdit/:whichContent", (req, res) => {
+router.post("/contentEdit/:whichContent", authenticateJWT, (req, res) => {
   const whichContent = req.params.whichContent;
   if (whichContent === "inventory") {
     upload.array("gallery", 4)(req, res, function (err) {
@@ -32,5 +35,13 @@ router.post("/contentEdit/:whichContent", (req, res) => {
     })
   }
 })
+
+router.get("/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Server is running",
+    timestamp: new Date().toISOString()
+  });
+});
 
 module.exports = router;
