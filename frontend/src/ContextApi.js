@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
 const counterURL = process.env.REACT_APP_API_COUNTER;
 const shopItemsURL = process.env.REACT_APP_API_CONTENTDATA
@@ -10,7 +10,7 @@ export const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
   const [counter, setCounter] = useState();
-  const [token] = useState("");
+  const [token, setToken] = useState("");
   const [lastOrder, setLastOrder] = useState([]);
   const [sales, setSales] = useState({});
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
@@ -18,7 +18,6 @@ export const MyProvider = ({ children }) => {
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
-
   const [bannerData, setBannerData] = useState({});
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -37,13 +36,25 @@ export const MyProvider = ({ children }) => {
   const fetchInventory = () => {
 
     if (table === "Products") {
-      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.products}`)
+      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.products}`, {
+        method: "GET",
+       headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
         .then((res) => res.json())
         .then((data) => {
           setInventoryTable(data.contentData.products);
         });
     } else {
-      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.bestsellers}`)
+      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.bestsellers}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+
+      }
+      )
         .then((res) => res.json())
         .then((data) => {
           setInventoryTable(data.contentData.bestseller);
@@ -54,7 +65,12 @@ export const MyProvider = ({ children }) => {
   const fetchMonths = async (month) => {
     try {
       const response = await fetch(
-        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
       );
       const data = await response.json();
       setSales((prevSales) => ({ ...prevSales, [month]: data[month] }));
@@ -87,6 +103,7 @@ export const MyProvider = ({ children }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
     };
@@ -106,6 +123,7 @@ export const MyProvider = ({ children }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ editAbleData, table }),
     };
@@ -122,7 +140,13 @@ export const MyProvider = ({ children }) => {
   const fetchAllOrders = async () => {
     try {
       const response = await fetch(
-        `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+
       );
       const json = await response.json();
       setPageState((old) => ({
@@ -137,19 +161,17 @@ export const MyProvider = ({ children }) => {
     }
   };
   const postIdForDelete = () => {
-    const idForDelete = rowSelectionModel;
-    const idForDeleteOrders = rowSelectionModelOrders;
-    console.log(idForDeleteOrders, tableOrders, flagOrders);
     let options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
     };
     if (flagOrders) {
-      options.body = JSON.stringify({ idForDeleteOrders, tableOrders });
+      options.body = JSON.stringify({ rowSelectionModelOrders, tableOrders });
     } else {
-      options.body = JSON.stringify({ idForDelete, table });
+      options.body = JSON.stringify({ rowSelectionModel, table });
     }
     fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, options)
       .then((res) => res.json())
@@ -162,50 +184,57 @@ export const MyProvider = ({ children }) => {
         console.error("Error sending req", error);
       });
   };
-  
+
   const fetchCounter = () => {
     axios
-      .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
+      .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         setCounter(response.data.counterOp);
-        console.log(counter);
       })
       .catch((error) => {
         console.error("Error fetching counter", error);
       });
   };
- 
- 
 
-  useEffect(() => {
-    fetchData();
 
-    const fetchLastOrder = () => {
-      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.lastOrder}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data)
-          setLastOrder(data);
-        })
-        .catch((error) => {
-          console.error("Fetch error:", error);
-        });
-    };
-    // visitorCounter();
-    //  setInterval(visitorCounter, 30000);
-    fetchLastOrder();
-  }, []);
+
+
+
+  const fetchLastOrder = () => {
+    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.lastOrder}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data)
+        setLastOrder(data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
 
   return (
     <MyContext.Provider
       value={{
         counter,
         token,
+        setToken,
         lastOrder,
         postIdForDelete,
         rowSelectionModel,
@@ -234,7 +263,8 @@ export const MyProvider = ({ children }) => {
         setBannerData,
         which,
         setWhich,
-
+        fetchLastOrder,
+        fetchData,
         formData
       }}
     >

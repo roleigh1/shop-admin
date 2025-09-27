@@ -1,17 +1,13 @@
-import React from "react";
 import { FormSignIn } from "./Form";
-import PropTypes from "prop-types"; 
-export function LoginPage({ onTokenReceived }) {
+ 
+export function LoginPage() {
   return (
     <div>
     
-          <FormSignIn onTokenReceived={onTokenReceived} />
+          <FormSignIn  />
      
     </div>
   );
 }
 
 
-LoginPage.propTypes = {
-  onTokenReceived: PropTypes.func.isRequired
-};

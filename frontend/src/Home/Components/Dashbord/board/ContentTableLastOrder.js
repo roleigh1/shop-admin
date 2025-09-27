@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,12 +10,14 @@ import { MyProvider, useMyContext } from "../../../../ContextApi";
 
 
 export default function LastOrderTable() {
-  const { lastOrder } = useMyContext(MyProvider);
-  
+  const { lastOrder,fetchLastOrder } = useMyContext(MyProvider);
+  useEffect(()=> {
+    fetchLastOrder()
+  },[])
   return (
     <div >
       <h5 className="text-center relative top-4">
-         order received
+        Last 5 orders received
       </h5>
       <div className="max-h-[300px] overflow-y-scroll" >
         <TableContainer

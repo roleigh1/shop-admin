@@ -13,8 +13,7 @@ import Slider from "@mui/material/Slider";
 import { apiConfig } from "../../config/apiConfig";
 
 export default function Editbanner() {
-  const { fetchEditBanners, which, setWhich } = useMyContext(MyProvider);
-  const [open, setOpen] = useState(false);
+  const { which, setWhich,token } = useMyContext(MyProvider);
   const [bannerData, setBannerData] = useState([]);
   const [editData, setEditData] = useState({
     headline: "",
@@ -27,7 +26,12 @@ export default function Editbanner() {
     const fetchEditBanners = () => {
 
       axios
-        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.banners}`)
+        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.banners}`, {
+          method:"GET", 
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         .then((response) => {
           setBannerData(response.data.contentData.banners);
         })
@@ -93,9 +97,10 @@ export default function Editbanner() {
 
   const postContentEdit = (formData) => {
     axios
-      .post("http://localhost:3131/api/contentEdit/banner", formData, {
+      .post(`${apiConfig.BASE_URL}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
         },
       })
       .then(function (response) {

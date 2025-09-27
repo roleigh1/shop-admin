@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import TextField from "@mui/material/TextField";
+import { MyProvider,useMyContext } from "../../ContextApi";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -21,6 +22,7 @@ export default function InsertData() {
     unity: "",
     files: ""
   })
+  const {token} = useMyContext(MyProvider); 
   const [imgName, setImgName] = useState("");
 
   const handleChange = (key, value) => {
@@ -46,6 +48,9 @@ export default function InsertData() {
     });
     fetch(insertURL, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       body: data,
     })
       .then((response) => response.json())

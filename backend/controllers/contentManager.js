@@ -69,7 +69,6 @@ const uploadData = async (req, res) => {
       console.log("untiy" , unity)
       const uploadedImageURLs = [];
 
-      // Alle Bilder hochladen
       for (const file of req.files) {
         const fileStream = fs.createReadStream(file.path);
 
@@ -141,7 +140,6 @@ const uploadData = async (req, res) => {
       });
     }
 
-    // Banner
     if (whichContent === "banner") {
       if (!req.file) return res.status(400).send("No file uploaded");
 
@@ -175,8 +173,7 @@ const uploadData = async (req, res) => {
         imageUrl: uploadResult.Location,
       });
     }
-
-    // Cards
+  
     if (whichContent === "cards") {
       if (!req.file) return res.status(400).send("No file uploaded");
 
@@ -218,7 +215,7 @@ const uploadData = async (req, res) => {
 };
 const deleteStoreItemID = async (req, res) => {
   try {
-    let { idForDelete, table, idForDeleteOrders, tableOrders } = req.body;
+    let { rowSelectionModel, table, rowSelectionModelOrders, tableOrders } = req.body;
     if (table === undefined) {
       table = tableOrders;
     }
@@ -229,7 +226,7 @@ const deleteStoreItemID = async (req, res) => {
         await BestSellerItemsDB.destroy({
           where: {
             id: {
-              [Op.in]: idForDelete,
+              [Op.in]: rowSelectionModel,
             },
           },
         });
@@ -238,7 +235,7 @@ const deleteStoreItemID = async (req, res) => {
         await ProductsDB.destroy({
           where: {
             id: {
-              [Op.in]: idForDelete,
+              [Op.in]: rowSelectionModel,
             },
           },
         });
@@ -247,7 +244,7 @@ const deleteStoreItemID = async (req, res) => {
         await FinishedOrders.destroy({
           where: {
             id: {
-              [Op.in]: idForDeleteOrders,
+              [Op.in]:  rowSelectionModelOrders,
             },
           },
         });
@@ -259,7 +256,7 @@ const deleteStoreItemID = async (req, res) => {
     res.status(200).json({ message: "Data deleted from", table });
   } catch (error) {
     console.error("Error receiving selected ID", error);
-    res.status(400).json({ message: "Error sending post request" });
+    res.status(400).json({ message: "Error sending post request" , error});
   }
 };
 module.exports = {

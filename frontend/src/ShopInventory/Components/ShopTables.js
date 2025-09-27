@@ -17,6 +17,7 @@ export default function InventoryTable({ onClick }) {
     inventoryTable,
     postIdForDelete,
     fetchInventory,
+
   } = useMyContext(MyProvider);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export default function InventoryTable({ onClick }) {
 
   const handleChange = (event) => {
     const newTable = event.target.value;
+    
     setTable(newTable);
   };
 

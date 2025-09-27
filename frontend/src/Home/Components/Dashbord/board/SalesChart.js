@@ -1,11 +1,13 @@
-import * as React from "react";
+import React , {useEffect} from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { MyContext, useMyContext } from "../../../../ContextApi";
 import "../../../home.css";
 import { useMediaQuery } from "@mui/material";
 export default function SalesLineChart() {
-  const { sales } = useMyContext(MyContext);
-  console.log(sales);
+  const { sales,fetchData } = useMyContext(MyContext);
+  useEffect(() =>{
+    fetchData()
+  },[])
   const isSmallScreen = useMediaQuery("(max-width:768px)");
   const width = isSmallScreen ? 300 : 600;
   return (

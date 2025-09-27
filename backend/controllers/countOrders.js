@@ -26,7 +26,7 @@ const countOperation = async (req, res) => {
     });
     const countOrder = await FinishedOrders.count();
 
-    const counterOp = {
+    const counterOp = { 
       ordersCountLastMonday,
       countOrder,
       lastMonday, 

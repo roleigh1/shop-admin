@@ -9,7 +9,7 @@ import LastOrderTable from "./Components/Dashbord/board/ContentTableLastOrder";
 import SalesLineChart from "./Components/Dashbord/board/SalesChart";
 import "./home.css";
 import SalesTotal from "./Components/Dashbord/board/SalesTotal";
-export default function Home() {
+export default function Home({onTokenRevived}) {
   return (
     <div>
       <div className="mt-10">

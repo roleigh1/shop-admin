@@ -8,26 +8,22 @@ import Inventory from "./ShopInventory/ShopInventory";
 import OrdersSite from "./Orders/Orders";
 import ContentManager from "./ContentManager/ContentManager";
 function App() {
-  const [, setToken] = useState(null);
 
-  const handleTokenReceived = (receivedToken) => {
-    setToken(receivedToken);
-  };
 
   return (
     <MyProvider>
-      <AppContent onTokenReceived={handleTokenReceived} />
+      <AppContent  />
     </MyProvider>
   );
 }
 
-function AppContent({ onTokenReceived }) {
+function AppContent() {
   return (
     <Router>
       <Routes>
         <Route
           path="/"
-          element={<LoginPage onTokenReceived={onTokenReceived} />}
+          element={<LoginPage  />}
         />
         <Route path="/contentManager" element={<ContentManager />} />
         <Route path="/home" element={<Home />} />
@@ -37,8 +33,6 @@ function AppContent({ onTokenReceived }) {
     </Router>
   );
 }
-AppContent.propTypes = {
-  onTokenReceived: PropTypes.func.isRequired,
-};
+
 
 export default App;

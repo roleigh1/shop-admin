@@ -3,7 +3,7 @@ const winston = require("winston");
 const { combine, timestamp, json, prettyPrint,errors } = winston.format;
 const express = require("express");
 const cors = require("cors");
-const passport = require("./controllers/passportController");
+const passport = require("./config/passportController");
 const app = express();
 
 // log file

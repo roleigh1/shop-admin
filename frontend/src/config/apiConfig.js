@@ -11,7 +11,10 @@ export const apiConfig = {
     orders: "/orders",
     months: "/totalMonths/",
     update: "/updateData",
-    lastOrder:"/lastOrder"
+    lastOrder:"/lastOrder",
+    login:"/login",
+    editBanner:"/contentEdit/Banner",
+    intventoryEdit: "/contentEdit/inventory/"
 
 
   },

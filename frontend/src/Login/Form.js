@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { MyProvider, useMyContext } from "../ContextApi";
 import PropTypes from "prop-types";
-
-export function FormSignIn({ onTokenReceived }) {
+import { apiConfig } from "../config/apiConfig";
+export function FormSignIn() {
   const [toggle, setToggle] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {setToken} = useMyContext(MyProvider); 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (email.length > 0 && password.length > 0) {
       setToggle("");
@@ -18,15 +19,15 @@ export function FormSignIn({ onTokenReceived }) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:3131/api/login", {
+      const response = await axios.post(`${apiConfig.BASE_URL}${apiConfig.endpoints.login}`, {
         username: email,
         password: password,
       });
 
       const retrievedToken = response.data.token;
-
-      onTokenReceived(retrievedToken);
-      console.log("Login successful", response.data);
+      
+      
+      setToken(retrievedToken); 
       navigate("/home");
     } catch (error) {
       console.log("Login failed", error);
@@ -79,6 +80,3 @@ export function FormSignIn({ onTokenReceived }) {
     </div>
   );
 }
-FormSignIn.propTypes = {
-  onTokenReceived: PropTypes.func.isRequired,
-};

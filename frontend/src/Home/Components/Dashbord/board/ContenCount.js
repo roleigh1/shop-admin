@@ -7,6 +7,7 @@ export default function OrderCounter() {
   useEffect(() => {
     fetchCounter();
   }, []);
+
   return (
     <div className="order-counter flex flex-col text-center opacity-100">
       <div
