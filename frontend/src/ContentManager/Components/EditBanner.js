@@ -23,6 +23,7 @@ export default function Editbanner() {
     top: 50,
   });
   useEffect(() => {
+
     const fetchEditBanners = () => {
 
       axios
@@ -97,7 +98,7 @@ export default function Editbanner() {
 
   const postContentEdit = (formData) => {
     axios
-      .post(`${apiConfig.BASE_URL}`, formData, {
+      .post(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`

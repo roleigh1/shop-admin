@@ -118,7 +118,7 @@ export const MyProvider = ({ children }) => {
   };
 
   const updateData = async () => {
-    console.log("Updated Data", editAbleData, "From", table);
+
     const options = {
       method: "POST",
       headers: {

@@ -9,15 +9,24 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { apiConfig } from "../../config/apiConfig";
 export default function EditCards() {
   const [editCard, setEditCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [choosenCards, setChoosenCards] = useState("");
   const [cardsData, setCardsData] = useState([]);
+  const {token} = useMyContext(MyProvider); 
+
   useEffect(() => {
     const fetchEditCards = () => {
       axios
-        .get("http://localhost:3131/api/contentdata/cards")
+        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.cards}`,{
+          method:"GET",
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+        )
         .then((response) => {
           setCardsData(response.data.contentData.cards);
         })
@@ -27,7 +36,7 @@ export default function EditCards() {
     };
     fetchEditCards();
     console.log(cardsData);
-  }, []);
+  }, [choosenCards]);
 
   useEffect(() => {
     if (!choosenCards || cardsData.length === 0)  return; 
@@ -68,6 +77,9 @@ export default function EditCards() {
       [property]: value,
     }));
   };
+
+  console.log(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`)
+
   const formSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -76,9 +88,10 @@ export default function EditCards() {
     formData.append("cardText", editCard.text);
     formData.append("picture", editCard.imageUpload);
     axios
-      .post("http://localhost:3131/api/contentEdit/cards", formData, {
+      .post(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization:`Bearer ${token}`
         },
       })
       .then(function (response) {
