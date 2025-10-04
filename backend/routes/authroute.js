@@ -1,5 +1,5 @@
 const express = require("express");
-const logintest = require("../controllers/authController");
+
 const counterDB = require("../controllers/countOrders");
 const salesReport = require("../controllers/SalesReport");
 const router = express.Router();
@@ -7,13 +7,15 @@ const displayLastOrder = require("../controllers/DisplayLastOrder");
 const orders = require("../controllers/orders");
 const contentManager = require("../controllers/contentManager");
 const upload = require("../multer/upload");
+const authController = require("../controllers/authController")
 
-const passport = require("passport"); 
-const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = authController.authToken;
 
-
+router.post("/logout", authController.logOut); 
 router.get("/counter", requireAuth, counterDB.countOperation);
-router.post("/login", logintest.login);
+router.post("/login", authController.login);
+router.get("/protected", requireAuth, authController.getProtectedData); 
+router.post("refesh", authController.refeshEndpoint)   ; 
 router.get("/lastOrder", requireAuth, displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", requireAuth, salesReport.getTotalMonth);
 router.post("/deleteID", requireAuth, contentManager.deleteStoreItemID);

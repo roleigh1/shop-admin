@@ -6,38 +6,50 @@ import PropTypes from "prop-types";
 import { apiConfig } from "../config/apiConfig";
 export function FormSignIn() {
   const [toggle, setToggle] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const {setToken} = useMyContext(MyProvider); 
+  const {setToken, setUser} = useMyContext(MyProvider); 
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (email.length > 0 && password.length > 0) {
+    if (username.length > 0 && password.length > 0) {
       setToggle("");
     }
-  }, [email, password]);
+  }, [username, password]);
 
-  const handleLogin = async () => {
+    const handleLogin = async () => {
+
+    setToggle("");
+    
     try {
-      const response = await axios.post(`${apiConfig.BASE_URL}${apiConfig.endpoints.login}`, {
-        username: email,
-        password: password,
+      const response = await fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.login}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: "include" 
       });
 
-      const retrievedToken = response.data.token;
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Login failed");
+      }
+
+      const userData = await response.json();
+      setUser(userData);
       
-      
-      setToken(retrievedToken); 
+     
       navigate("/home");
     } catch (error) {
-      console.log("Login failed", error);
-      setToggle("wrong username or password");
+      console.error("Login error:", error);
+      setToggle(error.message || "Login failed. Please try again.");
+    
     }
   };
-
   const handleToggle = (event) => {
     event.preventDefault();
-    if (email.length === 0 && password.length === 0) {
+    if (username.length === 0 && password.length === 0) {
       setToggle("Please enter login data");
     } else {
       handleLogin();
@@ -58,10 +70,10 @@ export function FormSignIn() {
               <span>{toggle}</span>
               <label htmlFor="email" style={{marginBottom:"1rem"}}>User</label>
               <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                name="email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                type="name"
+                name="username"
                 className=" mt-[-2rem] h-[2rem] rounded-sm bg-white w-[15rem]"
               />
               <label htmlFor="password" style={{marginBottom:"1rem"}}>Password</label>

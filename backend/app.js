@@ -3,8 +3,9 @@ const winston = require("winston");
 const { combine, timestamp, json, prettyPrint,errors } = winston.format;
 const express = require("express");
 const cors = require("cors");
-const passport = require("./config/passportController");
+
 const app = express();
+const cookieParser = require("cookie-parser"); 
 
 // log file
 const logger = winston.createLogger({
@@ -26,12 +27,15 @@ const logger = winston.createLogger({
 
 logger.error(new Error("504"))
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials:true
+}));
 
 const routes = require("./routes/authroute");
 
-
-app.use("/api", routes, passport.initialize());
+app.use(cookieParser()); 
+app.use("/api", routes);
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 

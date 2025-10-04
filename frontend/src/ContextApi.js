@@ -2,9 +2,6 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
-const counterURL = process.env.REACT_APP_API_COUNTER;
-const shopItemsURL = process.env.REACT_APP_API_CONTENTDATA
-const lastOrderURL = process.env.REACT_APP_API_LASTORDER;
 
 export const MyContext = createContext();
 
@@ -19,6 +16,7 @@ export const MyProvider = ({ children }) => {
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
   const [bannerData, setBannerData] = useState({});
+  const [user, setUser] = useState({})
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
@@ -31,48 +29,62 @@ export const MyProvider = ({ children }) => {
 
   const [which, setWhich] = useState("Products");
 
-
-  let formData = new FormData();
-  const fetchInventory = () => {
-
-    if (table === "Products") {
-      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.products}`, {
-        method: "GET",
-       headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setInventoryTable(data.contentData.products);
-        });
-    } else {
-      fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.bestsellers}`, {
-        method: "GET",
+  const apiReq = async (url,options = {}) => {
+    try {
+      const response = await fetch(url, {
+        ...options,
+        credentials: "include",
         headers: {
-          Authorization: `Bearer ${token}`
+          ...options.headers,
+          "Content-type": "application/json",
         }
-
-      }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setInventoryTable(data.contentData.bestseller);
+      });
+      if (response.status === 401) {
+        const refeshResponse = await fetch(`${apiConfig.BASE_URL}/refresh`, {
+          method: "POST",
+          credentials: "include"
+      
         });
+
+        if (refeshResponse.ok) {
+          return apiReq(url, options);
+        } else {
+        window.location.href = "/login";
+          throw new Error('Session exired');
+        }
+      }
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+      return response.json();
+    } catch (error) {
+      console.error("API error: ", error);
+      throw error;
+    }
+  };
+  const fetchUserData = () => apiReq(`${apiConfig.BASE_URL}/api/protected`);
+  let formData = new FormData();
+  const fetchInventory = async () => {
+    const endpoint = table === "Products"
+      ? apiConfig.endpoints.products
+      : apiConfig.endpoints.bestsellers;
+
+    try {
+      const data = await apiReq(`${apiConfig.BASE_URL}${endpoint}`);
+      setInventoryTable(table === "Products"
+        ? data.contentData.products
+        : data.contentData.bestseller
+      );
+    } catch (error) {
+      console.error("Error fetching inventory:", error);
     }
   };
 
   const fetchMonths = async (month) => {
     try {
-      const response = await fetch(
-        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
+      const data = await apiReq(
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`
       );
-      const data = await response.json();
       setSales((prevSales) => ({ ...prevSales, [month]: data[month] }));
     } catch (error) {
       console.error(`Error fetching ${month}`, error);
@@ -99,56 +111,40 @@ export const MyProvider = ({ children }) => {
     }
   };
   const orderFinishProcess = async (rowSelectionModelOrders) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
-    };
-    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("res recived", data);
-      })
-      .catch((error) => {
-        console.error("Error moving data to another table", error);
+    try {
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, {
+        method: "POST",
+        body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
       });
+    } catch (error) {
+      console.error("Error moving data to another table", error);
+    }
   };
-
+  const fetchCounter = async () => {
+    try {
+      const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
+      setCounter(data);
+    } catch(error){
+      console.error("Error fetching counter"); 
+    }
+}
   const updateData = async () => {
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ editAbleData, table }),
-    };
-    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.update}`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("res recived", data);
-      })
-      .catch((error) => {
-        console.error("Error updating data", error);
+    try {
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.update}`, {
+        method: "POST",
+        body: JSON.stringify({ editAbleData, table }),
       });
+    } catch (error) {
+      console.error("Error updating data", error);
+    }
   };
 
   const fetchAllOrders = async () => {
     try {
-      const response = await fetch(
-        `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-
+      const json = await apiReq(
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
-      const json = await response.json();
+
       setPageState((old) => ({
         ...old,
         isLoading: false,
@@ -160,80 +156,45 @@ export const MyProvider = ({ children }) => {
       setPageState((old) => ({ ...old, isLoading: false }));
     }
   };
-  const postIdForDelete = () => {
-    let options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    };
-    if (flagOrders) {
-      options.body = JSON.stringify({ rowSelectionModelOrders, tableOrders });
-    } else {
-      options.body = JSON.stringify({ rowSelectionModel, table });
+  const postIdForDelete = async () => {
+    try {
+      const body = flagOrders
+        ? { rowSelectionModelOrders, tableOrders }
+        : { rowSelectionModel, table };
+
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error("Error sending delete request", error);
     }
-    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("res recived", data);
-
-        console.log(options);
-      })
-      .catch((error) => {
-        console.error("Error sending req", error);
-      });
-  };
-
-  const fetchCounter = () => {
-    axios
-      .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        setCounter(response.data.counterOp);
-      })
-      .catch((error) => {
-        console.error("Error fetching counter", error);
-      });
   };
 
 
-
-
-
-  const fetchLastOrder = () => {
-    fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.lastOrder}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+  const fetchLastOrder = async () => {
+    try {
+      const data = await apiReq(
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.lastOrder}`
+      );
+      setLastOrder(data);
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
-
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data)
-        setLastOrder(data);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
   };
+
+
+
+
+
+
 
   return (
     <MyContext.Provider
       value={{
         counter,
         token,
+        fetchCounter,
         setToken,
         lastOrder,
         postIdForDelete,
@@ -245,7 +206,7 @@ export const MyProvider = ({ children }) => {
         setEditAbleData,
         updateData,
         sales,
-        fetchCounter,
+
         fetchInventory,
         inventoryTable,
         setInventoryTable,
@@ -265,7 +226,10 @@ export const MyProvider = ({ children }) => {
         setWhich,
         fetchLastOrder,
         fetchData,
-        formData
+        formData,
+        user,
+        setUser,
+        apiReq
       }}
     >
       {children}
