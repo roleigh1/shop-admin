@@ -219,7 +219,7 @@ const deleteStoreItemID = async (req, res) => {
     if (table === undefined) {
       table = tableOrders;
     }
-    console.log("Table recived:", table);
+    console.log("Table recived:", table,rowSelectionModelOrders);
 
     switch (table) {
       case "Bestseller":

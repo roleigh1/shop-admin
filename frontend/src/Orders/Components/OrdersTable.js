@@ -44,12 +44,13 @@ export default function OrdersTableDB() {
     setTableOrders,
     postIdForDelete,
     setFlagOrders,
+    flagOrders
   } = useMyContext(MyProvider);
 
   const handlePageChange = () => {
     console.log(rowSelectionModelOrders);
     orderFinishProcess(rowSelectionModelOrders);
-    window.location.reload();
+
   };
 
   const handleChange = (event) => {
@@ -66,7 +67,7 @@ export default function OrdersTableDB() {
     const data = [...pageState.data]; // Kopie von data erstellen
 
     function binarySearch(data, newId) {
-      // Sortiere die Kopie von data nach der ID
+      
       data.sort((a, b) => {
         return a.id - b.id;
       });
@@ -100,10 +101,12 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
-    postIdForDelete();
+    setFlagOrders(true); 
+
+    postIdForDelete(flagOrders);
   };
   useEffect(() => {
-    setFlagOrders(true);
+    setFlagOrders(false);
     fetchAllOrders();
   }, [newValue, pageState.page, foundData]);
 

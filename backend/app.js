@@ -26,7 +26,7 @@ const logger = winston.createLogger({
 });
 
 logger.error(new Error("504"))
-app.use(express.json());
+
 app.use(cors({
   origin:"http://localhost:3000",
   credentials:true
@@ -37,6 +37,6 @@ const routes = require("./routes/authroute");
 app.use(cookieParser()); 
 app.use("/api", routes);
 app.use(express.static("public"));
-app.use("/uploads", express.static("uploads"));
+app.use(express.json({limit:"10mb"}));
 
 module.exports = app;

@@ -1,12 +1,13 @@
-import  { useState } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { MyProvider,useMyContext } from "../../ContextApi";
+import { MyProvider, useMyContext } from "../../ContextApi";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import "../style.css";
 import Button from "@mui/material/Button";
+import { apiConfig } from "../../config/apiConfig";
 
 
 const insertURL = process.env.REACT_APP_API_POSTINSERT;
@@ -22,7 +23,7 @@ export default function InsertData() {
     unity: "",
     files: ""
   })
-  const {token} = useMyContext(MyProvider); 
+  const { apiReq } = useMyContext(MyProvider);
   const [imgName, setImgName] = useState("");
 
   const handleChange = (key, value) => {
@@ -33,43 +34,44 @@ export default function InsertData() {
   }
 
   const handleUpload = async (e) => {
-    e.preventDefault();
+    try {
 
-    const data = new FormData();
-    data.append("type", formdata.type);
-    data.append("price", formdata.price);
-    data.append("name", formdata.name);
-    data.append("where", formdata.where);
-    data.append("unity", formdata.unity);
-    data.append("description", formdata.description);
 
-    formdata.files.forEach((file) => {
-      data.append("gallery", file);
-    });
-    fetch(insertURL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Upload succsessful:", data);
+      e.preventDefault();
+
+      const data = new FormData();
+      data.append("type", formdata.type);
+      data.append("price", formdata.price);
+      data.append("name", formdata.name);
+      data.append("where", formdata.where);
+      data.append("unity", formdata.unity);
+      data.append("description", formdata.description);
+
+      formdata.files.forEach((file) => {
+        data.append("gallery", file);
+      });
+      const response = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.intventoryEdit}`, {
+        method: "POST",
+        body: data
+      })
+      if (response) {
+        alert("Product added intro store")
         setFormdata({
           type: "",
           name: "",
           description: "",
           where: "",
           price: "",
+          file: "",
           unity: "",
-          files: [],
-        });
-
-      })
-      .catch((error) => {
-        console.error("Upload error", error);
-      });
+          files: ""
+        })
+      } else[
+      ]
+    } catch (error) {
+      console.error("Error inserting product", error);
+      alert("Failed inserting a product")
+    }
   };
   const handleFileChange = (e) => {
     const selectedFiles = [...e.target.files];

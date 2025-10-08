@@ -13,14 +13,14 @@ const requireAuth = authController.authToken;
 
 router.post("/logout", authController.logOut); 
 router.get("/counter", requireAuth, counterDB.countOperation);
-router.post("/login", authController.login);
+router.post("/login", express.json() , authController.login);
 router.get("/protected", requireAuth, authController.getProtectedData); 
 router.post("refesh", authController.refeshEndpoint)   ; 
 router.get("/lastOrder", requireAuth, displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", requireAuth, salesReport.getTotalMonth);
-router.post("/deleteID", requireAuth, contentManager.deleteStoreItemID);
+router.post("/deleteID", express.json(), requireAuth, contentManager.deleteStoreItemID);
 router.get("/orders", requireAuth, orders.getAllOrders);
-router.post("/orders", requireAuth, orders.finishOrder);
+router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData/:whichContent", requireAuth, contentManager.getContentData);
 
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
@@ -36,8 +36,7 @@ router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
       contentManager.uploadData(req, res);
     })
   }
-})
-
+});
 router.get("/health", (req, res) => {
   res.json({
     success: true,

@@ -7,13 +7,12 @@ import { MyProvider, useMyContext } from "../../ContextApi";
 import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { apiConfig } from "../../config/apiConfig";
 
 export default function Editbanner() {
-  const { which, setWhich,token } = useMyContext(MyProvider);
+  const { which, setWhich,apiReq } = useMyContext(MyProvider);
   const [bannerData, setBannerData] = useState([]);
   const [editData, setEditData] = useState({
     headline: "",
@@ -24,24 +23,15 @@ export default function Editbanner() {
   });
   useEffect(() => {
 
-    const fetchEditBanners = () => {
-
-      axios
-        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.banners}`, {
-          method:"GET", 
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        .then((response) => {
-          setBannerData(response.data.contentData.banners);
-        })
-        .catch((error) => {
-          console.error("Error fetching content data", error);
-        });
-    };
-    fetchEditBanners();
-
+    const fetchEditBanners = async () => {
+      try{
+        const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.banners}`)
+        setBannerData(data.contentData.banners)
+      } catch(error){
+        console.error("error fetching banner data" ,error); 
+      }
+    }
+    fetchEditBanners()
   }, [which]);
 
   useEffect(() => {
@@ -96,21 +86,22 @@ export default function Editbanner() {
     postContentEdit(formData);
   };
 
-  const postContentEdit = (formData) => {
-    axios
-      .post(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        },
-      })
-      .then(function (response) {
-        alert("Data edited")
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+    const postContentEdit = async (formData) => {
+      try{
+        const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`, {
+          method: "POST",
+          body:formData
+        })
+        if(res){
+         
+          alert("Edit successful")
+        }
+      }catch(error) {
+        console.error("Error at banner edit", error); 
+        alert("Edit failed"); 
+      }
+    };
+    
 
   return (
     <div >

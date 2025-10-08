@@ -26,7 +26,6 @@ export const MyProvider = ({ children }) => {
   });
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
-
   const [which, setWhich] = useState("Products");
 
   const apiReq = async (url,options = {}) => {
@@ -45,7 +44,6 @@ export const MyProvider = ({ children }) => {
           credentials: "include"
       
         });
-
         if (refeshResponse.ok) {
           return apiReq(url, options);
         } else {
@@ -56,13 +54,13 @@ export const MyProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error("API request failed");
       }
-      return response.json();
+      return response.json()
     } catch (error) {
       console.error("API error: ", error);
       throw error;
     }
   };
-  const fetchUserData = () => apiReq(`${apiConfig.BASE_URL}/api/protected`);
+
   let formData = new FormData();
   const fetchInventory = async () => {
     const endpoint = table === "Products"
@@ -112,39 +110,31 @@ export const MyProvider = ({ children }) => {
   };
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     try {
+      console.log(rowSelectionModelOrders); 
       await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, {
         method: "POST",
-        body: JSON.stringify({ finishOrderId: rowSelectionModelOrders }),
+        body: JSON.stringify({ rowSelectionModelOrders}),
       });
     } catch (error) {
       console.error("Error moving data to another table", error);
     }
   };
+
   const fetchCounter = async () => {
     try {
       const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
-      setCounter(data);
+      console.log(data)
+  setCounter(data.counterOp);
     } catch(error){
       console.error("Error fetching counter"); 
     }
 }
-  const updateData = async () => {
-    try {
-      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.update}`, {
-        method: "POST",
-        body: JSON.stringify({ editAbleData, table }),
-      });
-    } catch (error) {
-      console.error("Error updating data", error);
-    }
-  };
 
   const fetchAllOrders = async () => {
     try {
       const json = await apiReq(
         `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
-
       setPageState((old) => ({
         ...old,
         isLoading: false,
@@ -156,21 +146,25 @@ export const MyProvider = ({ children }) => {
       setPageState((old) => ({ ...old, isLoading: false }));
     }
   };
+
   const postIdForDelete = async () => {
     try {
-      const body = flagOrders
-        ? { rowSelectionModelOrders, tableOrders }
-        : { rowSelectionModel, table };
-
+      if(flagOrders){
       await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, {
         method: "POST",
-        body: JSON.stringify(body),
+        body:JSON.stringify({rowSelectionModel,table}),
       });
+      } else {
+        console.log("orders",rowSelectionModelOrders,tableOrders)
+          await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, {
+        method: "POST",
+        body:JSON.stringify({rowSelectionModelOrders,tableOrders}),
+      });
+      }
     } catch (error) {
       console.error("Error sending delete request", error);
     }
   };
-
 
   const fetchLastOrder = async () => {
     try {
@@ -182,12 +176,6 @@ export const MyProvider = ({ children }) => {
       console.error("Fetch error:", error);
     }
   };
-
-
-
-
-
-
 
   return (
     <MyContext.Provider
@@ -204,9 +192,7 @@ export const MyProvider = ({ children }) => {
         setTable,
         editAbleData,
         setEditAbleData,
-        updateData,
         sales,
-
         fetchInventory,
         inventoryTable,
         setInventoryTable,

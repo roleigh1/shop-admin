@@ -11,16 +11,14 @@ function getLastMonday() {
   return lastmonday.format("YYYY-MM-DD");
 }
 
-
-
-
 const countOperation = async (req, res) => {
   try {
     let lastMonday = getLastMonday();
+   
     const ordersCountLastMonday = await FinishedOrders.count({
       where: {
         createdAt: {
-          [Op.gte]: lastMonday,
+          [Op.lte]: lastMonday,
         },
       },
     });

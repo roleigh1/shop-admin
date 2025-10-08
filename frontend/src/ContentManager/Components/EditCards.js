@@ -15,24 +15,17 @@ export default function EditCards() {
   const [isVisible, setIsVisible] = useState(false);
   const [choosenCards, setChoosenCards] = useState("");
   const [cardsData, setCardsData] = useState([]);
-  const {token} = useMyContext(MyProvider); 
+  const {apiReq} = useMyContext(MyProvider); 
 
   useEffect(() => {
-    const fetchEditCards = () => {
-      axios
-        .get(`${apiConfig.BASE_URL}${apiConfig.endpoints.cards}`,{
-          method:"GET",
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
-        )
-        .then((response) => {
-          setCardsData(response.data.contentData.cards);
-        })
-        .catch((error) => {
-          console.log(error, "Error fetching Cards data");
-        });
+    const fetchEditCards = async () => {
+   try{
+    const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.cards}`); 
+    setCardsData(data.contentData.cards); 
+   } catch (error){
+    console.error("Error fetching cards", error)
+   }
+      
     };
     fetchEditCards();
     console.log(cardsData);
@@ -78,30 +71,30 @@ export default function EditCards() {
     }));
   };
 
-  console.log(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`)
 
-  const formSubmit = (e) => {
+
+  const formSubmit = async (e) => {
+   try{
     e.preventDefault();
     const formData = new FormData();
     formData.append("id", editCard.id);
     formData.append("name", editCard.name);
     formData.append("cardText", editCard.text);
     formData.append("picture", editCard.imageUpload);
-    axios
-      .post(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization:`Bearer ${token}`
-        },
+
+     const response =  await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`, {
+        method: "POST",
+        body:formData
       })
-      .then(function (response) {
-        console.log(response);
-        alert("Data edited")
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (response) {
+      alert("Edit successful");
+    } 
+    }catch(error) {
+      console.error("Error at banner edit", error); 
+      alert("Edit failed")
+    }
   };
+  
   return (
     <div >
       <div>

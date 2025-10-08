@@ -6,6 +6,7 @@ export default function OrderCounter() {
 
   useEffect(() => {
     fetchCounter();
+    console.log(counter)
   }, []);
 
   return (

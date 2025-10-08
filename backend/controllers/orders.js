@@ -35,11 +35,11 @@ const getAllOrders = async (req, res) => {
 };
 const finishOrder = async (req, res) => {
   try {
-    const { finishOrderId } = req.body;
-    console.log(finishOrderId);
+    const { rowSelectionModelOrders } = req.body;
+    console.log(rowSelectionModelOrders);
     const oldOrders = await Orders.findAll({
       where: {
-        id: finishOrderId,
+        id: rowSelectionModelOrders
       },
     });
     const finishedOrders = await FinishedOrders.bulkCreate(
@@ -55,7 +55,7 @@ const finishOrder = async (req, res) => {
     res.status(200).json({ message: "Selected Order", finishedOrders });
     const deleteFinishedOrder = await Orders.destroy({
       where: {
-        id: finishOrderId,
+        id: rowSelectionModelOrders,
       },
     });
     console.log("Finished order is deleted", deleteFinishedOrder);
