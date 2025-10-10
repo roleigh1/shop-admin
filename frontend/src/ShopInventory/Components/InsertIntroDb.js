@@ -50,7 +50,7 @@ export default function InsertData() {
       formdata.files.forEach((file) => {
         data.append("gallery", file);
       });
-      const response = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.intventoryEdit}`, {
+      const response = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.intventoryEdit}`, false ,{
         method: "POST",
         body: data
       })

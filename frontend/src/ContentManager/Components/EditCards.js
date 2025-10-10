@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -7,19 +7,19 @@ import { MyProvider, useMyContext } from "../../ContextApi";
 import CardItem from "./Cards";
 import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Button from "@mui/material/Button";
-import axios from "axios";
+import Button from "@mui/material/Button";;
 import { apiConfig } from "../../config/apiConfig";
 export default function EditCards() {
   const [editCard, setEditCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [choosenCards, setChoosenCards] = useState("");
   const [cardsData, setCardsData] = useState([]);
-  const {apiReq} = useMyContext(MyProvider); 
+  const {apiReq,flagHeader,setFlagHeader} = useMyContext(MyProvider); 
 
   useEffect(() => {
-    const fetchEditCards = async () => {
+  const fetchEditCards = async () => {
    try{
+
     const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.cards}`); 
     setCardsData(data.contentData.cards); 
    } catch (error){
@@ -82,7 +82,7 @@ export default function EditCards() {
     formData.append("cardText", editCard.text);
     formData.append("picture", editCard.imageUpload);
 
-     const response =  await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`, {
+     const response =  await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`,true,  {
         method: "POST",
         body:formData
       })

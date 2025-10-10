@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
+import  { createContext, useState, useContext } from "react";
+
 import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
 
@@ -17,6 +17,7 @@ export const MyProvider = ({ children }) => {
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
   const [bannerData, setBannerData] = useState({});
   const [user, setUser] = useState({})
+  const [flagHeader, setFlagHeader] = useState(null); 
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
@@ -28,15 +29,15 @@ export const MyProvider = ({ children }) => {
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
 
-  const apiReq = async (url,options = {}) => {
+  const apiReq = async (url,flagHeader,options = {}) => {
     try {
       const response = await fetch(url, {
         ...options,
         credentials: "include",
-        headers: {
+        headers: flagHeader ? {
           ...options.headers,
           "Content-type": "application/json",
-        }
+        } : formData
       });
       if (response.status === 401) {
         const refeshResponse = await fetch(`${apiConfig.BASE_URL}/refresh`, {
@@ -111,7 +112,7 @@ export const MyProvider = ({ children }) => {
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     try {
       console.log(rowSelectionModelOrders); 
-      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, {
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`,true, {
         method: "POST",
         body: JSON.stringify({ rowSelectionModelOrders}),
       });
@@ -132,6 +133,7 @@ export const MyProvider = ({ children }) => {
 
   const fetchAllOrders = async () => {
     try {
+      console.log("call")
       const json = await apiReq(
         `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
@@ -147,18 +149,18 @@ export const MyProvider = ({ children }) => {
     }
   };
 
-  const postIdForDelete = async () => {
+  const postIdForDelete = async (selectionModel,flagOrders) => {
     try {
       if(flagOrders){
-      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, {
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`,true ,{
         method: "POST",
-        body:JSON.stringify({rowSelectionModel,table}),
+        body:JSON.stringify({rowSelectionModel:selectionModel,table}),
       });
       } else {
         console.log("orders",rowSelectionModelOrders,tableOrders)
-          await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, {
+          await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true,{
         method: "POST",
-        body:JSON.stringify({rowSelectionModelOrders,tableOrders}),
+        body:JSON.stringify({rowSelectionModelOrders: selectionModel,tableOrders}),
       });
       }
     } catch (error) {
@@ -215,7 +217,9 @@ export const MyProvider = ({ children }) => {
         formData,
         user,
         setUser,
-        apiReq
+        apiReq,
+        flagHeader,
+         setFlagHeader
       }}
     >
       {children}

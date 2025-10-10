@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import "./tableStyle.css";
 
@@ -53,8 +52,8 @@ export default function InventoryTable({ onClick }) {
     if (rowSelectionModel.length === 0) {
       return null;
     }
-
-    postIdForDelete(rowSelectionModel);
+    
+    postIdForDelete(rowSelectionModel,true);
   };
 
   return (

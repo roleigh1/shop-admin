@@ -34,6 +34,7 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [orderFinished, setOrderFinished] = useState(false); 
   const {
     rowSelectionModelOrders,
     setRowSelectionModelOrders,
@@ -43,14 +44,14 @@ export default function OrdersTableDB() {
     tableOrders,
     setTableOrders,
     postIdForDelete,
-    setFlagOrders,
-    flagOrders
+ 
   } = useMyContext(MyProvider);
 
-  const handlePageChange = () => {
-    console.log(rowSelectionModelOrders);
-    orderFinishProcess(rowSelectionModelOrders);
+  const handlePageChange = async() => {
 
+    console.log(rowSelectionModelOrders);
+    await orderFinishProcess(rowSelectionModelOrders);
+    setOrderFinished(prev => !prev) 
   };
 
   const handleChange = (event) => {
@@ -64,7 +65,7 @@ export default function OrdersTableDB() {
   };
   const handleIdSearch = () => {
     let newId = Number(searchID);
-    const data = [...pageState.data]; // Kopie von data erstellen
+    const data = [...pageState.data]; 
 
     function binarySearch(data, newId) {
       
@@ -101,14 +102,15 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
-    setFlagOrders(true); 
+ 
 
-    postIdForDelete(flagOrders);
+    await postIdForDelete(rowSelectionModelOrders,false);
+    setOrderFinished(prev => !prev) 
   };
   useEffect(() => {
-    setFlagOrders(false);
+
     fetchAllOrders();
-  }, [newValue, pageState.page, foundData]);
+  }, [newValue, pageState.page, foundData,orderFinished]);
 
   useEffect(() => {}, []);
   const handleClose = () => {

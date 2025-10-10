@@ -12,7 +12,7 @@ import Slider from "@mui/material/Slider";
 import { apiConfig } from "../../config/apiConfig";
 
 export default function Editbanner() {
-  const { which, setWhich,apiReq } = useMyContext(MyProvider);
+  const { which, setWhich,apiReq} = useMyContext(MyProvider);
   const [bannerData, setBannerData] = useState([]);
   const [editData, setEditData] = useState({
     headline: "",
@@ -81,14 +81,14 @@ export default function Editbanner() {
     formData.append("picture", editData.imageUpload);
     formData.append("top", editData.top);
     formData.append("bottom", editData.bottom);
-
+; 
     console.log(editData);
     postContentEdit(formData);
   };
 
-    const postContentEdit = async (formData) => {
+    const postContentEdit = async (formData,flagHeader) => {
       try{
-        const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`, {
+        const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`,false, {
           method: "POST",
           body:formData
         })
