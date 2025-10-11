@@ -3,19 +3,15 @@ const {
   InfoCard,
   BestSellerItemsDB,
   ProductsDB,
-  FinishedOrders, 
+  FinishedOrders,
   sequelize
 } = require("../models/models");
 const { Op } = require("sequelize");
 
 
-const upload = require("../multer/upload");
-const fs = require("fs");
-
-const AWS = require("aws-sdk");
 
 
-const s3 = new AWS.S3();
+
 const getContentData = async (req, res) => {
   try {
     const whichContent = req.params.whichContent;
@@ -64,26 +60,12 @@ const uploadData = async (req, res) => {
         type,
         unity,
         where,
-        description, 
+        description,
       } = req.body;
-      console.log("untiy" , unity)
-      const uploadedImageURLs = [];
+      console.log("untiy", unity)
+      const uploadedImageURLs = req.files.map(file => file.location);
 
-      for (const file of req.files) {
-        const fileStream = fs.createReadStream(file.path);
 
-        const params = {
-          Bucket: "shop",
-          Key: file.filename,
-          Body: fileStream,
-          ACL: "public-read",
-        };
-
-        const uploadResult = await s3.upload(params).promise();
-        fs.unlinkSync(file.path);
-
-        uploadedImageURLs.push(uploadResult.Location);
-      }
 
 
       const firstImage = uploadedImageURLs[0];
@@ -123,7 +105,7 @@ const uploadData = async (req, res) => {
           name: name,
           unit: unity,
           price: Number(price),
-          description: description, 
+          description: description,
           firstImage: firstImage,
           secondImage: secondImage,
           thirdImage: thirdImage,
@@ -143,24 +125,14 @@ const uploadData = async (req, res) => {
     if (whichContent === "banner") {
       if (!req.file) return res.status(400).send("No file uploaded");
 
-      const fileStream = fs.createReadStream(req.file.path);
-      const params = {
-        Bucket: "shop",
-        Key: req.file.filename,
-        Body: fileStream,
-        ACL: "public-read",
-      };
-
-      const uploadResult = await s3.upload(params).promise();
-      fs.unlinkSync(req.file.path);
-
+      const imgUrl = req.file.location;
       const { headline, text, location, top } = req.body;
 
       await BannerData.update(
         {
           headline,
           text,
-          img: uploadResult.Location,
+          img: imgUrl,
           top,
         },
         {
@@ -170,23 +142,13 @@ const uploadData = async (req, res) => {
 
       return res.json({
         message: "Banner upload successful",
-        imageUrl: uploadResult.Location,
+        imageUrl: imgUrl,
       });
     }
-  
+
     if (whichContent === "cards") {
       if (!req.file) return res.status(400).send("No file uploaded");
-
-      const fileStream = fs.createReadStream(req.file.path);
-      const params = {
-        Bucket: "shop",
-        Key: req.file.filename,
-        Body: fileStream,
-        ACL: "public-read",
-      };
-
-      const uploadResult = await s3.upload(params).promise();
-      fs.unlinkSync(req.file.path);
+      const imgUrl = req.file.location;
 
       const { name, cardText, id } = req.body;
 
@@ -194,7 +156,7 @@ const uploadData = async (req, res) => {
         {
           name,
           text: cardText,
-          image: uploadResult.Location,
+          image: imgUrl,
         },
         {
           where: { id },
@@ -203,7 +165,7 @@ const uploadData = async (req, res) => {
 
       return res.json({
         message: "Card upload successful",
-        imageUrl: uploadResult.Location,
+        imageUrl: imgUrl,
       });
     }
 
@@ -219,7 +181,7 @@ const deleteStoreItemID = async (req, res) => {
     if (table === undefined) {
       table = tableOrders;
     }
-    console.log("Table recived:", table,rowSelectionModelOrders);
+    console.log("Table recived:", table, rowSelectionModelOrders);
 
     switch (table) {
       case "Bestseller":
@@ -244,7 +206,7 @@ const deleteStoreItemID = async (req, res) => {
         await FinishedOrders.destroy({
           where: {
             id: {
-              [Op.in]:  rowSelectionModelOrders,
+              [Op.in]: rowSelectionModelOrders,
             },
           },
         });
@@ -256,11 +218,11 @@ const deleteStoreItemID = async (req, res) => {
     res.status(200).json({ message: "Data deleted from", table });
   } catch (error) {
     console.error("Error receiving selected ID", error);
-    res.status(400).json({ message: "Error sending post request" , error});
+    res.status(400).json({ message: "Error sending post request", error });
   }
 };
 module.exports = {
   uploadData,
   getContentData,
-  deleteStoreItemID 
+  deleteStoreItemID
 };

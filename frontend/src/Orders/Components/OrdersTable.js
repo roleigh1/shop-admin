@@ -49,9 +49,8 @@ export default function OrdersTableDB() {
 
   const handlePageChange = async() => {
 
-    console.log(rowSelectionModelOrders);
     await orderFinishProcess(rowSelectionModelOrders);
-    setOrderFinished(prev => !prev) 
+    fetchAllOrders(); 
   };
 
   const handleChange = (event) => {
@@ -110,7 +109,7 @@ export default function OrdersTableDB() {
   useEffect(() => {
 
     fetchAllOrders();
-  }, [newValue, pageState.page, foundData,orderFinished]);
+  }, [newValue, pageState.page, foundData]);
 
   useEffect(() => {}, []);
   const handleClose = () => {

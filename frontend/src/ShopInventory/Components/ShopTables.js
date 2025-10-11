@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,6 +8,7 @@ import { MyProvider, useMyContext } from "../../ContextApi";
 import "./tableStyle.css";
 
 export default function InventoryTable({ onClick }) {
+
   const {
     table,
     setTable,
@@ -48,12 +49,13 @@ export default function InventoryTable({ onClick }) {
     fetchInventory();
   };
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
     if (rowSelectionModel.length === 0) {
       return null;
     }
     
-    postIdForDelete(rowSelectionModel,true);
+    await postIdForDelete(rowSelectionModel,true);
+    fetchInventory()
   };
 
   return (

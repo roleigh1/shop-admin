@@ -23,7 +23,8 @@ export default function InsertData() {
     unity: "",
     files: ""
   })
-  const { apiReq } = useMyContext(MyProvider);
+  const { apiReq,  fetchInventory
+   } = useMyContext(MyProvider);
   const [imgName, setImgName] = useState("");
 
   const handleChange = (key, value) => {
@@ -66,8 +67,8 @@ export default function InsertData() {
           unity: "",
           files: ""
         })
-      } else[
-      ]
+        fetchInventory()
+      }
     } catch (error) {
       console.error("Error inserting product", error);
       alert("Failed inserting a product")
