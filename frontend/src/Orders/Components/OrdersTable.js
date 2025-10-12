@@ -34,7 +34,7 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [orderFinished, setOrderFinished] = useState(false); 
+
   const {
     rowSelectionModelOrders,
     setRowSelectionModelOrders,
@@ -104,7 +104,7 @@ export default function OrdersTableDB() {
  
 
     await postIdForDelete(rowSelectionModelOrders,false);
-    setOrderFinished(prev => !prev) 
+    fetchAllOrders(); 
   };
   useEffect(() => {
 

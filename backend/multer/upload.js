@@ -1,8 +1,7 @@
 const multer = require("multer");
-const multerS3 = require("multer-s3");
 const AWS = require("aws-sdk");
 const path = require("path");
-const uuid = require("uuid");
+
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY,
@@ -58,7 +57,7 @@ const upload = multer({
     bucket: BUCKET_NAME,
    }),
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5mb limit
+    fileSize: 10 * 1024 * 1024 // 10mb limit
   },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
