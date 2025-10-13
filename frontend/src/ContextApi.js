@@ -1,4 +1,4 @@
-import  { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 
 import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
@@ -17,7 +17,7 @@ export const MyProvider = ({ children }) => {
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
   const [bannerData, setBannerData] = useState({});
   const [user, setUser] = useState({})
-  const [flagHeader, setFlagHeader] = useState(null); 
+  const [flagHeader, setFlagHeader] = useState(null);
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
@@ -29,7 +29,7 @@ export const MyProvider = ({ children }) => {
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
 
-  const apiReq = async (url,flagHeader,options = {}) => {
+  const apiReq = async (url, flagHeader, options = {}) => {
     try {
       const response = await fetch(url, {
         ...options,
@@ -43,12 +43,12 @@ export const MyProvider = ({ children }) => {
         const refeshResponse = await fetch(`${apiConfig.BASE_URL}/refresh`, {
           method: "POST",
           credentials: "include"
-      
+
         });
         if (refeshResponse.ok) {
           return apiReq(url, options);
         } else {
-        window.location.href = "/login";
+          window.location.href = "/login";
           throw new Error('Session exired');
         }
       }
@@ -111,10 +111,10 @@ export const MyProvider = ({ children }) => {
   };
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     try {
-      console.log(rowSelectionModelOrders); 
-      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`,true, {
+      console.log(rowSelectionModelOrders);
+      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, true, {
         method: "POST",
-        body: JSON.stringify({ rowSelectionModelOrders}),
+        body: JSON.stringify({ rowSelectionModelOrders }),
       });
     } catch (error) {
       console.error("Error moving data to another table", error);
@@ -125,11 +125,11 @@ export const MyProvider = ({ children }) => {
     try {
       const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
       console.log(data)
-  setCounter(data.counterOp);
-    } catch(error){
-      console.error("Error fetching counter"); 
+      setCounter(data.counterOp);
+    } catch (error) {
+      console.error("Error fetching counter");
     }
-}
+  }
 
   const fetchAllOrders = async () => {
     try {
@@ -149,19 +149,19 @@ export const MyProvider = ({ children }) => {
     }
   };
 
-  const postIdForDelete = async (selectionModel,flagOrders) => {
+  const postIdForDelete = async (selectionModel, flagOrders) => {
     try {
-      if(flagOrders){
-      await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`,true ,{
-        method: "POST",
-        body:JSON.stringify({rowSelectionModel:selectionModel,table}),
-      });
+      if (flagOrders) {
+        await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
+          method: "POST",
+          body: JSON.stringify({ rowSelectionModel: selectionModel, table }),
+        });
       } else {
-        console.log("orders",rowSelectionModelOrders,tableOrders)
-          await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true,{
-        method: "POST",
-        body:JSON.stringify({rowSelectionModelOrders: selectionModel,tableOrders}),
-      });
+        console.log("orders", rowSelectionModelOrders, tableOrders)
+        await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
+          method: "POST",
+          body: JSON.stringify({ rowSelectionModelOrders: selectionModel, tableOrders }),
+        });
       }
     } catch (error) {
       console.error("Error sending delete request", error);
@@ -178,6 +178,22 @@ export const MyProvider = ({ children }) => {
       console.error("Fetch error:", error);
     }
   };
+  const logOut = async () => {
+    try {
+      await fetch(`${apiConfig.BASE_URL}${apiConfig.endpoints.logout}`, {
+        method: "POST",
+        credentials: "include"
+      });
+
+      setUser(null)
+
+      window.location.href = "/login";
+    } catch(error) {
+      console.error('Logout error:', error ); 
+    }
+   
+  }
+
 
   return (
     <MyContext.Provider
@@ -219,7 +235,8 @@ export const MyProvider = ({ children }) => {
         setUser,
         apiReq,
         flagHeader,
-         setFlagHeader
+        setFlagHeader,
+        logOut
       }}
     >
       {children}

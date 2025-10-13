@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MyProvider,useMyContext } from "../../../ContextApi";
 export default function Navbar() {
+  const {logOut} = useMyContext(MyProvider); 
   return (
     <div className=" flex flex-row items-center justify-center">
       <Link
@@ -79,8 +81,9 @@ export default function Navbar() {
           />
         </svg>
       </Link>
-      <Link to="/"  className="text-white">
+      <Link  className="text-white">
         <svg
+        onClick={logOut}
           width="30"
           height="30"
           aria-hidden="true"
@@ -96,7 +99,7 @@ export default function Navbar() {
             d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
           />
         </svg>
-      </Link>
+   </Link>
     </div>
   );
 }

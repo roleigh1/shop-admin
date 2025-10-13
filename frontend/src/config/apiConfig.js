@@ -16,7 +16,8 @@ export const apiConfig = {
     editBanner:"/contentEdit/banner",
     intventoryEdit: "/contentEdit/inventory/",
     cards: "/contentdata/cards",
-    editCards:"/contentEdit/cards"
+    editCards:"/contentEdit/cards", 
+    logout:"/logout"
 
 
   },
