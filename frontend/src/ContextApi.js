@@ -1,5 +1,4 @@
 import { createContext, useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
 
@@ -49,7 +48,7 @@ export const MyProvider = ({ children }) => {
         if (refeshResponse.ok) {
           return apiReq(url, options);
         } else {
-          window.location.href = "/login"
+          window.location.href = "/"
           throw new Error('Session exired');
         }
       }
@@ -188,7 +187,7 @@ export const MyProvider = ({ children }) => {
 
       setUser(null)
 
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch(error) {
       console.error('Logout error:', error ); 
     }
