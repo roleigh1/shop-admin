@@ -1,7 +1,8 @@
 import { createContext, useState, useContext } from "react";
-
+import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { apiConfig } from "./config/apiConfig"
+
 
 export const MyContext = createContext();
 
@@ -28,7 +29,7 @@ export const MyProvider = ({ children }) => {
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
-
+  console.log(user); 
   const apiReq = async (url, flagHeader, options = {}) => {
     try {
       const response = await fetch(url, {
@@ -48,7 +49,7 @@ export const MyProvider = ({ children }) => {
         if (refeshResponse.ok) {
           return apiReq(url, options);
         } else {
-          window.location.href = "/login";
+          window.location.href = "/login"
           throw new Error('Session exired');
         }
       }

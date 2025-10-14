@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { MyProvider, useMyContext } from "../ContextApi";
-import PropTypes from "prop-types";
+
 import { apiConfig } from "../config/apiConfig";
 export function FormSignIn() {
   const [toggle, setToggle] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const {setToken, setUser} = useMyContext(MyProvider); 
+  const { setUser} = useMyContext(MyProvider); 
   const navigate = useNavigate();
   
   useEffect(() => {

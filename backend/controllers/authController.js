@@ -42,7 +42,7 @@ const login = async (req, res) => {
       sameSite: 'strict',
       maxAge: 15 * 60 * 1000 // 15min 
     });
-    return res.json({ userId: user.id, username: username });
+    return res.json({ userId: user.id, username: username , "token": true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Login failed", error: err });
