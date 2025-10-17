@@ -7,7 +7,6 @@ export default function SalesTotal() {
   const sumAllSales = Object.values(sales)
     .reduce((total, monthData) => total + monthData, 0)
     .toFixed(2);
-  console.log(sumAllSales);
 
   return (
 

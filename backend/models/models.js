@@ -267,10 +267,6 @@ const BannerData = sequelize.define(
     location: {
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    top: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     }
   },
   {

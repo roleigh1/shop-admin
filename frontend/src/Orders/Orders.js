@@ -6,7 +6,7 @@ import OrdersTableDB from "./Components/OrdersTable";
 
 export default function OrdersSite() {
   return (
-    <div fluid>
+    <div >
       <div className="mt-10">
         <Navbar />
       </div>

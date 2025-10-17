@@ -19,7 +19,7 @@ export default function Editbanner() {
     text: "",
     img: "",
     imageUpload: null,
-    top: 50,
+
   });
   useEffect(() => {
 
@@ -79,14 +79,13 @@ export default function Editbanner() {
     formData.append("text", editData.text);
     formData.append("location", which);
     formData.append("picture", editData.imageUpload);
-    formData.append("top", editData.top);
+
     formData.append("bottom", editData.bottom);
-; 
     console.log(editData);
     postContentEdit(formData);
   };
 
-    const postContentEdit = async (formData,flagHeader) => {
+    const postContentEdit = async (formData) => {
       try{
         const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`,false, {
           method: "POST",
@@ -167,20 +166,8 @@ export default function Editbanner() {
               alignItems: "center",
             }}
           >
-            <Box sx={{ width: 80 }}>
-              <span style={{ fontSize: "0.8em", marginLeft: "1.9rem" }}>
-                Top:
-              </span>
-              <Slider
-                size="small"
-                min={-100}
-                max={100}
-                aria-label="Small"
-                valueLabelDisplay="auto"
-                value={editData?.top || 0}
-                onChange={(e, value) => handleInputChange("top", value)}
-              />
-            </Box>
+        
+             
 
             <Button type="submit" variant="outlined" value="submit">
               Submit
@@ -188,9 +175,7 @@ export default function Editbanner() {
           </div>
         </form>
       </div>
-      <div>
-
-      </div>
+    
     </div>
   );
 }

@@ -126,14 +126,13 @@ const uploadData = async (req, res) => {
       if (!req.file) return res.status(400).send("No file uploaded");
 
       const imgUrl = req.file.location;
-      const { headline, text, location, top } = req.body;
+      const { headline, text, location } = req.body;
 
       await BannerData.update(
         {
           headline,
           text,
           img: imgUrl,
-          top,
         },
         {
           where: { location },

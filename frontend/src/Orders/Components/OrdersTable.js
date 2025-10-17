@@ -154,13 +154,13 @@ export default function OrdersTableDB() {
             style={{ width: "90%", height: "30rem", margin: "auto" }}
             rows={pageState.data}
             rowCount={pageState.total}
-            page={pageState.page}
+            page={!pageState.total || pageState.total <= 0 ? 0 : pageState.page}
             pageSize={pageState.pageSize}
             columns={columns}
             loading={pageState.isLoading}
             initialState={{
               pagination: {
-                paginationModel: { page: 5, pageSize: 5 },
+                paginationModel: { page:  5,pageSize: 5 },
               },
             }}
             pagination

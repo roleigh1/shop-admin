@@ -21,14 +21,14 @@ export const MyProvider = ({ children }) => {
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
-    total: 0,
-    page: 1,
+    total: 0,     
+    page: 0,
     pageSize: 1000,
-  });
+  }); 
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
-  console.log(user); 
+
   const apiReq = async (url, flagHeader, options = {}) => {
     try {
       const response = await fetch(url, {
@@ -111,7 +111,6 @@ export const MyProvider = ({ children }) => {
   };
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     try {
-      console.log(rowSelectionModelOrders);
       await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, true, {
         method: "POST",
         body: JSON.stringify({ rowSelectionModelOrders }),
@@ -124,7 +123,7 @@ export const MyProvider = ({ children }) => {
   const fetchCounter = async () => {
     try {
       const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
-      console.log(data)
+  
       setCounter(data.counterOp);
     } catch (error) {
       console.error("Error fetching counter");
@@ -133,7 +132,6 @@ export const MyProvider = ({ children }) => {
 
   const fetchAllOrders = async () => {
     try {
-      console.log("call")
       const json = await apiReq(
         `${apiConfig.BASE_URL}${apiConfig.endpoints.orders}?page=${pageState.page}&pageSize=${pageState.pageSize}&type=${tableOrders}`
       );
@@ -142,6 +140,7 @@ export const MyProvider = ({ children }) => {
         isLoading: false,
         data: json.orders,
         total: json.total,
+    
       }));
     } catch (error) {
       console.error("Error fetching data:", error);
