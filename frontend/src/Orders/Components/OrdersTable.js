@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
@@ -12,7 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 
 import "./style.css";
-const columns = [
+const header = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "email", headerName: "Email", width: 200 },
   { field: "item", headerName: "Items", width: 300 },
@@ -44,13 +44,13 @@ export default function OrdersTableDB() {
     tableOrders,
     setTableOrders,
     postIdForDelete,
- 
-  } = useMyContext(MyProvider);
 
-  const handlePageChange = async() => {
-
+  } = useMyContext();
+  const tableData = pageState.data;
+  const handlePageChange = async () => {
+    ;
     await orderFinishProcess(rowSelectionModelOrders);
-    fetchAllOrders(); 
+    fetchAllOrders();
   };
 
   const handleChange = (event) => {
@@ -64,10 +64,10 @@ export default function OrdersTableDB() {
   };
   const handleIdSearch = () => {
     let newId = Number(searchID);
-    const data = [...pageState.data]; 
+    const data = [...pageState.data];
 
     function binarySearch(data, newId) {
-      
+
       data.sort((a, b) => {
         return a.id - b.id;
       });
@@ -101,17 +101,17 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
- 
 
-    await postIdForDelete(rowSelectionModelOrders,false);
-    fetchAllOrders(); 
+
+    await postIdForDelete(rowSelectionModelOrders, false);
+    fetchAllOrders();
   };
   useEffect(() => {
 
     fetchAllOrders();
   }, [newValue, pageState.page, foundData]);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const handleClose = () => {
     setOpen(false);
     setNotFound(false);
@@ -123,6 +123,7 @@ export default function OrdersTableDB() {
         style={{ height: 510, marginTop: "1rem", marginBottom: "7em" }}
       >
         <div className="top-actions" style={{ marginLeft: "2rem" }}>
+
           <Select
             style={{ marginBottom: "1rem", marginLeft: "1rem" }}
             className="select"
@@ -149,28 +150,88 @@ export default function OrdersTableDB() {
           </Button>
         </div>
 
-        <div className="dataGriddiv" style={{ width: "60vw", margin: "auto" }}>
-          <DataGrid
-            style={{ width: "90%", height: "30rem", margin: "auto" }}
-            rows={pageState.data}
-            rowCount={pageState.total}
-            page={!pageState.total || pageState.total <= 0 ? 0 : pageState.page}
-            pageSize={pageState.pageSize}
-            columns={columns}
-            loading={pageState.isLoading}
-            initialState={{
-              pagination: {
-                paginationModel: { page:  5,pageSize: 5 },
-              },
-            }}
-            pagination
-            onRowSelectionModelChange={setRowSelectionModelOrders}
-            rowSelectionModel={rowSelectionModelOrders}
-            pageSizeOptions={[5, 40, 60]}
-            checkboxSelection
-            className="table"
-          />
+        <div className="flex flex-col">
+          <div className="-m-1.5 overflow-x-auto">
+            <div className="p-1.5 min-w-full inline-block align-middle">
+              <div className="border border-gray-200 rounded-lg overflow-hidden dark:border-neutral-700">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                  <thead className="bg-gray-50 dark:bg-neutral-700">
+                    <tr>
+                      <th scope="col" className="py-3 ps-4">
+                        <div className="flex items-center h-5">
+                          <input
+                            id="hs-table-checkbox-all"
+                            type="checkbox"
+                            className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                          />
+                          <label htmlFor="hs-table-checkbox-all" className="sr-only">
+                            Checkbox
+                          </label>
+                        </div>
+                      </th>
+                      {header.map((data) => {
+                        return (
+                          <th
+                            scope="col"
+                            key={data.field}
+                            className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                          >
+                            {data.headerName}
+                          </th>
+
+                        )
+
+
+                      })}
+                    </tr>
+                  </thead>
+
+                  <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
+                    {tableData.map((order) => (
+                      <tr key={order.id}>
+                        <td className="py-3 ps-4">
+                          <div className="flex items-center h-5">
+                            <input
+                              id={`hs-table-checkbox-${order.id}`}
+                              type="checkbox"
+                              className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                            />
+                            <label
+                              htmlFor={`hs-table-checkbox-${order.id}`}
+                              className="sr-only"
+                            >
+                              Checkbox
+                            </label>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                          {order.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                          {order.item}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                          {order.total}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                          {order.location}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                          {order.pickupdate}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                          {order.createdAt}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
+
+
         <div
           className="actions"
           style={{
