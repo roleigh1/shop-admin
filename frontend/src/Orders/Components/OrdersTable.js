@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { MyProvider, useMyContext } from "../../ContextApi";
+import  { useEffect, useState } from "react";
+import { useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
@@ -10,21 +9,21 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
-
+import Pagination from "./Pagination";
 import "./style.css";
 const header = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "email", headerName: "Email", width: 200 },
-  { field: "item", headerName: "Items", width: 300 },
-  { field: "total", headerName: "Total", type: "number", width: 120 },
-  {
+  { field: "email", headerName: "EMAIL", width: 70 },
+  { field: "Order", headerName: "Order", width: 200 },
+  { field: "total", headerName: "Total", type: "number", width: 120 }, 
+  { field: "location", headerName: "Market", width: 120 },
+  , {
     field: "pickupdate",
     headerName: "Pickup Date",
     type: "date",
     width: 150,
     valueGetter: (params) => new Date(params.row.pickupdate),
   },
-  { field: "location", headerName: "Market", width: 120 },
+
   { field: "createdAt", headerName: "Created", width: 220 },
 ];
 
@@ -37,7 +36,6 @@ export default function OrdersTableDB() {
 
   const {
     rowSelectionModelOrders,
-    setRowSelectionModelOrders,
     orderFinishProcess,
     fetchAllOrders,
     pageState,
@@ -48,7 +46,6 @@ export default function OrdersTableDB() {
   } = useMyContext();
   const tableData = pageState.data;
   const handlePageChange = async () => {
-    ;
     await orderFinishProcess(rowSelectionModelOrders);
     fetchAllOrders();
   };
@@ -120,9 +117,9 @@ export default function OrdersTableDB() {
     <div>
       <div
         className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em" }}
+        style={{ height: 510, marginTop: "1rem", marginBottom: "7em",display:"flex",flexDirection:"column" , }}
       >
-        <div className="top-actions" style={{ marginLeft: "2rem" }}>
+        <div className="top-actions" >
 
           <Select
             style={{ marginBottom: "1rem", marginLeft: "1rem" }}
@@ -149,12 +146,10 @@ export default function OrdersTableDB() {
             Finish Order
           </Button>
         </div>
-
-        <div className="flex flex-col">
-          <div className="-m-1.5 overflow-x-auto">
-            <div className="p-1.5 min-w-full inline-block align-middle">
-              <div className="border border-gray-200 rounded-lg overflow-hidden dark:border-neutral-700">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+        
+ <div className="flex flex-col   ">
+              <div className="border  border-gray-200 rounded-lg  dark:border-neutral-700 overflow-auto h-[20rem] w-full">
+                <table className=" divide-y divide-gray-200 dark:divide-neutral-700  m-auto">
                   <thead className="bg-gray-50 dark:bg-neutral-700">
                     <tr>
                       <th scope="col" className="py-3 ps-4">
@@ -174,7 +169,7 @@ export default function OrdersTableDB() {
                           <th
                             scope="col"
                             key={data.field}
-                            className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                            className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 "
                           >
                             {data.headerName}
                           </th>
@@ -227,19 +222,21 @@ export default function OrdersTableDB() {
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
+  
         </div>
 
+   
+       
 
         <div
           className="actions"
           style={{
             display: "flex",
             flexDirection: "row",
-            gap: "1rem",
+            gap: "2rem",
             marginLeft: "1rem",
-            marginTop: "0.5rem",
+            marginTop:"1.5rem"
+          
           }}
         >
           <TextField
@@ -278,7 +275,9 @@ export default function OrdersTableDB() {
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
-        </div>
+           </div>
+        <Pagination />
+     
         <Dialog
           open={open}
           onClose={handleClose}

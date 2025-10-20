@@ -10,13 +10,12 @@ export default function OrdersSite() {
       <div className="mt-10">
         <Navbar />
       </div>
-      <div className="topRow flex items-center justify-center gap-4 mt-20">
-        <div>
+
+        <div className="topRow  flex items-center justify-center  mt-20">
           <BackgroundOrders>
             <OrdersTableDB />
           </BackgroundOrders>
         </div>
-      </div>
     </div>
   );
 }
