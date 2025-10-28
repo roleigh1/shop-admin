@@ -14,7 +14,7 @@ export const MyProvider = ({ children }) => {
   const [editAbleData, setEditAbleData] = useState();
   const [table, setTable] = useState("Products");
   const [inventoryTable, setInventoryTable] = useState([]);
-  const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState();
+  const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState([]);
   const [bannerData, setBannerData] = useState({});
   const [user, setUser] = useState({})
   const [flagHeader, setFlagHeader] = useState(null);
@@ -23,7 +23,7 @@ export const MyProvider = ({ children }) => {
     data: [],
     total: 0,     
     page: 0,
-    pageSize: 1000,
+    pageSize: 5,
   }); 
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);

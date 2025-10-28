@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMyContext } from "../../ContextApi";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,9 +12,10 @@ import Alert from "@mui/material/Alert";
 import Pagination from "./Pagination";
 import "./style.css";
 const header = [
+  { field: "id", headerName: "ID", width: 70 },
   { field: "email", headerName: "EMAIL", width: 70 },
   { field: "Order", headerName: "Order", width: 200 },
-  { field: "total", headerName: "Total", type: "number", width: 120 }, 
+  { field: "total", headerName: "Total", type: "number", width: 120 },
   { field: "location", headerName: "Market", width: 120 },
   , {
     field: "pickupdate",
@@ -42,6 +43,7 @@ export default function OrdersTableDB() {
     tableOrders,
     setTableOrders,
     postIdForDelete,
+    setRowSelectionModelOrders
 
   } = useMyContext();
   const tableData = pageState.data;
@@ -49,13 +51,17 @@ export default function OrdersTableDB() {
     await orderFinishProcess(rowSelectionModelOrders);
     fetchAllOrders();
   };
-
+useEffect(() => {
+  console.log(rowSelectionModelOrders); 
+},[rowSelectionModelOrders])
   const handleChange = (event) => {
     const value = event.target.value;
     setTableOrders(value);
     setNewValue(value);
   };
-
+useEffect(() => {
+  fetchAllOrders(); 
+},[pageState.page]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -113,11 +119,22 @@ export default function OrdersTableDB() {
     setOpen(false);
     setNotFound(false);
   };
+const handleRowSelection = (event) => {
+  const value = Number(event.target.value);
+
+  setRowSelectionModelOrders((prev) => {
+    if (prev.includes(value)) {
+      return prev.filter((item) => item !== value);
+    } else {
+      return [...prev, value];
+    }
+  });
+};
   return (
     <div>
       <div
         className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em",display:"flex",flexDirection:"column" , }}
+        style={{ height: 510, marginTop: "1rem", marginBottom: "7em", display: "flex", flexDirection: "column", }}
       >
         <div className="top-actions" >
 
@@ -146,87 +163,92 @@ export default function OrdersTableDB() {
             Finish Order
           </Button>
         </div>
-        
- <div className="flex flex-col   ">
-              <div className="border  border-gray-200 rounded-lg  dark:border-neutral-700 overflow-auto h-[20rem] w-full">
-                <table className=" divide-y divide-gray-200 dark:divide-neutral-700  m-auto">
-                  <thead className="bg-gray-50 dark:bg-neutral-700">
-                    <tr>
-                      <th scope="col" className="py-3 ps-4">
-                        <div className="flex items-center h-5">
-                          <input
-                            id="hs-table-checkbox-all"
-                            type="checkbox"
-                            className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                          />
-                          <label htmlFor="hs-table-checkbox-all" className="sr-only">
-                            Checkbox
-                          </label>
-                        </div>
+
+        <div className="flex flex-col   ">
+          <div className="border  border-gray-200 rounded-lg  dark:border-neutral-700 overflow-auto h-[20rem] w-full">
+            <table className=" divide-y divide-gray-200 dark:divide-neutral-700  m-auto">
+              <thead className="bg-gray-50 dark:bg-neutral-700">
+                <tr>
+                  <th scope="col" className="py-3 ps-4">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="hs-table-checkbox-all"
+                        type="checkbox"
+                        className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                      />
+                      <label htmlFor="hs-table-checkbox-all" className="sr-only">
+                        Checkbox
+                      </label>
+                    </div>
+                  </th>
+                  {header.map((data) => {
+                    return (
+                      <th
+                        scope="col"
+                        key={data.field}
+                        className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 "
+                      >
+                        {data.headerName}
                       </th>
-                      {header.map((data) => {
-                        return (
-                          <th
-                            scope="col"
-                            key={data.field}
-                            className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 "
-                          >
-                            {data.headerName}
-                          </th>
 
-                        )
+                    )
 
 
-                      })}
-                    </tr>
-                  </thead>
+                  })}
+                </tr>
+              </thead>
 
-                  <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                    {tableData.map((order) => (
-                      <tr key={order.id}>
-                        <td className="py-3 ps-4">
-                          <div className="flex items-center h-5">
-                            <input
-                              id={`hs-table-checkbox-${order.id}`}
-                              type="checkbox"
-                              className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                            />
-                            <label
-                              htmlFor={`hs-table-checkbox-${order.id}`}
-                              className="sr-only"
-                            >
-                              Checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                          {order.email}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                          {order.item}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                          {order.total}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                          {order.location}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                          {order.pickupdate}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                          {order.createdAt}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-  
+              <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
+                {tableData.map((order) => (
+                  <tr key={order.id}>
+                    <td className="py-3 ps-4">
+                      <div className="flex items-center h-5">
+                        <input
+                          id={`hs-table-checkbox-${order.id}`}
+                          onChange={handleRowSelection}
+                          value={order.id}
+                          checked={rowSelectionModelOrders.includes(order.id)}
+                          type="checkbox"
+                          className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                        />
+                        <label
+                          htmlFor={`hs-table-checkbox-${order.id}`}
+                          className="sr-only"
+                        >
+                          Checkbox
+                        </label>
+                      </div>
+                    </td>  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                      {order.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                      {order.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                      {order.item}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                      {order.total}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                      {order.location}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                      {order.pickupdate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                      {order.createdAt}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         </div>
 
-   
-       
+
+
 
         <div
           className="actions"
@@ -235,8 +257,8 @@ export default function OrdersTableDB() {
             flexDirection: "row",
             gap: "2rem",
             marginLeft: "1rem",
-            marginTop:"1.5rem"
-          
+            marginTop: "1.5rem"
+
           }}
         >
           <TextField
@@ -275,9 +297,9 @@ export default function OrdersTableDB() {
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
-           </div>
+        </div>
         <Pagination />
-     
+
         <Dialog
           open={open}
           onClose={handleClose}
