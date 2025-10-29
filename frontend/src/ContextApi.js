@@ -22,7 +22,7 @@ export const MyProvider = ({ children }) => {
     isLoading: false,
     data: [],
     total: 0,     
-    page: 0,
+    page: 1,
     pageSize: 5,
   }); 
   const [tableOrders, setTableOrders] = useState("new");

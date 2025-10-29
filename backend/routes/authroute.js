@@ -19,7 +19,7 @@ router.post("refesh", authController.refeshEndpoint)   ;
 router.get("/lastOrder", requireAuth, displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", requireAuth, salesReport.getTotalMonth);
 router.post("/deleteID", express.json(), requireAuth, contentManager.deleteStoreItemID);
-router.get("/orders", requireAuth, orders.getAllOrders);
+router.get("/orders",  orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData/:whichContent", requireAuth, contentManager.getContentData);
 

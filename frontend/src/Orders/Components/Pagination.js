@@ -1,11 +1,12 @@
 import { useMyContext } from "../../ContextApi";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 export default function Pagination() {
-
+const [numPages,setNumPages] = useState(0);
  const {pageState,setPageState} = useMyContext(); 
+
   const handlePrev =(e) => {
     e.preventDefault(); 
-    if(pageState.page > 0){
+    if(pageState.page > 1){
       setPageState((old) => ({
         ...old,
         page:old.page -1 
@@ -14,10 +15,14 @@ export default function Pagination() {
   }
   const handleNext = (e) => {
     e.preventDefault(); 
+    setNumPages(pageState.total / pageState.pageSize); 
+    if(pageState.page < numPages){
     setPageState((old)=> ({
         ...old,
         page:old.page + 1
     })); 
+    }
+
   }
   return (
     <div className=" border-t border-gray-200 px-4 py-3 sm:px-6  ">
@@ -43,7 +48,7 @@ export default function Pagination() {
           <p className="text-sm text-gray-700">
             Showing{" "}
             <span className="font-medium">1</span> to{" "}
-            <span className="font-medium">10</span> of{" "}
+            <span className="font-medium">{pageState.pageSize}</span> of{" "}
             <span className="font-medium">{pageState.total}</span> results
           </p>
         </div>
@@ -75,7 +80,13 @@ export default function Pagination() {
               </svg>
             </a>
 
-         
+          <a
+              href="#"
+              aria-current="page"
+              className="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              {pageState.page}
+            </a>
 
             {/* Next Button */}
             <a

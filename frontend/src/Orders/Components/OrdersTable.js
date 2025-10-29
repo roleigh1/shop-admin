@@ -43,7 +43,8 @@ export default function OrdersTableDB() {
     tableOrders,
     setTableOrders,
     postIdForDelete,
-    setRowSelectionModelOrders
+    setRowSelectionModelOrders,
+    setPageState
 
   } = useMyContext();
   const tableData = pageState.data;
@@ -58,6 +59,10 @@ useEffect(() => {
     const value = event.target.value;
     setTableOrders(value);
     setNewValue(value);
+    setPageState((old) => ({
+      ...old,
+      page:1
+    }))
   };
 useEffect(() => {
   fetchAllOrders(); 
