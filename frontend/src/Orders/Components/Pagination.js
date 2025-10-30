@@ -3,6 +3,19 @@ import { useEffect,useState } from "react";
 export default function Pagination() {
 const [numPages,setNumPages] = useState(0);
  const {pageState,setPageState} = useMyContext(); 
+ const [showingResults, setShowingResults] = useState({
+  first: 0,
+  last : 5
+ })
+ useEffect(() => {
+  setNumPages(Math.ceil(pageState.total / pageState.pageSize));
+
+ },[pageState.total, pageState.pageSize]); 
+ useEffect(() => {
+  const first = (pageState.page -1) * pageState.pageSize + 1; 
+  const last = Math.min(first + pageState.pageSize -1 , pageState.total); 
+  setShowingResults({first,last}); 
+ },[pageState.page, pageState.total, pageState.pageSize]); 
 
   const handlePrev =(e) => {
     e.preventDefault(); 
@@ -11,16 +24,17 @@ const [numPages,setNumPages] = useState(0);
         ...old,
         page:old.page -1 
       }));
+      
     }
   }
   const handleNext = (e) => {
     e.preventDefault(); 
-    setNumPages(pageState.total / pageState.pageSize); 
     if(pageState.page < numPages){
     setPageState((old)=> ({
         ...old,
         page:old.page + 1
     })); 
+    
     }
 
   }
@@ -47,8 +61,8 @@ const [numPages,setNumPages] = useState(0);
         <div className="mt-3">
           <p className="text-sm text-gray-700">
             Showing{" "}
-            <span className="font-medium">1</span> to{" "}
-            <span className="font-medium">{pageState.pageSize}</span> of{" "}
+            <span className="font-medium">{showingResults.first}</span> to{" "}
+            <span className="font-medium">{showingResults.last}</span> of{" "}
             <span className="font-medium">{pageState.total}</span> results
           </p>
         </div>
