@@ -34,6 +34,8 @@ export default function OrdersTableDB() {
   const [foundData, setFoundData] = useState({});
   const [open, setOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [openOrder, setOpenOrder] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const {
     rowSelectionModelOrders,
@@ -52,21 +54,21 @@ export default function OrdersTableDB() {
     await orderFinishProcess(rowSelectionModelOrders);
     fetchAllOrders();
   };
-useEffect(() => {
-  console.log(rowSelectionModelOrders); 
-},[rowSelectionModelOrders])
+  useEffect(() => {
+    console.log(rowSelectionModelOrders);
+  }, [rowSelectionModelOrders])
   const handleChange = (event) => {
     const value = event.target.value;
     setTableOrders(value);
     setNewValue(value);
     setPageState((old) => ({
       ...old,
-      page:1
+      page: 1
     }))
   };
-useEffect(() => {
-  fetchAllOrders(); 
-},[pageState.page]);
+  useEffect(() => {
+    fetchAllOrders();
+  }, [pageState.page]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -124,17 +126,17 @@ useEffect(() => {
     setOpen(false);
     setNotFound(false);
   };
-const handleRowSelection = (event) => {
-  const value = Number(event.target.value);
+  const handleRowSelection = (event) => {
+    const value = Number(event.target.value);
 
-  setRowSelectionModelOrders((prev) => {
-    if (prev.includes(value)) {
-      return prev.filter((item) => item !== value);
-    } else {
-      return [...prev, value];
-    }
-  });
-};
+    setRowSelectionModelOrders((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((item) => item !== value);
+      } else {
+        return [...prev, value];
+      }
+    });
+  };
   return (
     <div>
       <div
@@ -223,14 +225,19 @@ const handleRowSelection = (event) => {
                           Checkbox
                         </label>
                       </div>
-                    </td>  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                    </td>  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                       {order.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                       {order.email}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                      {order.item}
+                      <a onClick={() => {
+                        setOpenOrder(true); setSelectedOrder(order.item.split(',')
+                          .map(item => item.trim()))
+                      }} className="underline cursor-pointer">Details</a>
+
+
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                       {order.total}
@@ -361,7 +368,36 @@ const handleRowSelection = (event) => {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog
+          open={openOrder}
+
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" style={{ fontWeight: "bold" }}>
+            Order
+          </DialogTitle>
+          <DialogContent>
+            {selectedOrder ? (
+
+              <ul>
+
+                {selectedOrder.map(order => <li>{order}</li>)}
+              </ul>
+
+
+            ) : (
+              <p>No Order selected</p>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenOrder(false)} autoFocus>
+              close
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </div>
-    </div>
+    </div >
   );
 }
