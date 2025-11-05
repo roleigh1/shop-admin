@@ -126,6 +126,15 @@ export default function OrdersTableDB() {
     setOpen(false);
     setNotFound(false);
   };
+  const handleAllRowSelection = () => {
+    setRowSelectionModelOrders((prev) => {
+      if (prev.length === tableData.length) {
+        return [];
+      } else {
+        return tableData.map(item => item.id);
+      }
+    })
+  }
   const handleRowSelection = (event) => {
     const value = Number(event.target.value);
 
@@ -170,8 +179,8 @@ export default function OrdersTableDB() {
             Finish Order
           </Button>
         </div>
-
-        <div className="flex flex-col   ">
+        {console.log(rowSelectionModelOrders)}
+        <div className="flex flex-col ">
           <div className="border  border-gray-200 rounded-lg  dark:border-neutral-700 overflow-auto h-[20rem] w-full">
             <table className=" divide-y divide-gray-200 dark:divide-neutral-700  m-auto">
               <thead className="bg-gray-50 dark:bg-neutral-700">
@@ -181,6 +190,9 @@ export default function OrdersTableDB() {
                       <input
                         id="hs-table-checkbox-all"
                         type="checkbox"
+                        onChange={handleAllRowSelection}
+                        checked={tableData.length > 0 &&
+                          rowSelectionModelOrders.length === tableData.length}
                         className="border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                       />
                       <label htmlFor="hs-table-checkbox-all" className="sr-only">
