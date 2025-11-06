@@ -4,7 +4,7 @@ const getAllOrders = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
-    const offset = (page - 1) * pageSize;
+    const offset = (page - 1) * pageSize; 
     let orders;
     let total; 
     switch (req.query.type) {
@@ -64,8 +64,44 @@ const finishOrder = async (req, res) => {
     res.status(400).json({ message: "Error getting old Order", error });
   }
 };
-
+const findOrder = async (req,res) => {
+  try{
+ const id = req.query.id; 
+  const where = req.query.where; 
+  let order; 
+  switch(where){
+    case "finished": 
+    order = await FinishedOrders.findOne({
+      where: {
+        id: id
+      }
+    })
+    if(order === null) {
+     return res.status(404).json({message: "Order not found"}); 
+    }
+    break; 
+    case "new": 
+    order = await Orders.findOne({
+      where: {
+        id: id
+      }
+    })
+    if(order === null){
+     return res.status(404).json({message: "Order not found"}); 
+    }
+    break; 
+    default: 
+   res.status(400).json({message: "no Table to select"})
+  }
+  res.status(200).json({message: "Order found", order}); 
+  } catch(error) {
+    console.error("Error searching Order", error); 
+    res.status(400).json({ message: "Error getting old Order", error });
+  }
+ 
+}
 module.exports = {
   getAllOrders,
   finishOrder,
+  findOrder
 };

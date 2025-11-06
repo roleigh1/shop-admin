@@ -22,7 +22,7 @@ router.post("/deleteID", express.json(), requireAuth, contentManager.deleteStore
 router.get("/orders",  orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData/:whichContent", requireAuth, contentManager.getContentData);
-
+router.get("/searchOrder",  orders.findOrder); 
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
   const whichContent = req.params.whichContent;
   if (whichContent === "inventory") {

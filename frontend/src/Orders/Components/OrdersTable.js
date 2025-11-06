@@ -46,13 +46,15 @@ export default function OrdersTableDB() {
     setTableOrders,
     postIdForDelete,
     setRowSelectionModelOrders,
-    setPageState
+    setPageState,
+    apiReq
 
   } = useMyContext();
   const tableData = pageState.data;
   const handlePageChange = async () => {
     await orderFinishProcess(rowSelectionModelOrders);
     fetchAllOrders();
+    setRowSelectionModelOrders([])
   };
   useEffect(() => {
     console.log(rowSelectionModelOrders);
@@ -65,6 +67,7 @@ export default function OrdersTableDB() {
       ...old,
       page: 1
     }))
+    setRowSelectionModelOrders([]); 
   };
   useEffect(() => {
     fetchAllOrders();
@@ -72,39 +75,10 @@ export default function OrdersTableDB() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleIdSearch = () => {
+  const handleIdSearch = async() => {
     let newId = Number(searchID);
-    const data = [...pageState.data];
-
-    function binarySearch(data, newId) {
-
-      data.sort((a, b) => {
-        return a.id - b.id;
-      });
-
-      let left = 0,
-        right = data.length - 1;
-      while (left <= right) {
-        let mid = Math.floor((left + right) / 2);
-
-        if (data[mid].id === newId) {
-          setFoundData(data[mid]);
-          handleClickOpen();
-          setNotFound(false);
-          return;
-        } else if (data[mid].id < newId) {
-          left = mid + 1;
-        } else {
-          right = mid - 1;
-        }
-      }
-      setNotFound(true);
-      setFoundData(null);
-      handleClickOpen();
-    }
-
-    binarySearch(data, newId);
-    setSearchID("");
+   const res = await apiReq()
+    
   };
   const handleSearchIDChange = (e) => {
     setSearchID(e.target.value);
@@ -115,6 +89,7 @@ export default function OrdersTableDB() {
 
     await postIdForDelete(rowSelectionModelOrders, false);
     fetchAllOrders();
+    setRowSelectionModelOrders([]); 
   };
   useEffect(() => {
 
