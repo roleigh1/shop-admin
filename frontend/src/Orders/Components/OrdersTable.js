@@ -11,6 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 import Pagination from "./Pagination";
 import "./style.css";
+import { apiConfig } from "../../config/apiConfig";
 const header = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "email", headerName: "EMAIL", width: 70 },
@@ -67,18 +68,31 @@ export default function OrdersTableDB() {
       ...old,
       page: 1
     }))
-    setRowSelectionModelOrders([]); 
+    setRowSelectionModelOrders([]);
   };
   useEffect(() => {
     fetchAllOrders();
   }, [pageState.page]);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleIdSearch = async() => {
-    let newId = Number(searchID);
-   const res = await apiReq()
-    
+
+  const handleIdSearch = async () => {
+    try {
+      let newId = Number(searchID);
+      const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.searchID}?id=${newId}&where=${tableOrders}`, {
+        method: "GET"
+      });
+      console.log(data)
+      if (data.message === "Order found") {
+        setFoundData(data.order)
+        setOpen(true);
+      } else {
+        setFoundData(false);
+      }
+      setSearchID("");
+    } catch (error) {
+      setNotFound(true);
+    }
+
+
   };
   const handleSearchIDChange = (e) => {
     setSearchID(e.target.value);
@@ -89,7 +103,7 @@ export default function OrdersTableDB() {
 
     await postIdForDelete(rowSelectionModelOrders, false);
     fetchAllOrders();
-    setRowSelectionModelOrders([]); 
+    setRowSelectionModelOrders([]);
   };
   useEffect(() => {
 
@@ -154,7 +168,7 @@ export default function OrdersTableDB() {
             Finish Order
           </Button>
         </div>
-        {console.log(rowSelectionModelOrders)}
+
         <div className="flex flex-col ">
           <div className="border  border-gray-200 rounded-lg  dark:border-neutral-700 overflow-auto h-[20rem] w-full">
             <table className=" divide-y divide-gray-200 dark:divide-neutral-700  m-auto">

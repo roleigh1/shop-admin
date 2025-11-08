@@ -17,7 +17,8 @@ export const apiConfig = {
     intventoryEdit: "/contentEdit/inventory/",
     cards: "/contentdata/cards",
     editCards:"/contentEdit/cards", 
-    logout:"/logout"
+    logout:"/logout",
+    searchID:"/searchOrder"
 
 
   },
