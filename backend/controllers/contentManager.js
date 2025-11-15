@@ -14,9 +14,12 @@ const { Op } = require("sequelize");
 
 const getContentData = async (req, res) => {
   try {
-    const whichContent = req.params.whichContent;
-    let response = {};
-    switch (whichContent) {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const offset = (page - 1) * pageSize;
+    let response = {}
+    let total = 0;
+    switch (req.query.type) {
       case "banners":
         response.banners = await BannerData.findAll({
           order: [["id", "DESC"]],
@@ -29,15 +32,23 @@ const getContentData = async (req, res) => {
         });
         break;
       case "bestsellers":
-        response.bestseller = await BestSellerItemsDB.findAll();
+        response.inventory = await BestSellerItemsDB.findAll({
+          offset,
+          limit: pageSize
+        });
+        total = await BestSellerItemsDB.count();
         break;
       case "products":
-        response.products = await ProductsDB.findAll();
+        response.inventory = await ProductsDB.findAll({
+          offset,
+          limit: pageSize
+        });
+        total =  await ProductsDB.count();
         break;
       default:
-        res.status(400).json({ message: "Invalid content type" });
+       return   res.status(400).json({ message: "Invalid content type" });
     }
-    res.status(200).json({ contentData: response });
+    res.status(200).json({ contentData: response, total });
   } catch (error) {
     console.error("Error getting content data", error);
     res.status(400).json({ message: "Problem getting content data", error });

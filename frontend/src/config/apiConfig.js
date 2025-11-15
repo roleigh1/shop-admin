@@ -18,7 +18,8 @@ export const apiConfig = {
     cards: "/contentdata/cards",
     editCards:"/contentEdit/cards", 
     logout:"/logout",
-    searchID:"/searchOrder"
+    searchID:"/searchOrder",
+    inventory: "/contentData"
 
 
   },

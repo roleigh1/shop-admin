@@ -21,7 +21,7 @@ router.get("/totalMonths/:month", requireAuth, salesReport.getTotalMonth);
 router.post("/deleteID", express.json(), requireAuth, contentManager.deleteStoreItemID);
 router.get("/orders",  orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
-router.get("/contentData/:whichContent", requireAuth, contentManager.getContentData);
+router.get("/contentData",  contentManager.getContentData);
 router.get("/searchOrder", requireAuth,  orders.findOrder); 
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
   const whichContent = req.params.whichContent;

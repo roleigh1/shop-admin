@@ -12,7 +12,7 @@ export const MyProvider = ({ children }) => {
   const [sales, setSales] = useState({});
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [editAbleData, setEditAbleData] = useState();
-  const [table, setTable] = useState("Products");
+  const [table, setTable] = useState("products");
   const [inventoryTable, setInventoryTable] = useState([]);
   const [rowSelectionModelOrders, setRowSelectionModelOrders] = useState([]);
   const [bannerData, setBannerData] = useState({});
@@ -25,6 +25,13 @@ export const MyProvider = ({ children }) => {
     page: 1,
     pageSize: 5,
   }); 
+  const [pageStateInventory, setPageStateInventory] = useState({
+    isLoading: false,
+    data: [],
+    total: 0,     
+    page: 1,
+    pageSize: 5,
+  })
   const [tableOrders, setTableOrders] = useState("new");
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
@@ -64,16 +71,15 @@ export const MyProvider = ({ children }) => {
 
   let formData = new FormData();
   const fetchInventory = async () => {
-    const endpoint = table === "Products"
-      ? apiConfig.endpoints.products
-      : apiConfig.endpoints.bestsellers;
+   try {
+      const json = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.inventory}?page=${pageStateInventory.page}&pageSize=${pageStateInventory.pageSize}&type=${table}`);
+      setPageStateInventory((old) => ({
+            ...old,
+            isLoading:true,
+            data: json.contentData.inventory,
+            total: json.total
 
-    try {
-      const data = await apiReq(`${apiConfig.BASE_URL}${endpoint}`);
-      setInventoryTable(table === "Products"
-        ? data.contentData.products
-        : data.contentData.bestseller
-      );
+      }))
     } catch (error) {
       console.error("Error fetching inventory:", error);
     }
@@ -137,7 +143,7 @@ export const MyProvider = ({ children }) => {
       );
       setPageState((old) => ({
         ...old,
-        isLoading: false,
+        isLoading: true,
         data: json.orders,
         total: json.total,
     
@@ -235,8 +241,9 @@ export const MyProvider = ({ children }) => {
         apiReq,
         flagHeader,
         setFlagHeader,
-        logOut
-      }}
+        logOut,
+        pageStateInventory,
+        setPageStateInventory}}
     >
       {children}
     </MyContext.Provider>

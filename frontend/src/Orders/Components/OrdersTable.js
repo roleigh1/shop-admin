@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
-import Pagination from "./Pagination";
+import Pagination from "../../Pagination/Pagination";
 import "./style.css";
 import { apiConfig } from "../../config/apiConfig";
 const header = [
@@ -73,7 +73,12 @@ export default function OrdersTableDB() {
   useEffect(() => {
     fetchAllOrders();
   }, [pageState.page]);
-
+useEffect(() => {
+  setPageState((old) => ({
+    ...old,
+    page: 1
+  }))
+},[])
   const handleIdSearch = async () => {
     try {
       let newId = Number(searchID);
@@ -139,7 +144,7 @@ export default function OrdersTableDB() {
     <div>
       <div
         className="main"
-        style={{ height: 510, marginTop: "1rem", marginBottom: "7em", display: "flex", flexDirection: "column", }}
+        style={{ height: 510, marginTop: "1rem", marginBottom: "7em", display: "flex", flexDirection: "column" }}
       >
         <div className="top-actions" >
 
@@ -226,7 +231,8 @@ export default function OrdersTableDB() {
                           Checkbox
                         </label>
                       </div>
-                    </td>  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                    </td>  
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                       {order.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
@@ -311,7 +317,8 @@ export default function OrdersTableDB() {
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
         </div>
-        <Pagination />
+       
+        <Pagination pageState={pageState} setPageState={setPageState}/>
 
         <Dialog
           open={open}
