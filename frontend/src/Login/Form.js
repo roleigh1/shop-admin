@@ -72,8 +72,8 @@ export function FormSignIn() {
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                type="name"
-                name="username"
+                type="email"
+                name="email"
                 className=" mt-[-2rem] h-[2rem] rounded-sm bg-white w-[15rem]"
               />
               <label htmlFor="password" style={{marginBottom:"1rem"}}>Password</label>

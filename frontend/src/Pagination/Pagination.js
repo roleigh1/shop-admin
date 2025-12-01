@@ -42,6 +42,8 @@ const [numPages,setNumPages] = useState(0);
       {/* Mobile view */}
       <div className="flex flex-1 justify-between sm:hidden mt-3">
         <a
+          disabled={pageState.page === 0}
+          onClick={handlePrev}
           href="#"
           className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
@@ -49,6 +51,7 @@ const [numPages,setNumPages] = useState(0);
         </a>
         <a
           href="#"
+          onClick={handleNext}
           className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Next

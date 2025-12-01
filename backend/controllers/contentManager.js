@@ -191,10 +191,10 @@ const deleteStoreItemID = async (req, res) => {
     if (table === undefined) {
       table = tableOrders;
     }
-    console.log("Table recived:", table, rowSelectionModelOrders);
+    console.log("Table recived:", table, rowSelectionModel);
 
     switch (table) {
-      case "Bestseller":
+      case "bestsellers":
         await BestSellerItemsDB.destroy({
           where: {
             id: {
@@ -203,7 +203,7 @@ const deleteStoreItemID = async (req, res) => {
           },
         });
         break;
-      case "Products":
+      case "products":
         await ProductsDB.destroy({
           where: {
             id: {

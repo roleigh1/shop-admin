@@ -154,18 +154,20 @@ export const MyProvider = ({ children }) => {
     }
   };
 
-  const postIdForDelete = async (selectionModel, flagOrders) => {
+  const postIdForDelete = async (flagOrders) => {
     try {
       if (flagOrders) {
+
         await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
           method: "POST",
-          body: JSON.stringify({ rowSelectionModel: selectionModel, table }),
+          body: JSON.stringify({ rowSelectionModel, table }),
         });
       } else {
+
         console.log("orders", rowSelectionModelOrders, tableOrders)
         await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
           method: "POST",
-          body: JSON.stringify({ rowSelectionModelOrders: selectionModel, tableOrders }),
+          body: JSON.stringify({ rowSelectionModelOrders, tableOrders }),
         });
       }
     } catch (error) {
@@ -189,9 +191,7 @@ export const MyProvider = ({ children }) => {
         method: "POST",
         credentials: "include"
       });
-
       setUser(null)
-
       window.location.href = "/";
     } catch(error) {
       console.error('Logout error:', error ); 

@@ -73,12 +73,12 @@ export default function OrdersTableDB() {
   useEffect(() => {
     fetchAllOrders();
   }, [pageState.page]);
-useEffect(() => {
-  setPageState((old) => ({
-    ...old,
-    page: 1
-  }))
-},[])
+  useEffect(() => {
+    setPageState((old) => ({
+      ...old,
+      page: 1
+    }))
+  }, [])
   const handleIdSearch = async () => {
     try {
       let newId = Number(searchID);
@@ -231,7 +231,7 @@ useEffect(() => {
                           Checkbox
                         </label>
                       </div>
-                    </td>  
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                       {order.id}
                     </td>
@@ -317,8 +317,8 @@ useEffect(() => {
             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
           </svg>
         </div>
-       
-        <Pagination pageState={pageState} setPageState={setPageState}/>
+
+        <Pagination pageState={pageState} setPageState={setPageState} />
 
         <Dialog
           open={open}
