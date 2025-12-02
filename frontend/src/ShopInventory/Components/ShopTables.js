@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import { MyProvider, useMyContext } from "../../ContextApi";
 import "./tableStyle.css";
 import Pagination from "../../Pagination/Pagination";
+import { apiConfig } from "../../config/apiConfig";
 
 export default function InventoryTable() {
 
@@ -14,10 +15,10 @@ export default function InventoryTable() {
     setTable,
     rowSelectionModel,
     setRowSelectionModel,
-    postIdForDelete,
     fetchInventory,
     pageStateInventory,
     setPageStateInventory,
+    apiReq
 
   } = useMyContext(MyProvider);
 
@@ -54,11 +55,16 @@ export default function InventoryTable() {
   };
 
   const handleDelete = async () => {
-
-
-    await postIdForDelete(rowSelectionModel, true);
-    fetchInventory()
-    setRowSelectionModel([]);
+    const response = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
+      method: "POST",
+      body: JSON.stringify({ rowSelectionModel, tableCase: table })
+    })
+    if (response.message) {
+      fetchInventory();
+      setRowSelectionModel([]);
+    } else {
+      console.error("Error deleting orders")
+    }
   };
   const handleAllRowSelections = () => {
     setRowSelectionModel((prev) => {

@@ -154,26 +154,7 @@ export const MyProvider = ({ children }) => {
     }
   };
 
-  const postIdForDelete = async (flagOrders) => {
-    try {
-      if (flagOrders) {
-
-        await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
-          method: "POST",
-          body: JSON.stringify({ rowSelectionModel, table }),
-        });
-      } else {
-
-        console.log("orders", rowSelectionModelOrders, tableOrders)
-        await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
-          method: "POST",
-          body: JSON.stringify({ rowSelectionModelOrders, tableOrders }),
-        });
-      }
-    } catch (error) {
-      console.error("Error sending delete request", error);
-    }
-  };
+ 
 
   const fetchLastOrder = async () => {
     try {
@@ -208,7 +189,6 @@ export const MyProvider = ({ children }) => {
         fetchCounter,
         setToken,
         lastOrder,
-        postIdForDelete,
         rowSelectionModel,
         setRowSelectionModel,
         table,

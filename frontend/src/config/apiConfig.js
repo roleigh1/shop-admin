@@ -1,7 +1,7 @@
 export const apiConfig = {
   BASE_URL: process.env.REACT_APP_API_URL , 
   endpoints: {
-    banners: "/contentData/banners",        
+    banners: "/contentData?type=banners",        
     products: "/contentData/products", 
     bestsellers: "/contentData/bestsellers",     
     categories: "/categories",
@@ -15,7 +15,7 @@ export const apiConfig = {
     login:"/login",
     editBanner:"/contentEdit/banner",
     intventoryEdit: "/contentEdit/inventory/",
-    cards: "/contentdata/cards",
+    cards: "/contentData?type=cards",
     editCards:"/contentEdit/cards", 
     logout:"/logout",
     searchID:"/searchOrder",

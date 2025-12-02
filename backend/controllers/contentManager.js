@@ -187,13 +187,8 @@ const uploadData = async (req, res) => {
 };
 const deleteStoreItemID = async (req, res) => {
   try {
-    let { rowSelectionModel, table, rowSelectionModelOrders, tableOrders } = req.body;
-    if (table === undefined) {
-      table = tableOrders;
-    }
-    console.log("Table recived:", table, rowSelectionModel);
-
-    switch (table) {
+    let { rowSelectionModel, tableCase, rowSelectionModelOrders} = req.body;
+    switch (tableCase) {
       case "bestsellers":
         await BestSellerItemsDB.destroy({
           where: {
@@ -225,7 +220,7 @@ const deleteStoreItemID = async (req, res) => {
         console.log("nothing deleted");
     }
 
-    res.status(200).json({ message: "Data deleted from", table });
+    res.status(200).json({ message: "Data deleted from", tableCase });
   } catch (error) {
     console.error("Error receiving selected ID", error);
     res.status(400).json({ message: "Error sending post request", error });

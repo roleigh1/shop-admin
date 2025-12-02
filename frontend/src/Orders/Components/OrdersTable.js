@@ -45,7 +45,6 @@ export default function OrdersTableDB() {
     pageState,
     tableOrders,
     setTableOrders,
-    postIdForDelete,
     setRowSelectionModelOrders,
     setPageState,
     apiReq
@@ -104,11 +103,16 @@ export default function OrdersTableDB() {
   };
 
   const handleDelete = async () => {
-
-
-    await postIdForDelete(rowSelectionModelOrders, false);
-    fetchAllOrders();
-    setRowSelectionModelOrders([]);
+    const response = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.deleteID}`, true, {
+      method: "POST",
+      body: JSON.stringify({ rowSelectionModelOrders, tableCase: tableOrders })
+    })
+    if (response.message) {
+      fetchAllOrders();
+      setRowSelectionModelOrders([]);
+    } else {
+      console.error("Error deleting orders")
+    }
   };
   useEffect(() => {
 

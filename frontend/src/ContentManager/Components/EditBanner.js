@@ -87,7 +87,7 @@ export default function Editbanner() {
 
     const postContentEdit = async (formData) => {
       try{
-        const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`,false, {
+        const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editBanner}`, false, {
           method: "POST",
           body:formData
         })

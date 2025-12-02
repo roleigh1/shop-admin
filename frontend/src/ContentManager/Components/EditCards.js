@@ -19,7 +19,6 @@ export default function EditCards() {
   useEffect(() => {
   const fetchEditCards = async () => {
    try{
-
     const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.cards}`); 
     setCardsData(data.contentData.cards); 
    } catch (error){
@@ -82,7 +81,7 @@ export default function EditCards() {
     formData.append("cardText", editCard.text);
     formData.append("picture", editCard.imageUpload);
 
-     const response =  await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`,true,  {
+     const response =  await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.editCards}`,false,  {
         method: "POST",
         body:formData
       })
