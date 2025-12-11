@@ -5,7 +5,7 @@ export default function BackgroundLastOrdersListed({ children }) {
   return (
     <div>
       <div
-        className="backgroundLast bg-[#ebeceb] w-[50vw] h-[20rem] rounded-tr-[10px]"
+        className="backgroundLast bg-[#ebeceb] w-[50vw] h-[20rem] rounded-tr-[10px]   "
 
       >
         {children}
@@ -13,6 +13,3 @@ export default function BackgroundLastOrdersListed({ children }) {
     </div>
   );
 }
-BackgroundLastOrdersListed.propTypes = {
-  children: PropTypes.node.isRequired,
-};

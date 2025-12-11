@@ -21,14 +21,14 @@ export const MyProvider = ({ children }) => {
   const [pageState, setPageState] = useState({
     isLoading: false,
     data: [],
-    total: 0,     
+    total: 0,
     page: 1,
     pageSize: 5,
-  }); 
+  });
   const [pageStateInventory, setPageStateInventory] = useState({
     isLoading: false,
     data: [],
-    total: 0,     
+    total: 0,
     page: 1,
     pageSize: 5,
   })
@@ -71,13 +71,13 @@ export const MyProvider = ({ children }) => {
 
   let formData = new FormData();
   const fetchInventory = async () => {
-   try {
+    try {
       const json = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.inventory}?page=${pageStateInventory.page}&pageSize=${pageStateInventory.pageSize}&type=${table}`);
       setPageStateInventory((old) => ({
-            ...old,
-            isLoading:true,
-            data: json.contentData.inventory,
-            total: json.total
+        ...old,
+        isLoading: true,
+        data: json.contentData.inventory,
+        total: json.total
 
       }))
     } catch (error) {
@@ -85,17 +85,7 @@ export const MyProvider = ({ children }) => {
     }
   };
 
-  const fetchMonths = async (month) => {
-    try {
-      const data = await apiReq(
-        `${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`
-      );
-      setSales((prevSales) => ({ ...prevSales, [month]: data[month] }));
-    } catch (error) {
-      console.error(`Error fetching ${month}`, error);
-    }
-  };
-
+ 
   const months = [
     "jan",
     "feb",
@@ -111,10 +101,24 @@ export const MyProvider = ({ children }) => {
     "dec",
   ];
   const fetchData = async () => {
-    for (const month of months) {
-      await fetchMonths(month);
+    try {
+      const req = months.map(month =>
+        apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.months}${month}`)
+          .then(data => ({ month, value: data[month] }))
+      );
+
+      const res = await Promise.all(req);
+
+      const result = res.reduce((acc, { month, value }) => {
+        acc[month] = value;
+        return acc;
+      }, {});
+      setSales(result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  };
+  }
+
   const orderFinishProcess = async (rowSelectionModelOrders) => {
     try {
       await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.orders}`, true, {
@@ -129,7 +133,7 @@ export const MyProvider = ({ children }) => {
   const fetchCounter = async () => {
     try {
       const data = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.counter}`)
-  
+
       setCounter(data.counterOp);
     } catch (error) {
       console.error("Error fetching counter");
@@ -146,7 +150,7 @@ export const MyProvider = ({ children }) => {
         isLoading: true,
         data: json.orders,
         total: json.total,
-    
+
       }));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -154,7 +158,7 @@ export const MyProvider = ({ children }) => {
     }
   };
 
- 
+
 
   const fetchLastOrder = async () => {
     try {
@@ -174,10 +178,10 @@ export const MyProvider = ({ children }) => {
       });
       setUser(null)
       window.location.href = "/";
-    } catch(error) {
-      console.error('Logout error:', error ); 
+    } catch (error) {
+      console.error('Logout error:', error);
     }
-   
+
   }
 
 
@@ -223,7 +227,8 @@ export const MyProvider = ({ children }) => {
         setFlagHeader,
         logOut,
         pageStateInventory,
-        setPageStateInventory}}
+        setPageStateInventory
+      }}
     >
       {children}
     </MyContext.Provider>

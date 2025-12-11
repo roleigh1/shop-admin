@@ -1,15 +1,13 @@
-import React from "react";
 import Navbar from "./Components/Dashbord/Navbar";
 import Background from "./Components/Dashbord/board/Backgrounds/Background";
 import BackgroundLastOrdersListed from "./Components/Dashbord/board/Backgrounds/BackroundLastOrdersListed";
-import { Row, Col, Container } from "react-bootstrap";
-import OrderCounter from "./Components/Dashbord/board/ContenCount";
+import OrderCounter from "./Components/Dashbord/board/ContentCount";
 import BackgroundSales from "./Components/Dashbord/board/Backgrounds/BackgroundSales";
 import LastOrderTable from "./Components/Dashbord/board/ContentTableLastOrder";
 import SalesLineChart from "./Components/Dashbord/board/SalesChart";
 import "./home.css";
 import SalesTotal from "./Components/Dashbord/board/SalesTotal";
-export default function Home({onTokenRevived}) {
+export default function Home({ onTokenRevived }) {
   return (
     <div>
       <div className="mt-10">
@@ -29,14 +27,16 @@ export default function Home({onTokenRevived}) {
           </BackgroundLastOrdersListed>
         </div>
       </div>
-      <div className="midRow flex items-center justify-center mt-4" >
-        <BackgroundSales>
-          <div>
-            <SalesLineChart />
-          </div>
+      <div className="midRow flex justify-center mt-4" >
+        <BackgroundSales >
+          <div className="flex md:flex-row flex-col  md:gap-[8rem]  items-center justify-center m-auto ">
+            <div className="h-[350px] flex items-center pt-[5rem] md:pt-0 ">
+              <SalesLineChart />
+            </div>
 
-          <div>
-            <SalesTotal />
+            <div className="h-[350px] flex items-center  pb-[10rem] md:pb-0">
+              <SalesTotal  />
+            </div>
           </div>
         </BackgroundSales>
       </div>

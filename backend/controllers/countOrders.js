@@ -7,7 +7,9 @@ function getLastMonday() {
   let dayOfWeek = today.day();
 
   let distanceToLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
   let lastmonday = today.subtract(distanceToLastMonday, "days");
+  console.log("Last Monday Date: ", lastmonday.format("YYYY-MM-DD"));
   return lastmonday.format("YYYY-MM-DD");
 }
 
@@ -18,12 +20,12 @@ const countOperation = async (req, res) => {
     const ordersCountLastMonday = await FinishedOrders.count({
       where: {
         createdAt: {
-          [Op.lte]: lastMonday,
+          [Op.gte]: lastMonday, 
         },
       },
     });
     const countOrder = await FinishedOrders.count();
-
+    console.log("Orders Counted up to Last Monday: ", ordersCountLastMonday);
     const counterOp = { 
       ordersCountLastMonday,
       countOrder,
