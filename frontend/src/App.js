@@ -1,7 +1,8 @@
 
-import { BrowserRouter as Router ,Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./protectedRoutes";
-import { LoginPage } from "./Login/Login";
+import {LoginPage} from "./Login/Login";
+import Promotions from "./Promotions/Promotions";
 import Home from "./Home/Home";
 import { MyProvider } from "./ContextApi";
 import Inventory from "./ShopInventory/ShopInventory";
@@ -23,7 +24,6 @@ function AppContent() {
 
         <Route path="/" element={<LoginPage />} />
 
-    
         <Route
           path="/contentManager"
           element={
@@ -32,7 +32,7 @@ function AppContent() {
             </PrivateRoutes>
           }
         />
-        
+
         <Route
           path="/home"
           element={
@@ -41,7 +41,7 @@ function AppContent() {
             </PrivateRoutes>
           }
         />
-        
+
         <Route
           path="/inventory"
           element={
@@ -50,7 +50,7 @@ function AppContent() {
             </PrivateRoutes>
           }
         />
-        
+
         <Route
           path="/orders"
           element={
@@ -59,9 +59,20 @@ function AppContent() {
             </PrivateRoutes>
           }
         />
+
+        <Route
+          path="/promotions"
+          element={
+            <PrivateRoutes>
+              <Promotions />
+            </PrivateRoutes>
+          }
+        />
+
       </Routes>
     </Router>
   );
 }
+
 
 export default App;
