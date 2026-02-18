@@ -7,8 +7,7 @@ import { MyProvider, useMyContext } from "../../ContextApi";
 import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
+
 import { apiConfig } from "../../config/apiConfig";
 
 export default function Editbanner() {

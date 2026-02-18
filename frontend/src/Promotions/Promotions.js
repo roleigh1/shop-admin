@@ -1,4 +1,3 @@
-
 import Navbar from "../Home/Components/Dashbord/Navbar";
 import Background from "../Background/Background";
 import VoucherAttechment from "./Components/Voucherattachment";
@@ -12,7 +11,7 @@ export default function Promotions() {
       </div>
       <div className="flex justify-center items-center mt-10 mb-10 flex-col md:flex-row gap-10 sm:gap-5">
         <div>
-          <Background className="md:w-[35vw] w-[100%] h-[80vh]">
+          <Background className="md:w-[35vw] w-[100%] h-[80vh] overflow-y-scroll">
             <VoucherAttechment />
           </Background>
         </div>

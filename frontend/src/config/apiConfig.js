@@ -20,7 +20,5 @@ export const apiConfig = {
     logout:"/logout",
     searchID:"/searchOrder",
     inventory: "/contentData"
-
-
   },
 };

@@ -36,6 +36,7 @@ export const MyProvider = ({ children }) => {
   const [flagOrders, setFlagOrders] = useState(false);
   const [which, setWhich] = useState("Products");
 
+
   const apiReq = async (url, flagHeader, options = {}) => {
     try {
       const response = await fetch(url, {
@@ -70,22 +71,27 @@ export const MyProvider = ({ children }) => {
   };
 
   let formData = new FormData();
-  const fetchInventory = async () => {
+  const fetchInventory = async ({ pageSize, page } = {}) => {
     try {
-      const json = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.inventory}?page=${pageStateInventory.page}&pageSize=${pageStateInventory.pageSize}&type=${table}`);
+      const size = pageSize ?? pageStateInventory.pageSize;
+      const currentPage = page ?? pageStateInventory.page;
+
+      const json = await apiReq(
+        `${apiConfig.BASE_URL}${apiConfig.endpoints.inventory}?page=${currentPage}&pageSize=${size}&type=${table}`
+      );
+
       setPageStateInventory((old) => ({
         ...old,
         isLoading: true,
         data: json.contentData.inventory,
-        total: json.total
-
-      }))
+        total: json.total,
+      }));
     } catch (error) {
       console.error("Error fetching inventory:", error);
     }
   };
 
- 
+
   const months = [
     "jan",
     "feb",
