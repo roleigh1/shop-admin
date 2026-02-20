@@ -19,7 +19,7 @@ export default function VoucherAttechment() {
     const [selected, setSelected] = useState(null);
     const [data, setData] = useState([]);
     const [createVoucherFormData, setCreateVoucherFormData] = useState({
-        vouchertype:"",
+        vouchertype: "",
         product: "",
         category: "",
         value: "",
@@ -108,7 +108,7 @@ export default function VoucherAttechment() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(createVoucherFormData);
+
     };
 
     return (
@@ -131,13 +131,25 @@ export default function VoucherAttechment() {
 
                 <h2 className="text-sm font-medium pl-5">Select voucher type</h2>
                 <div className="discount-btns flex flex-row gap-2 pl-5 mt-2">
+                    {/* Hidden required field für Browser-Validation */}
+                    <input
+                        type="hidden"
+                        name="vouchertype"
+                        value={createVoucherFormData.vouchertype}
+                        required
+                    />
+
                     {buttons.map((btn) => (
                         <button
                             type="button"
                             key={btn.id}
-                            value={createVoucherFormData.vouchertype}
-                            onClick={() => setActiveButton(btn.id)}
-                            className={`${activeButton === btn.id
+                            onClick={() =>
+                                setCreateVoucherFormData((prev) => ({
+                                    ...prev,
+                                    vouchertype: btn.id,
+                                }))
+                            }
+                            className={`${createVoucherFormData.vouchertype === btn.id
                                 ? "bg-[oklch(87%_0_0)]"
                                 : "bg-white hover:bg-gray-100"
                                 } border border-gray-400 rounded shadow text-xs flex items-center justify-center w-[4rem] lg:h-[3rem] lg:w-[8rem]`}
@@ -149,20 +161,21 @@ export default function VoucherAttechment() {
                 <p className="opacity-40 font-light pl-5 text-xs pt-3">Please choose a Voucher-type</p>
                 <hr className="border-gray-300 mt-2 w-[95%]" />
 
-                <div className={`mt-5 ml-5 ${activeTotal ? "opacity-60" : "opacity-100"}`}>
+                <div className={`mt-5 ml-5 ${createVoucherFormData.vouchertype === "total" ? "opacity-60" : "opacity-100"}`}>
                     <h2 className="text-sm font-medium mr-5">Choose Category or Product</h2>
                     <div className="flex flex-row gap-4 pt-3">
                         <FormControl>
                             <InputLabel id="product-label">Product</InputLabel>
                             <Select
                                 labelId="product-label"
+                                name="product"
                                 value={createVoucherFormData.product}
                                 onChange={handleChangeCreate}
                                 label="Product"
                                 sx={{ top: 10 }}
-                                disabled={activeButton === "total" || activeButton === "category"}
-                                required
-                                className={`${activeButton === "category" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
+                                required={createVoucherFormData.vouchertype === "product"}
+                                disabled={createVoucherFormData.vouchertype === "total" || createVoucherFormData.vouchertype === "category"}
+                                className={`${createVoucherFormData.vouchertype === "category" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
                             >
                                 {data?.map((item) => (
                                     <MenuItem key={item} value={item}>{item}</MenuItem>
@@ -174,12 +187,13 @@ export default function VoucherAttechment() {
                             <InputLabel>Category</InputLabel>
                             <Select
                                 label="Category"
+                                name="category"
                                 value={createVoucherFormData.category}
                                 onChange={handleChangeCreate}
-                                disabled={activeButton === "total" || activeButton === "product"}
+                                required={createVoucherFormData.vouchertype === "category"}
+                                disabled={createVoucherFormData.vouchertype === "total" || createVoucherFormData.vouchertype === "product"}
                                 sx={{ top: 10 }}
-                                required
-                                className={`${activeButton === "product" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
+                                className={`${createVoucherFormData.vouchertype === "product" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
                             >
                                 {typeConfig.selectTypesVoucherCategory.map((option) => (
                                     <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -200,6 +214,7 @@ export default function VoucherAttechment() {
                             size="small"
                             value={createVoucherFormData.value}
                             name="value"
+                            required
                             onChange={handleChangeCreate}
                             className="h-[2rem] w-[5rem] relative top-2"
                         />
@@ -215,6 +230,7 @@ export default function VoucherAttechment() {
                                 <TextField
                                     key={field}
                                     size="small"
+                                    required
                                     value={createVoucherFormData.validityFrom[field]}
                                     onChange={handleDateChange("validityFrom", field)}
                                     className={`h-[2rem] ${index === 2 ? "w-[4rem]" : "w-[3rem]"
@@ -229,6 +245,7 @@ export default function VoucherAttechment() {
                                 <TextField
                                     key={field}
                                     size="small"
+                                    required
                                     value={createVoucherFormData.validityTill[field]}
                                     onChange={handleDateChange("validityTill", field)}
                                     className={`h-[2rem] ${index === 2 ? "w-[4rem]" : "w-[3rem]"
@@ -254,114 +271,115 @@ export default function VoucherAttechment() {
                             </svg>
                         </div>
                         <span className="text-xs opacity-40">Click the button to generate the voucher with the selected options.</span>
-                        <Button variant="outlined" type="submit" className="w-[8rem] h-[2rem]">
+                        <Button variant="outlined" noValidate type="submit" className="w-[8rem] h-[2rem]">
                             Generate
                         </Button>
                     </div>
                 </div>
-                <hr className="border-gray-300 mt-5 w-[95%]" />
+            </form >
+            <hr className="border-gray-300 mt-5 w-[95%]" />
 
-                <div className="flex flex-row pt-5 justify-center">
-                    <div className="flex flex-col ">
-                        <h2 className="text-sm font-medium">Generated Voucher Link</h2>
+            <div className="flex flex-row pt-5 justify-center">
+                <div className="flex flex-col ">
+                    <h2 className="text-sm font-medium">Generated Voucher Link</h2>
 
-                        <FormControl className="w-[7rem] h-[3rem] pt-5">
-                            <InputLabel>Choose Voucher</InputLabel>
-                            <Select
-                                label="Choose Voucher"
+                    <FormControl className="w-[7rem] h-[3rem] pt-5">
+                        <InputLabel>Choose Voucher</InputLabel>
+                        <Select
+                            label="Choose Voucher"
 
-                                value={createLinkFromData.voucher}
-                                onChange={(e) =>
-                                    setCreateLinkFromData((prev) => ({
-                                        ...prev,
-                                        voucher: e.target.value,
-                                    }))
-                                }
-                                sx={{ top: 10 }}
+                            value={createLinkFromData.voucher}
+                            onChange={(e) =>
+                                setCreateLinkFromData((prev) => ({
+                                    ...prev,
+                                    voucher: e.target.value,
+                                }))
+                            }
+                            sx={{ top: 10 }}
+                            required
+                            className="h-[2rem] w-[8rem]"
+                        >
+                            <MenuItem value="default">default</MenuItem>
+                            <MenuItem value="option1">option 1</MenuItem>
+                            <MenuItem value="option2">option 2</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <span className="text-sm">Banner color</span>
+                    <div className="flex flex-row">
+                        {CheckBoxData.map((option) => (
+                            <FormControlLabel
+                                key={option.value}
+                                control={<Checkbox />}
+                                label={option.label}
+
                                 required
-                                className="h-[2rem] w-[8rem]"
-                            >
-                                <MenuItem value="default">default</MenuItem>
-                                <MenuItem value="option1">option 1</MenuItem>
-                                <MenuItem value="option2">option 2</MenuItem>
-                            </Select>
-                        </FormControl>
+                                checked={selected === option.value}
+                                onChange={() => setSelected(option.value)}
+                            />
+                        ))}
+                    </div>
+                    <hr className="border-gray-300 w-[45%]" />
 
-                        <span className="text-sm">Banner color</span>
-                        <div className="flex flex-row">
-                            {CheckBoxData.map((option) => (
-                                <FormControlLabel
-                                    key={option.value}
-                                    control={<Checkbox />}
-                                    label={option.label}
-
-                                    required
-                                    checked={selected === option.value}
-                                    onChange={() => setSelected(option.value)}
-                                />
-                            ))}
-                        </div>
-                        <hr className="border-gray-300 w-[45%]" />
-
-                        <div className="flex flex-col gap-4">
-                            <h2 className="text-sm font-medium pt-5">Validity</h2>
-                            <div className="flex flex-col gap-4 pt-3">
-                                <div className="gap-1 flex flex-row w-full h-[2rem]">
-                                    <label className="text-xs opacity-40">From:</label>
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                </div>
-                                <div className="flex flex-row gap-1 w-full pl-3 h-[2rem]">
-                                    <label className="text-xs opacity-40">Till:</label>
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                    <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
-                                </div>
+                    <div className="flex flex-col gap-4">
+                        <h2 className="text-sm font-medium pt-5">Validity</h2>
+                        <div className="flex flex-col gap-4 pt-3">
+                            <div className="gap-1 flex flex-row w-full h-[2rem]">
+                                <label className="text-xs opacity-40">From:</label>
+                                <TextField  variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
+                                <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
+                                <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
+                            </div>
+                            <div className="flex flex-row gap-1 w-full pl-3 h-[2rem]">
+                                <label className="text-xs opacity-40">Till:</label>
+                                <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
+                                <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
+                                <TextField variant="outlined" size="small" sx={{ width: 45, height: 45 }} />
                             </div>
                         </div>
                     </div>
-
-                    <div className="flex flex-col gap-4">
-                        <span>Banner content</span>
-                        <div className="flex flex-row">
-                            {bannerContent.map((option) => (
-                                <FormControlLabel
-                                    key={option.value}
-                                    control={<Checkbox />}
-                                    label={option.label}
-                                    required
-                                    checked={selected === option.value}
-                                    onChange={() => setSelected(option.value)}
-                                />
-                            ))}
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <TextField label="Headline" />
-                            <TextField label="Text" minRows={4} multiline />
-                        </div>
-                    </div>
                 </div>
 
-
-                <div className="flex flex-col gap-2 justify-center items-center pb-5 pt-5">
+                <div className="flex flex-col gap-4">
+                    <span>Banner content</span>
                     <div className="flex flex-row">
-                        <div className="bg-gray-300 rounded w-[25rem] h-[2rem] pt-5" />
-
-                        <svg fill="#000000" className="w-[2rem] h-[2rem] cursor-pointer" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M8,7 L8,8 L6.5,8 C5.67157288,8 5,8.67157288 5,9.5 L5,18.5 C5,19.3284271 5.67157288,20 6.5,20 L13.5,20 C14.3284271,20 15,19.3284271 15,18.5 L15,17 L16,17 L16,18.5 C16,19.8807119 14.8807119,21 13.5,21 L6.5,21 C5.11928813,21 4,19.8807119 4,18.5 L4,9.5 C4,8.11928813 5.11928813,7 6.5,7 L8,7 Z M16,4 L10.5,4 C9.67157288,4 9,4.67157288 9,5.5 L9,14.5 C9,15.3284271 9.67157288,16 10.5,16 L17.5,16 C18.3284271,16 19,15.3284271 19,14.5 L19,7 L16.5,7 C16.2238576,7 16,6.77614237 16,6.5 L16,4 Z M20,6.52797748 L20,14.5 C20,15.8807119 18.8807119,17 17.5,17 L10.5,17 C9.11928813,17 8,15.8807119 8,14.5 L8,5.5 C8,4.11928813 9.11928813,3 10.5,3 L16.4720225,3 C16.6047688,2.99158053 16.7429463,3.03583949 16.8535534,3.14644661 L19.8535534,6.14644661 C19.9641605,6.25705373 20.0084195,6.39523125 20,6.52797748 Z M17,6 L18.2928932,6 L17,4.70710678 L17,6 Z" />
-                            </g>
-                        </svg>
+                        {bannerContent.map((option) => (
+                            <FormControlLabel
+                                key={option.value}
+                                control={<Checkbox />}
+                                label={option.label}
+                                required
+                                checked={selected === option.value}
+                                onChange={() => setSelected(option.value)}
+                            />
+                        ))}
                     </div>
-                    <Button type="submit" variant="outlined" className="w-[8rem] h-[2rem]">
-                        Generate
-                    </Button>
+                    <div className="flex flex-col gap-2">
+                        <TextField label="Headline" />
+                        <TextField label="Text" minRows={4} multiline />
+                    </div>
                 </div>
+            </div>
 
-            </form>
-        </div>
+
+            <div className="flex flex-col gap-2 justify-center items-center pb-5 pt-5">
+                <div className="flex flex-row">
+                    <div className="bg-gray-300 rounded w-[25rem] h-[2rem] pt-5" />
+
+                    <svg fill="#000000" className="w-[2rem] h-[2rem] cursor-pointer" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M8,7 L8,8 L6.5,8 C5.67157288,8 5,8.67157288 5,9.5 L5,18.5 C5,19.3284271 5.67157288,20 6.5,20 L13.5,20 C14.3284271,20 15,19.3284271 15,18.5 L15,17 L16,17 L16,18.5 C16,19.8807119 14.8807119,21 13.5,21 L6.5,21 C5.11928813,21 4,19.8807119 4,18.5 L4,9.5 C4,8.11928813 5.11928813,7 6.5,7 L8,7 Z M16,4 L10.5,4 C9.67157288,4 9,4.67157288 9,5.5 L9,14.5 C9,15.3284271 9.67157288,16 10.5,16 L17.5,16 C18.3284271,16 19,15.3284271 19,14.5 L19,7 L16.5,7 C16.2238576,7 16,6.77614237 16,6.5 L16,4 Z M20,6.52797748 L20,14.5 C20,15.8807119 18.8807119,17 17.5,17 L10.5,17 C9.11928813,17 8,15.8807119 8,14.5 L8,5.5 C8,4.11928813 9.11928813,3 10.5,3 L16.4720225,3 C16.6047688,2.99158053 16.7429463,3.03583949 16.8535534,3.14644661 L19.8535534,6.14644661 C19.9641605,6.25705373 20.0084195,6.39523125 20,6.52797748 Z M17,6 L18.2928932,6 L17,4.70710678 L17,6 Z" />
+                        </g>
+                    </svg>
+                </div>
+                <Button type="submit" variant="outlined" className="w-[8rem] h-[2rem]">
+                    Generate
+                </Button>
+            </div>
+
+
+        </div >
     );
 }
