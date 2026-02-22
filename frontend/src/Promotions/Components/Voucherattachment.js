@@ -13,11 +13,10 @@ import { typeConfig } from "../../config/typeconfig";
 
 
 export default function VoucherAttechment() {
-    const [activeButton, setActiveButton] = useState('');
-    const [activeTotal, setActiveTotal] = useState('');
-    const { fetchInventory, pageStateInventory } = useMyContext(MyProvider);
+    const { fetchInventory, pageStateInventory, apiReq } = useMyContext(MyProvider);
     const [selected, setSelected] = useState(null);
     const [data, setData] = useState([]);
+    const [generatedVoucherCode, setGeneratedVaucherCode ] = useState(""); 
     const [createVoucherFormData, setCreateVoucherFormData] = useState({
         vouchertype: "",
         product: "",
@@ -72,22 +71,14 @@ export default function VoucherAttechment() {
         fetchInventory({ pageSize: 1000 });
     }, []);
 
-    useEffect(() => {
-        console.log(activeButton)
-    }, [activeButton]);
+
     useEffect(() => {
         const names = pageStateInventory.data?.map((item) => item.name);
         console.log(names);
         setData(names);
     }, [pageStateInventory]);
 
-    useEffect(() => {
-        if (activeButton === "total") {
-            setActiveTotal(true);
-        } else {
-            setActiveTotal(false);
-        }
-    }, [activeButton]);
+
     const handleChangeCreate = (e) => {
         const { name, value } = e.target;
         setCreateVoucherFormData((prev) => ({
@@ -106,8 +97,25 @@ export default function VoucherAttechment() {
             },
         }));
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+
+       const voucherData = Object.entries(createVoucherFormData).reduce((acc,[key,value]) => {
+            if(value !== ""){
+                acc[key] = value
+            }
+            return acc;
+        },{})
+
+        try{
+            const res = await apiReq(`http://localhost:3131/api/voucherCreation`, true, {
+            method: "POST",
+            body: JSON.stringify(voucherData)
+        })
+            console.log(res); 
+        } catch (err){
+            console.error("Error creating Voucher", err);
+        }
 
     };
 

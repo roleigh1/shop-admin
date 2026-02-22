@@ -309,6 +309,49 @@ const InfoCard = sequelize.define(
     timestamps: true,
   }
 );
+const Voucher = sequelize.define(
+  "Voucher",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    vouchertype: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    discountedgroup: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    value: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    validityfrom: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+    },
+    validitytill: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+      onUpdate: Sequelize.fn("NOW"),
+    },
+  }
+)
 
 module.exports = {
   User,
@@ -320,4 +363,5 @@ module.exports = {
   Visitors,
   BannerData,
   InfoCard,
+  Voucher
 };

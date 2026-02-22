@@ -8,7 +8,7 @@ const orders = require("../controllers/orders");
 const contentManager = require("../controllers/contentManager");
 const upload = require("../multer/upload");
 const authController = require("../controllers/authController")
-
+const voucherController = require("../controllers/voucherController"); 
 const requireAuth = authController.authToken;
 
 router.post("/logout", authController.logOut); 
@@ -23,6 +23,7 @@ router.get("/orders",  orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData", requireAuth, contentManager.getContentData);
 router.get("/searchOrder", requireAuth,  orders.findOrder); 
+router.post("/voucherCreation",  express.json(),requireAuth , voucherController.createVoucher )
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
   const whichContent = req.params.whichContent;
   if (whichContent === "inventory") {
