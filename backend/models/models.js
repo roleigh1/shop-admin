@@ -317,7 +317,7 @@ const Voucher = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    code: {
+    hashedcode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -325,10 +325,19 @@ const Voucher = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    codeEncrypted: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     discountedgroup: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    maxredemptions: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    currentre
     value: {
       type: DataTypes.INTEGER,
       allowNull: false,

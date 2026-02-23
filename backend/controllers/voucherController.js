@@ -1,6 +1,8 @@
 
 const { Voucher } = require("../models/models");
 const { v4: uuidv4 } = require("uuid");
+const hashVoucher = require("../cryptoVoucher/cryptoHelper.mjs"); 
+const encrypteVoucher = require("../cryptoVoucher/cryptoHelper.mjs"); 
 
 const codeGen = () => {
     return uuidv4().slice(0, 9).toUpperCase();
@@ -58,6 +60,19 @@ const createVoucher = async (req, res) => {
     }
 
 }
+const voucherLinkCreation = async(req,res) => {
+    const voucherLinkData = req.body; 
+}
+const postController = async(req) =>{
+   const voucherOperation = req.query.type; 
+    if(voucherOperation === "voucherCreation"){
+        createVoucher(req); 
+    }  else {
+ voucherLinkCreation(); 
+    }
+
+}
 module.exports = {
-    createVoucher
+    createVoucher,
+    postController
 }
