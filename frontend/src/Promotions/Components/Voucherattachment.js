@@ -4,7 +4,7 @@ import LinkCreationForm from "./VoucherLinkCreationForm";
 
 
 export default function VoucherAttechment() {
-    
+
     return (
         <div className="Form-container">
             <div id="headline" className="flex flex-row justify-center pt-4 gap-1">
@@ -23,12 +23,9 @@ export default function VoucherAttechment() {
                 <CreationForm />
             </div>
             <hr className="border-gray-300 mt-5 w-[95%]" />
-
-            
-            <div> 
-                <LinkCreationForm /> 
+            <div>
+                <LinkCreationForm />
             </div>
-
         </div >
     );
 }

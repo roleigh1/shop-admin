@@ -23,7 +23,8 @@ router.get("/orders",  orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData", requireAuth, contentManager.getContentData);
 router.get("/searchOrder", requireAuth,  orders.findOrder); 
-router.post("/voucherCreation",  express.json(),requireAuth , voucherController.createVoucher )
+router.post("/voucherCreation",  express.json(), voucherController.createVoucher);
+router.get("/vouchers", voucherController.getdecryptedVoucher);  
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
   const whichContent = req.params.whichContent;
   if (whichContent === "inventory") {

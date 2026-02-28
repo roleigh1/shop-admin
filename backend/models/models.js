@@ -337,7 +337,10 @@ const Voucher = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    currentre
+    currentredemptions: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     value: {
       type: DataTypes.INTEGER,
       allowNull: false,

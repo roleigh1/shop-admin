@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import { typeConfig } from "../../config/typeconfig";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
-
+import { apiConfig } from "../../config/apiConfig";
 export default function CreationForm() {
     const { fetchInventory, pageStateInventory, apiReq } = useMyContext(MyProvider);
     const [generatedVoucherCode, setGeneratedVaucherCode] = useState("");
@@ -17,10 +17,13 @@ export default function CreationForm() {
         vouchertype: "",
         product: "",
         category: "",
+        maxredemptions: 0,
         value: "",
+
         validityFrom: null,
         validityTill: null,
     });
+
     const [data, setData] = useState([]);
     const buttons = [
         { id: "total", label: "total shopping basket" },
@@ -36,7 +39,7 @@ export default function CreationForm() {
         setData(names);
     }, [pageStateInventory]);
 
-    
+
     const handleChangeCreate = (e) => {
         const { name, value } = e.target;
         setCreateVoucherFormData((prev) => ({
@@ -55,7 +58,7 @@ export default function CreationForm() {
         }, {})
 
         try {
-            const res = await apiReq(`http://localhost:3131/api/voucherCreation`, true, {
+            const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.voucherCreation}`, true, {
                 method: "POST",
                 body: JSON.stringify(voucherData)
             })
@@ -64,6 +67,7 @@ export default function CreationForm() {
                     vouchertype: "",
                     product: "",
                     category: "",
+                    maxredemptions: null,
                     value: "",
                     validityFrom: null,
                     validityTill: null,
@@ -116,47 +120,97 @@ export default function CreationForm() {
                 <p className="opacity-40 font-light pl-5 text-xs pt-3">Please choose a Voucher-type</p>
                 <hr className="border-gray-300 mt-2 w-[95%]" />
 
-                <div className={`mt-5 ml-5 ${createVoucherFormData.vouchertype === "total" ? "opacity-60" : "opacity-100"}`}>
-                    <h2 className="text-sm font-medium mr-5">Choose Category or Product</h2>
-                    <div className="flex flex-row gap-4 pt-3">
-                        <FormControl>
-                            <InputLabel id="product-label">Product</InputLabel>
-                            <Select
-                                labelId="product-label"
-                                name="product"
-                                value={createVoucherFormData.product}
-                                onChange={handleChangeCreate}
-                                label="Product"
-                                sx={{ top: 10 }}
-                                required={createVoucherFormData.vouchertype === "product"}
-                                disabled={createVoucherFormData.vouchertype === "total" || createVoucherFormData.vouchertype === "category"}
-                                className={`${createVoucherFormData.vouchertype === "category" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
-                            >
-                                {data?.map((item) => (
-                                    <MenuItem key={item} value={item}>{item}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                <div
+                    className={`mt-5 ml-5 ${createVoucherFormData.vouchertype === "total"
+                        ? "opacity-60"
+                        : "opacity-100"
+                        }`}
+                >
 
-                        <FormControl className="w-[7rem] h-[3rem]">
-                            <InputLabel>Category</InputLabel>
-                            <Select
-                                label="Category"
-                                name="category"
-                                value={createVoucherFormData.category}
-                                onChange={handleChangeCreate}
-                                required={createVoucherFormData.vouchertype === "category"}
-                                disabled={createVoucherFormData.vouchertype === "total" || createVoucherFormData.vouchertype === "product"}
-                                sx={{ top: 10 }}
-                                className={`${createVoucherFormData.vouchertype === "product" ? "opacity-70" : "opacity-100"} h-[2rem] w-[8rem]`}
-                            >
-                                {typeConfig.selectTypesVoucherCategory.map((option) => (
-                                    <MenuItem key={option} value={option}>{option}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                    <div className="flex items-center justify-between mb-3 pr-10">
+                        <h2 className="text-sm font-medium w-[15rem]">
+                            Choose Category or Product
+                        </h2>
+
+                        <h2 className="text-sm font-medium">
+                            Max redemptions
+                        </h2>
                     </div>
-                    <span className="opacity-40 text-xs pt-2">Select the product or category for the discounted voucher.</span>
+
+                    <div className="flex flex-row">
+
+                        <div className="flex flex-row gap-4 pt-3">
+                            <FormControl>
+                                <InputLabel id="product-label">Product</InputLabel>
+                                <Select
+                                    labelId="product-label"
+                                    name="product"
+                                    value={createVoucherFormData.product}
+                                    onChange={handleChangeCreate}
+                                    label="Product"
+                                    sx={{ top: 10 }}
+                                    required={createVoucherFormData.vouchertype === "product"}
+                                    disabled={
+                                        createVoucherFormData.vouchertype === "total" ||
+                                        createVoucherFormData.vouchertype === "category"
+                                    }
+                                    className={`${createVoucherFormData.vouchertype === "category"
+                                        ? "opacity-70"
+                                        : "opacity-100"
+                                        } h-[2rem] w-[8rem]`}
+                                >
+                                    {data?.map((item) => (
+                                        <MenuItem key={item} value={item}>
+                                            {item}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl className="w-[7rem] h-[3rem]">
+                                <InputLabel>Category</InputLabel>
+                                <Select
+                                    label="Category"
+                                    name="category"
+                                    value={createVoucherFormData.category}
+                                    onChange={handleChangeCreate}
+                                    required={createVoucherFormData.vouchertype === "category"}
+                                    disabled={
+                                        createVoucherFormData.vouchertype === "total" ||
+                                        createVoucherFormData.vouchertype === "product"
+                                    }
+                                    sx={{ top: 10 }}
+                                    className={`${createVoucherFormData.vouchertype === "product"
+                                        ? "opacity-70"
+                                        : "opacity-100"
+                                        } h-[2rem] w-[8rem]`}
+                                >
+                                    {typeConfig.selectTypesVoucherCategory.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-start w-full pt-3">
+                            <TextField
+                                type="number"
+                                variant="outlined"
+                                size="small"
+                                value={createVoucherFormData.maxredemptions}
+                                name="maxredemptions"
+                                required
+                                onChange={handleChangeCreate}
+                                className="h-[2rem] w-[5rem]"
+                            />
+                        </div>
+                    </div>
+
+                    <span className="opacity-40 text-xs pt-2 block">
+                        Select the product or category for the discounted voucher.
+                    </span>
                 </div>
                 <hr className="border-gray-300 mt-2 w-[95%]" />
 
@@ -167,6 +221,7 @@ export default function CreationForm() {
                             label="Value"
                             variant="outlined"
                             size="small"
+                            type="number"
                             value={createVoucherFormData.value}
                             name="value"
                             required
