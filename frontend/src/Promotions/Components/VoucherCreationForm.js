@@ -17,13 +17,11 @@ export default function CreationForm() {
         vouchertype: "",
         product: "",
         category: "",
-        maxredemptions: 0,
+        maxredemptions: "",
         value: "",
-
         validityFrom: null,
         validityTill: null,
     });
-
     const [data, setData] = useState([]);
     const buttons = [
         { id: "total", label: "total shopping basket" },
@@ -35,7 +33,6 @@ export default function CreationForm() {
     }, []);
     useEffect(() => {
         const names = pageStateInventory.data?.map((item) => item.name);
-        console.log(names);
         setData(names);
     }, [pageStateInventory]);
 
@@ -49,16 +46,15 @@ export default function CreationForm() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(createVoucherFormData.validityFrom)
+
         const voucherData = Object.entries(createVoucherFormData).reduce((acc, [key, value]) => {
             if (value !== "") {
                 acc[key] = value
             }
             return acc;
         }, {})
-
         try {
-            const res = await apiReq(`${apiConfig.BASE_URL}${apiConfig.endpoints.voucherCreation}`, true, {
+            const res = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.voucherCreation}`, true, {
                 method: "POST",
                 body: JSON.stringify(voucherData)
             })
@@ -72,32 +68,24 @@ export default function CreationForm() {
                     validityFrom: null,
                     validityTill: null,
                 });
-                console.log(res);
                 setGeneratedVaucherCode(res.code);
                 setTimeout(() => setGeneratedVaucherCode(""), 10000)
             }
-
         } catch (err) {
             console.error("Error creating Voucher", err);
         }
-
     };
     return (
         <div>
-
             <form onSubmit={handleSubmit} className="divider px-5 w-full">
-
-
                 <h2 className="text-sm font-medium pl-5">Select voucher type</h2>
                 <div className="discount-btns flex flex-row gap-2 pl-5 mt-2">
-
                     <input
                         type="hidden"
                         name="vouchertype"
                         value={createVoucherFormData.vouchertype}
                         required
                     />
-
                     {buttons.map((btn) => (
                         <button
                             type="button"
@@ -172,6 +160,7 @@ export default function CreationForm() {
                                 <Select
                                     label="Category"
                                     name="category"
+                      
                                     value={createVoucherFormData.category}
                                     onChange={handleChangeCreate}
                                     required={createVoucherFormData.vouchertype === "category"}
@@ -199,8 +188,9 @@ export default function CreationForm() {
                                 type="number"
                                 variant="outlined"
                                 size="small"
-                                value={createVoucherFormData.maxredemptions}
+                                value={createVoucherFormData.maxredemptions ?? ""}
                                 name="maxredemptions"
+
                                 required
                                 onChange={handleChangeCreate}
                                 className="h-[2rem] w-[5rem]"

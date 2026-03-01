@@ -9,11 +9,15 @@ import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
+import { apiConfig } from "../../config/apiConfig";
+import { useMyContext, MyProvider } from "../../ContextApi";
 
 export default function LinkCreationForm() {
-    const [selected, setSelected] = useState(null)
+    const [selected, setSelected] = useState(null);
+    const [vouchers, setVouchers] = useState([]);
+    const { apiReq } = useMyContext(MyProvider);
     const [createLinkFromData, setCreateLinkFromData] = useState({
-        voucher: "",
+        voucher: [],
         bannerColor: "",
         validityFrom: null,
         validityTill: null,
@@ -30,17 +34,34 @@ export default function LinkCreationForm() {
         { value: "default", label: "default" },
         { value: "custom", label: "custom" },
     ];
-    
+    const fetchVouchers = async () => {
+        try {
+            const res = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.vouchers}`);
+
+            setVouchers(res.decryptedData);
+        } catch (err) {
+            console.error("Error fetching vouchers:", err);
+        }
+    }
+    useEffect(() => {
+        setInterval(() => {
+            fetchVouchers();
+        }, 1000)
+        console.log(vouchers);
+    }, []);
     return (
         <div>
             <div className="flex flex-row pt-5 justify-center">
                 <div className="flex flex-col ">
-                    <h2 className="text-sm font-medium">Generated Voucher Link</h2>
+                    <h2 className="text-sm font-medium pb-5">Generated Voucher Link</h2>
 
-                    <FormControl className="w-[7rem] h-[3rem] pt-5">
-                        <InputLabel>Choose Voucher</InputLabel>
+                    <FormControl className="">
+                        <InputLabel id="voucher-label">Choose Voucher</InputLabel>
                         <Select
-                            label="Choose Voucher"
+                            label="voucher-label"
+                            className="w-[10rem] h-[2.4rem]   "
+                            multiple
+
 
                             value={createLinkFromData.voucher}
                             onChange={(e) =>
@@ -51,15 +72,22 @@ export default function LinkCreationForm() {
                             }
                             sx={{ top: 10 }}
                             required
-                            className="h-[2rem] w-[8rem]"
+
                         >
-                            <MenuItem value="default">default</MenuItem>
-                            <MenuItem value="option1">option 1</MenuItem>
-                            <MenuItem value="option2">option 2</MenuItem>
+                            {vouchers.length > 0 ? (
+                                vouchers.map((voucher, index) => (
+                                    <MenuItem multiple key={index} value={voucher}>{voucher}</MenuItem>
+                                ))
+                            ) : (
+                                <MenuItem value="" disabled>No vouchers available</MenuItem>
+                            )}
                         </Select>
+
+
+
                     </FormControl>
 
-                    <span className="text-sm">Banner color</span>
+                    <span className="text-sm pt-5">Banner color</span>
                     <div className="flex flex-row">
                         {CheckBoxData.map((option) => (
                             <FormControlLabel
@@ -98,7 +126,7 @@ export default function LinkCreationForm() {
                                     className="rounded-md bg-[#ebeceb] border-gray-400  focus-within:border-blue-400 focus-within:outline-2 "
                                     selected={createLinkFromData.validityFrom}
                                     onChange={(date) =>
-                                      setCreateLinkFromData((prev) => ({
+                                        setCreateLinkFromData((prev) => ({
                                             ...prev,
                                             validityFrom: date,
                                         }))
@@ -146,6 +174,6 @@ export default function LinkCreationForm() {
                     Generate
                 </Button>
             </div>
-        </div>
+        </div >
     )
 }

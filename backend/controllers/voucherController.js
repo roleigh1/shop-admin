@@ -75,9 +75,6 @@ const getdecryptedVoucher = async (req, res) => {
             const encryptedObj = JSON.parse(item.codeEncrypted);
             return decryptVoucher(encryptedObj);
         });
-
-
-        console.log(decryptedData);
         res.json({ message: "data", decryptedData });
     } catch (error) {
         console.error("Error decrypting voucher:", error);
