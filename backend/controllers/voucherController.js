@@ -7,6 +7,9 @@ const codeGen = () => {
     return uuidv4().slice(0, 9).toUpperCase();
 
 }
+const generateRedeemToken = () => {
+    return crypto.randomBytes(32).toString("hex");
+}
 const createVoucher = async (req, res) => {
     try {
         const voucherData = req.body;
@@ -69,20 +72,41 @@ const getdecryptedVoucher = async (req, res) => {
     try {
         const encryptedVoucher = await Voucher.findAll({
             attributes: ["id", "codeEncrypted"]
-        })
-        const result = encryptedVoucher.map(v => v.toJSON());
-        const decryptedData = result.map(item => {
-            const encryptedObj = JSON.parse(item.codeEncrypted);
-            return decryptVoucher(encryptedObj);
         });
-        res.json({ message: "data", decryptedData });
+
+        const decryptedVouchers = encryptedVoucher.map(v => {
+            const { id, codeEncrypted } = v.toJSON();
+            const encryptedObj = JSON.parse(codeEncrypted);
+            const decryptedCode = decryptVoucher(encryptedObj);
+
+            return {
+                id,
+                decryptedCode
+            };
+        });
+                
+        res.json({
+            message: "data",
+            data: decryptedVouchers
+        });
+
     } catch (error) {
         console.error("Error decrypting voucher:", error);
         res.status(500).json({ error: "Error decrypting voucher" });
     }
-}
-const voucherLinkCreation = async (req, res) => {
-    const voucherLinkData = req.body;
+};
+const voucherLinkCreation = async (req) => {
+    try {
+        const voucherLinkData = req.body;
+        const token = generateRedeemToken()
+        const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${Token}`;
+        const voucherLink = await VoucherLink.create({
+        })
+    } catch (err) {
+        console.error("Creating voucher Link failed", err);
+    }
+
+
 }
 const postController = async (req) => {
     const voucherOperation = req.query.type;

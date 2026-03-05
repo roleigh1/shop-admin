@@ -364,6 +364,49 @@ const Voucher = sequelize.define(
     },
   }
 )
+  const VoucherLink = sequelize.define(
+    "VoucherLink",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true, 
+        autoIncrement:true, 
+      }, 
+      url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      redeemToken: {
+        type: DataTypes.STRING,
+        allowNull: false, 
+      }, 
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.fn("NOW"), 
+      },
+      updatedAt: {
+        type: DataTypes.DATE, 
+        defaultValue: Sequelize.fn("NOW"),
+        onUpdate: Sequelize.fn("NOW"),
+      },
+      validityfrom: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.fn("NOW"),
+        onUpdate: Sequelize.fn("NOW"),
+      },
+      validitytill: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.fn("NOW"), 
+        onUpdate: Sequelize.fn("NOW"), 
+      },
+      voucherId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+      },
+      
+    }
+    
+  )
 
 module.exports = {
   User,

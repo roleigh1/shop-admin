@@ -38,7 +38,8 @@ export default function LinkCreationForm() {
         try {
             const res = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.vouchers}`);
 
-            setVouchers(res.decryptedData);
+            setVouchers(res.data);
+            console.log(vouchers)
         } catch (err) {
             console.error("Error fetching vouchers:", err);
         }
@@ -75,11 +76,15 @@ export default function LinkCreationForm() {
 
                         >
                             {vouchers.length > 0 ? (
-                                vouchers.map((voucher, index) => (
-                                    <MenuItem multiple key={index} value={voucher}>{voucher}</MenuItem>
+                                vouchers.map((voucher) => (
+                                    <MenuItem key={voucher.id} value={voucher.id}>
+                                        {voucher.decryptedCode}
+                                    </MenuItem>
                                 ))
                             ) : (
-                                <MenuItem value="" disabled>No vouchers available</MenuItem>
+                                <MenuItem value="" disabled>
+                                    No vouchers available
+                                </MenuItem>
                             )}
                         </Select>
 
