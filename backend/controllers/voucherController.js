@@ -1,6 +1,8 @@
-const { Voucher } = require("../models/models");
+const { Voucher, VoucherLink } = require("../models/models");
+const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { hashVoucher, encryptVoucher, decryptVoucher } = require("../cryptoVoucher/cryptoHelper.js");
+const { get } = require("http");
 
 const codeGen = () => {
 
@@ -16,19 +18,6 @@ const createVoucher = async (req, res) => {
         let uniCode;
         let exists = false;
         let fullCode;
-
-
-        const validityFromDate = new Date(
-            parseInt(voucherData.validityFrom.year),
-            parseInt(voucherData.validityFrom.month) - 1,
-            parseInt(voucherData.validityFrom.day)
-        );
-
-        const validityTillDate = new Date(
-            parseInt(voucherData.validityTill.year),
-            parseInt(voucherData.validityTill.month) - 1,
-            parseInt(voucherData.validityTill.day)
-        );
         while (!exists) {
             uniCode = codeGen();
             if (voucherData.vouchertype === "product") {
@@ -42,7 +31,6 @@ const createVoucher = async (req, res) => {
                 exists = true;
             }
         }
-
         const createdVoucher = await Voucher.create({
             hashedcode: hashVoucher(fullCode),
             codeEncrypted: JSON.stringify(encryptVoucher(fullCode)),
@@ -53,8 +41,8 @@ const createVoucher = async (req, res) => {
                     ? voucherData.product
                     : "NON",
             value: voucherData.value,
-            validityfrom: validityFromDate,
-            validitytill: validityTillDate,
+            validityfrom: voucherData.validityFrom,
+            validitytill: voucherData.validityTill,
         });
 
         return res.status(201).json({
@@ -66,7 +54,6 @@ const createVoucher = async (req, res) => {
         console.error("Creating voucher failed", err);
         res.json({ error: "Creating voucher failed", err });
     }
-
 }
 const getdecryptedVoucher = async (req, res) => {
     try {
@@ -84,7 +71,7 @@ const getdecryptedVoucher = async (req, res) => {
                 decryptedCode
             };
         });
-                
+
         res.json({
             message: "data",
             data: decryptedVouchers
@@ -95,13 +82,31 @@ const getdecryptedVoucher = async (req, res) => {
         res.status(500).json({ error: "Error decrypting voucher" });
     }
 };
-const voucherLinkCreation = async (req) => {
+const voucherLinkCreation = async (req, res) => {
     try {
         const voucherLinkData = req.body;
         const token = generateRedeemToken()
-        const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${Token}`;
+        const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${token}`;
+        const valityFrom = new Date(`${voucherLinkData.validityFrom} 00:00:00`);
+        const valityTill = new Date(`${voucherLinkData.validityTill} 23:59:59`);
+        console.log("Validity From:", valityFrom);
+        console.log("validity Till:", valityTill);
         const voucherLink = await VoucherLink.create({
+            url: url,
+            redeemToken: token,
+            validityFrom: valityFrom,
+            validityTill: valityTill,
+            voucherId: voucherLinkData.voucher,
+            bannerContent: voucherLinkData.bannerContent,
+            bannerHeadline: voucherLinkData.bannerContent === "default" ? "NON" : voucherLinkData.bannerHeadline,
+            bannerText: voucherLinkData.bannerContent === " default" ? "NON" : voucherLinkData.bannerText,
+            bannerColor: voucherLinkData.bannerColor
         })
+        res.status(200).json({
+            message: "Voucher Link created",
+            voucherLink
+        })
+
     } catch (err) {
         console.error("Creating voucher Link failed", err);
     }
@@ -119,6 +124,7 @@ const postController = async (req) => {
 }
 module.exports = {
     createVoucher,
-    getdecryptedVoucher
+    getdecryptedVoucher,
+    voucherLinkCreation
 
 }

@@ -364,49 +364,66 @@ const Voucher = sequelize.define(
     },
   }
 )
-  const VoucherLink = sequelize.define(
-    "VoucherLink",
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true, 
-        autoIncrement:true, 
-      }, 
-      url: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      redeemToken: {
-        type: DataTypes.STRING,
-        allowNull: false, 
-      }, 
-      createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.fn("NOW"), 
-      },
-      updatedAt: {
-        type: DataTypes.DATE, 
-        defaultValue: Sequelize.fn("NOW"),
-        onUpdate: Sequelize.fn("NOW"),
-      },
-      validityfrom: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.fn("NOW"),
-        onUpdate: Sequelize.fn("NOW"),
-      },
-      validitytill: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.fn("NOW"), 
-        onUpdate: Sequelize.fn("NOW"), 
-      },
-      voucherId: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-      },
-      
-    }
-    
-  )
+const VoucherLink = sequelize.define(
+  "VoucherURLs",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    redeemToken: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+      onUpdate: Sequelize.fn("NOW"),
+    },
+    validityfrom: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+      onUpdate: Sequelize.fn("NOW"),
+    },
+    validitytill: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+      onUpdate: Sequelize.fn("NOW"),
+    },
+    voucherId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    bannerColor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bannerContent: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bannerHeadline: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
+    bannerText: {
+      type: DataTypes.STRING, 
+      allowNull: false   
+    }, 
+
+
+  }
+
+)
 
 module.exports = {
   User,
@@ -418,5 +435,6 @@ module.exports = {
   Visitors,
   BannerData,
   InfoCard,
-  Voucher
+  Voucher,
+  VoucherLink
 };

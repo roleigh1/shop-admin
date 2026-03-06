@@ -160,7 +160,7 @@ export default function CreationForm() {
                                 <Select
                                     label="Category"
                                     name="category"
-                      
+
                                     value={createVoucherFormData.category}
                                     onChange={handleChangeCreate}
                                     required={createVoucherFormData.vouchertype === "category"}

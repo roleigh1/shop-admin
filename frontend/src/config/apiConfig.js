@@ -21,6 +21,8 @@ export const apiConfig = {
     searchID: "/searchOrder",
     inventory: "/contentData",
     voucherCreation: "/voucherCreation",
-    vouchers: "/vouchers"
+    vouchers: "/vouchers",
+    voucherLinkCreation: "/voucherLinkCreation",
+
   },
 };

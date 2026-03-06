@@ -8,23 +8,24 @@ const orders = require("../controllers/orders");
 const contentManager = require("../controllers/contentManager");
 const upload = require("../multer/upload");
 const authController = require("../controllers/authController")
-const voucherController = require("../controllers/voucherController"); 
+const voucherController = require("../controllers/voucherController");
 const requireAuth = authController.authToken;
 
-router.post("/logout", authController.logOut); 
+router.post("/logout", authController.logOut);
 router.get("/counter", requireAuth, counterDB.countOperation);
-router.post("/login", express.json() , authController.login);
-router.get("/protected", requireAuth, authController.getProtectedData); 
-router.post("refesh", authController.refeshEndpoint)   ; 
+router.post("/login", express.json(), authController.login);
+router.get("/protected", requireAuth, authController.getProtectedData);
+router.post("refesh", authController.refeshEndpoint);
 router.get("/lastOrder", requireAuth, displayLastOrder.getlastOrder);
 router.get("/totalMonths/:month", requireAuth, salesReport.getTotalMonth);
 router.post("/deleteID", express.json(), requireAuth, contentManager.deleteStoreItemID);
-router.get("/orders",  orders.getAllOrders);
+router.get("/orders", orders.getAllOrders);
 router.post("/orders", express.json(), requireAuth, orders.finishOrder);
 router.get("/contentData", requireAuth, contentManager.getContentData);
-router.get("/searchOrder", requireAuth,  orders.findOrder); 
-router.post("/voucherCreation",  express.json(), voucherController.createVoucher);
-router.get("/vouchers", voucherController.getdecryptedVoucher);  
+router.get("/searchOrder", requireAuth, orders.findOrder);
+router.post("/voucherCreation", express.json(), voucherController.createVoucher);
+router.get("/vouchers", voucherController.getdecryptedVoucher);
+router.post("/voucherLinkCreation", requireAuth,express.json(), voucherController.voucherLinkCreation);
 router.post("/contentEdit/:whichContent", requireAuth, (req, res) => {
   const whichContent = req.params.whichContent;
   if (whichContent === "inventory") {
