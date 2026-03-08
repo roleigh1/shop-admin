@@ -2,7 +2,8 @@ const { Voucher, VoucherLink } = require("../models/models");
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { hashVoucher, encryptVoucher, decryptVoucher } = require("../cryptoVoucher/cryptoHelper.js");
-const { get } = require("http");
+const { months } = require("moment");
+
 
 const codeGen = () => {
 
@@ -10,7 +11,7 @@ const codeGen = () => {
 
 }
 const generateRedeemToken = () => {
-    return crypto.randomBytes(32).toString("hex");
+    return crypto.randomBytes(9).toString("hex");
 }
 const createVoucher = async (req, res) => {
     try {
@@ -82,21 +83,21 @@ const getdecryptedVoucher = async (req, res) => {
         res.status(500).json({ error: "Error decrypting voucher" });
     }
 };
+
+
 const voucherLinkCreation = async (req, res) => {
     try {
         const voucherLinkData = req.body;
         const token = generateRedeemToken()
         const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${token}`;
-        const valityFrom = new Date(`${voucherLinkData.validityFrom} 00:00:00`);
-        const valityTill = new Date(`${voucherLinkData.validityTill} 23:59:59`);
-        console.log("Validity From:", valityFrom);
-        console.log("validity Till:", valityTill);
+
+        console.log(voucherLinkData.validityFrom)
         const voucherLink = await VoucherLink.create({
             url: url,
             redeemToken: token,
-            validityFrom: valityFrom,
-            validityTill: valityTill,
-            voucherId: voucherLinkData.voucher,
+            validityfrom: voucherLinkData.validityFrom,
+            validitytill: voucherLinkData.validityTill,
+            voucherId: voucherLinkData.voucherId,
             bannerContent: voucherLinkData.bannerContent,
             bannerHeadline: voucherLinkData.bannerContent === "default" ? "NON" : voucherLinkData.bannerHeadline,
             bannerText: voucherLinkData.bannerContent === " default" ? "NON" : voucherLinkData.bannerText,

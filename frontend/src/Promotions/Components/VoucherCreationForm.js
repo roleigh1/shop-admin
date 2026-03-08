@@ -75,6 +75,7 @@ export default function CreationForm() {
             console.error("Error creating Voucher", err);
         }
     };
+
     return (
         <div>
             <form onSubmit={handleSubmit} className="divider px-5 w-full">

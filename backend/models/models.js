@@ -390,14 +390,12 @@ const VoucherLink = sequelize.define(
       onUpdate: Sequelize.fn("NOW"),
     },
     validityfrom: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.fn("NOW"),
-      onUpdate: Sequelize.fn("NOW"),
+    type: DataTypes.STRING,
+      allowNull: false,
     },
     validitytill: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.fn("NOW"),
-      onUpdate: Sequelize.fn("NOW"),
+    type: DataTypes.STRING,
+      allowNull: false,
     },
     voucherId: {
       type: DataTypes.INTEGER,

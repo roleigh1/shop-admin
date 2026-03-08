@@ -11,14 +11,15 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { apiConfig } from "../../config/apiConfig";
 import { useMyContext, MyProvider } from "../../ContextApi";
-import { set } from "date-fns";
+
+
 
 export default function LinkCreationForm() {
     const [selected, setSelected] = useState(null);
     const [vouchers, setVouchers] = useState([]);
     const { apiReq } = useMyContext(MyProvider);
     const [createLinkFromData, setCreateLinkFromData] = useState({
-        voucher: "",
+        voucherId: "",
         bannerColor: "",
         validityFrom: null,
         validityTill: null,
@@ -47,11 +48,25 @@ export default function LinkCreationForm() {
             console.error("Error fetching vouchers:", err);
         }
     }
+    const getFormattedDate = (dateInput, flag) => {
+        const date = new Date(dateInput);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        if (flag) {
+            return `${day}/${month}/${year} 00:00:00`;
+        } else {
+            return `${day}/${month}/${year} 23:59:59`;
+        }
+
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(createLinkFromData.voucher)
-    
         try {
+            createLinkFromData.validityFrom = getFormattedDate(createLinkFromData.validityFrom, true);
+            createLinkFromData.validityTill = getFormattedDate(createLinkFromData.validityTill, false);
+
             const createLink = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.voucherLinkCreation}`, true,
                 {
                     method: "POST",
@@ -70,35 +85,30 @@ export default function LinkCreationForm() {
                 })
                 setLinkCreated(createLink.voucherLink.url);
             }
+
         } catch (err) {
             console.error("Error creating voucher Link", err);
         }
     }
 
+
     return (
         <div>
             <form onSubmit={handleSubmit} >
                 <div className="flex flex-row pt-5 justify-center">
-
-
                     <div className="flex flex-col ">
                         <h2 className="text-sm font-medium pb-5">Generated Voucher Link</h2>
-
-
-
                         <FormControl className="">
                             <InputLabel id="voucher-label">Choose Voucher</InputLabel>
                             <Select
                                 label="voucher-label"
-                                className="w-[10rem] h-[2.4rem]   "
-
-
+                                className="w-[10rem] h-[2.4rem]"
                                 onOpen={fetchVouchers}
-                                value={createLinkFromData.voucher}
+                                value={createLinkFromData.voucherId}
                                 onChange={(e) =>
                                     setCreateLinkFromData((prev) => ({
                                         ...prev,
-                                        voucher: e.target.value,
+                                        voucherId: e.target.value,
                                     }))
                                 }
                                 sx={{ top: 10 }}
@@ -117,11 +127,7 @@ export default function LinkCreationForm() {
                                     </MenuItem>
                                 )}
                             </Select>
-
-
-
                         </FormControl>
-
                         <span className="text-sm pt-5">Banner color</span>
                         <div className="flex flex-row">
                             {CheckBoxData.map((option) => (
@@ -129,7 +135,7 @@ export default function LinkCreationForm() {
                                     key={option.value}
                                     control={<Checkbox />}
                                     label={option.label}
-                                    required={createLinkFromData.bannerColor === ""}
+                                    required={createLinkFromData.bannerContent === ""}
                                     checked={createLinkFromData.bannerColor === option.value}
                                     onChange={() => setCreateLinkFromData((prev) => ({
                                         ...prev,
@@ -139,7 +145,6 @@ export default function LinkCreationForm() {
                             ))}
                         </div>
                         <hr className="border-gray-300 w-[45%]" />
-
                         <div className="flex flex-col gap-4">
                             <h2 className="text-sm font-medium pt-5">Validity</h2>
                             <div className="flex flex-col gap-4 pt-3">
@@ -148,14 +153,17 @@ export default function LinkCreationForm() {
 
                                     <DatePicker
                                         className="rounded-md  bg-[#ebeceb] border-gray-400  focus-within:border-blue-400 focus-within:outline-2 "
-                                        selected={createLinkFromData.validityFrom}
+
                                         required
-                                        onChange={(date) =>
+                                        selected={createLinkFromData.validityFrom}
+
+                                        onChange={(date) => {
                                             setCreateLinkFromData((prev) => ({
                                                 ...prev,
                                                 validityFrom: date,
-                                            }))
-                                        } />
+                                            }));
+
+                                        }} />
 
                                 </div>
                                 <div className="flex flex-row gap-1 w-full pl-3 h-[2rem]">
@@ -164,12 +172,14 @@ export default function LinkCreationForm() {
                                         className="rounded-md bg-[#ebeceb] border-gray-400  focus-within:border-blue-400 focus-within:outline-2 "
                                         selected={createLinkFromData.validityTill}
                                         required
-                                        onChange={(date) =>
+                                        onChange={(date) => {
+
+
                                             setCreateLinkFromData((prev) => ({
                                                 ...prev,
-                                                validityTill: date,
-                                            }))
-                                        } />
+                                                validityTill: date
+                                            }));
+                                        }} />
                                 </div>
                             </div>
                         </div>
@@ -198,19 +208,13 @@ export default function LinkCreationForm() {
                         </div>
                     </div>
                 </div>
-
-
                 <div className="flex flex-col gap-2 justify-center items-center pb-5 pt-5">
                     <div className="flex flex-row">
-                        <div className="bg-gray-300 rounded w-[25rem] h-[2rem] pt-5" >{linkCreated}</div>
-
-                        <svg fill="#000000" className="w-[2rem] h-[2rem] cursor-pointer" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M8,7 L8,8 L6.5,8 C5.67157288,8 5,8.67157288 5,9.5 L5,18.5 C5,19.3284271 5.67157288,20 6.5,20 L13.5,20 C14.3284271,20 15,19.3284271 15,18.5 L15,17 L16,17 L16,18.5 C16,19.8807119 14.8807119,21 13.5,21 L6.5,21 C5.11928813,21 4,19.8807119 4,18.5 L4,9.5 C4,8.11928813 5.11928813,7 6.5,7 L8,7 Z M16,4 L10.5,4 C9.67157288,4 9,4.67157288 9,5.5 L9,14.5 C9,15.3284271 9.67157288,16 10.5,16 L17.5,16 C18.3284271,16 19,15.3284271 19,14.5 L19,7 L16.5,7 C16.2238576,7 16,6.77614237 16,6.5 L16,4 Z M20,6.52797748 L20,14.5 C20,15.8807119 18.8807119,17 17.5,17 L10.5,17 C9.11928813,17 8,15.8807119 8,14.5 L8,5.5 C8,4.11928813 9.11928813,3 10.5,3 L16.4720225,3 C16.6047688,2.99158053 16.7429463,3.03583949 16.8535534,3.14644661 L19.8535534,6.14644661 C19.9641605,6.25705373 20.0084195,6.39523125 20,6.52797748 Z M17,6 L18.2928932,6 L17,4.70710678 L17,6 Z" />
-                            </g>
-                        </svg>
+                        <div className="bg-gray-300 rounded w-[40rem] h-[2rem] flex flex-col items-center justify-center" >
+                            <span className="text-xs ">
+                                {linkCreated}
+                            </span>
+                        </div>
                     </div>
                     <Button noValidate type="submit" variant="outlined" className="w-[8rem] h-[2rem]">
                         Generate
