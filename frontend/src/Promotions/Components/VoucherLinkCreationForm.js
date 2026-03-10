@@ -11,7 +11,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { apiConfig } from "../../config/apiConfig";
 import { useMyContext, MyProvider } from "../../ContextApi";
-
+import moment from "moment";
 
 
 export default function LinkCreationForm() {
@@ -64,9 +64,6 @@ export default function LinkCreationForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            createLinkFromData.validityFrom = getFormattedDate(createLinkFromData.validityFrom, true);
-            createLinkFromData.validityTill = getFormattedDate(createLinkFromData.validityTill, false);
-
             const createLink = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.voucherLinkCreation}`, true,
                 {
                     method: "POST",
@@ -152,34 +149,37 @@ export default function LinkCreationForm() {
                                     <label className="text-xs opacity-40">From:</label>
 
                                     <DatePicker
-                                        className="rounded-md  bg-[#ebeceb] border-gray-400  focus-within:border-blue-400 focus-within:outline-2 "
-
-                                        required
+                                        className="rounded-md bg-[#ebeceb] border-gray-400"
                                         selected={createLinkFromData.validityFrom}
-
+                                        required
                                         onChange={(date) => {
+
+                                            const formattedDate = moment(date).format("YYYY-MM-DD");
+
                                             setCreateLinkFromData((prev) => ({
                                                 ...prev,
-                                                validityFrom: date,
+                                                validityFrom: formattedDate
                                             }));
-
-                                        }} />
+                                        }}
+                                    />
 
                                 </div>
                                 <div className="flex flex-row gap-1 w-full pl-3 h-[2rem]">
                                     <label className="text-xs opacity-40">Till:</label>
                                     <DatePicker
-                                        className="rounded-md bg-[#ebeceb] border-gray-400  focus-within:border-blue-400 focus-within:outline-2 "
+                                        className="rounded-md bg-[#ebeceb] border-gray-400"
                                         selected={createLinkFromData.validityTill}
                                         required
                                         onChange={(date) => {
 
+                                            const formattedDate = moment(date).format("YYYY-MM-DD");
 
                                             setCreateLinkFromData((prev) => ({
                                                 ...prev,
-                                                validityTill: date
+                                                validityTill: formattedDate
                                             }));
-                                        }} />
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>

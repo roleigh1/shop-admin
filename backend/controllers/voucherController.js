@@ -2,7 +2,7 @@ const { Voucher, VoucherLink } = require("../models/models");
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { hashVoucher, encryptVoucher, decryptVoucher } = require("../cryptoVoucher/cryptoHelper.js");
-const { months } = require("moment");
+
 
 
 const codeGen = () => {
@@ -90,7 +90,7 @@ const voucherLinkCreation = async (req, res) => {
         const voucherLinkData = req.body;
         const token = generateRedeemToken()
         const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${token}`;
-
+        
         console.log(voucherLinkData.validityFrom)
         const voucherLink = await VoucherLink.create({
             url: url,

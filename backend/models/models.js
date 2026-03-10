@@ -8,6 +8,7 @@ const sequelize = new Sequelize(dbName, dbUser, dbPW, {
   host: dbHost,
   dialect: "mysql",
   port: "3306",
+  timezone: "+00:00",
   logging: (msg) => {
     console.log(`[Sequelize] ${msg}`);
   },

@@ -1,7 +1,4 @@
-const path = require("path");
-require("dotenv").config({
-    path: path.resolve(__dirname, "../.env")
-});
+
 const crypto = require("crypto");
 const SECRET = process.env.VOUCHER_SECRET;
 const ENC_KEY = process.env.VOUCHER_ENC_KEY;
