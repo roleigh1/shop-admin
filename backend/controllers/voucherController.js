@@ -1,14 +1,13 @@
 const { Voucher, VoucherLink } = require("../models/models");
 const crypto = require("crypto");
+const { Op, col } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const { hashVoucher, encryptVoucher, decryptVoucher } = require("../cryptoVoucher/cryptoHelper.js");
 
 
 
 const codeGen = () => {
-
     return uuidv4().slice(0, 9).toUpperCase();
-
 }
 const generateRedeemToken = () => {
     return crypto.randomBytes(9).toString("hex");
@@ -42,8 +41,8 @@ const createVoucher = async (req, res) => {
                     ? voucherData.product
                     : "NON",
             value: voucherData.value,
-            validityfrom: voucherData.validityFrom,
-            validitytill: voucherData.validityTill,
+            currentredemptions: 0, 
+
         });
 
         return res.status(201).json({
@@ -56,20 +55,26 @@ const createVoucher = async (req, res) => {
         res.json({ error: "Creating voucher failed", err });
     }
 }
-const getdecryptedVoucher = async (req, res) => {
+const getVouchers = async (req, res) => {
     try {
         const encryptedVoucher = await Voucher.findAll({
+            where: {
+             
+                currentredemptions: { [Op.lt]: col("maxredemptions") }
+            },
             attributes: ["id", "codeEncrypted"]
         });
 
         const decryptedVouchers = encryptedVoucher.map(v => {
-            const { id, codeEncrypted } = v.toJSON();
+            const { id, codeEncrypted} = v.toJSON();
             const encryptedObj = JSON.parse(codeEncrypted);
             const decryptedCode = decryptVoucher(encryptedObj);
 
             return {
                 id,
-                decryptedCode
+                decryptedCode,
+        
+
             };
         });
 
@@ -90,8 +95,8 @@ const voucherLinkCreation = async (req, res) => {
         const voucherLinkData = req.body;
         const token = generateRedeemToken()
         const url = `${process.env.FRONTEND_BASE_URL}/redeem?voucher=${token}`;
-        
-        console.log(voucherLinkData.validityFrom)
+
+
         const voucherLink = await VoucherLink.create({
             url: url,
             redeemToken: token,
@@ -111,8 +116,6 @@ const voucherLinkCreation = async (req, res) => {
     } catch (err) {
         console.error("Creating voucher Link failed", err);
     }
-
-
 }
 const postController = async (req) => {
     const voucherOperation = req.query.type;
@@ -125,7 +128,7 @@ const postController = async (req) => {
 }
 module.exports = {
     createVoucher,
-    getdecryptedVoucher,
-    voucherLinkCreation
+    voucherLinkCreation,
+    getVouchers
 
 }

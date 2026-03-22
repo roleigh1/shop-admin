@@ -7,7 +7,7 @@ AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY,
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION,
-  endpoint: "https://c2i3.c17.e2-4.dev/",
+  endpoint: "https://s3.eu-central-2.idrivee2.com/",
   s3ForcePathStyle: true,
   signatureVersion: "v4",
 });
@@ -19,7 +19,7 @@ class IdriveE2Storage {
     this.bucket = opts.bucket
   }
   _handleFile(req, file, cb) {
-    const filename = Date.now() + "-" + file.originalname;
+    const filename = Date.now() + "-" + file.originalname;s
     const params = {
       Bucket: this.bucket,
       Key: filename,

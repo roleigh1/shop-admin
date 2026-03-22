@@ -15,7 +15,7 @@ import moment from "moment";
 
 
 export default function LinkCreationForm() {
-    const [selected, setSelected] = useState(null);
+
     const [vouchers, setVouchers] = useState([]);
     const { apiReq } = useMyContext(MyProvider);
     const [createLinkFromData, setCreateLinkFromData] = useState({
@@ -27,13 +27,13 @@ export default function LinkCreationForm() {
         bannerHeadline: "",
         bannerText: "",
     });
+
     const [linkCreated, setLinkCreated] = useState("");
     const CheckBoxData = [
         { value: "default", label: "default" },
         { value: "green", label: "green" },
-        { value: "red", label: "red" },
+        { value: "blue", label: "blue" },
     ];
-
     const bannerContent = [
         { value: "default", label: "default" },
         { value: "custom", label: "custom" },
@@ -41,29 +41,19 @@ export default function LinkCreationForm() {
     const fetchVouchers = async () => {
         try {
             const res = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.vouchers}`);
-
             setVouchers(res.data);
-            console.log(vouchers)
         } catch (err) {
             console.error("Error fetching vouchers:", err);
         }
     }
-    const getFormattedDate = (dateInput, flag) => {
-        const date = new Date(dateInput);
 
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        if (flag) {
-            return `${day}/${month}/${year} 00:00:00`;
-        } else {
-            return `${day}/${month}/${year} 23:59:59`;
-        }
 
-    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+
+
             const createLink = await apiReq(`${apiConfig.BASE_URL + apiConfig.endpoints.voucherLinkCreation}`, true,
                 {
                     method: "POST",
@@ -82,13 +72,11 @@ export default function LinkCreationForm() {
                 })
                 setLinkCreated(createLink.voucherLink.url);
             }
-
+        
         } catch (err) {
             console.error("Error creating voucher Link", err);
         }
     }
-
-
     return (
         <div>
             <form onSubmit={handleSubmit} >
@@ -110,7 +98,6 @@ export default function LinkCreationForm() {
                                 }
                                 sx={{ top: 10 }}
                                 required
-
                             >
                                 {vouchers.length > 0 ? (
                                     vouchers.map((voucher) => (
@@ -147,19 +134,17 @@ export default function LinkCreationForm() {
                             <div className="flex flex-col gap-4 pt-3">
                                 <div className="gap-1 flex flex-row w-full h-[2rem]">
                                     <label className="text-xs opacity-40">From:</label>
-
                                     <DatePicker
                                         className="rounded-md bg-[#ebeceb] border-gray-400"
                                         selected={createLinkFromData.validityFrom}
                                         required
                                         onChange={(date) => {
-
                                             const formattedDate = moment(date).format("YYYY-MM-DD");
-
                                             setCreateLinkFromData((prev) => ({
                                                 ...prev,
                                                 validityFrom: formattedDate
                                             }));
+                                           
                                         }}
                                     />
 
@@ -178,6 +163,7 @@ export default function LinkCreationForm() {
                                                 ...prev,
                                                 validityTill: formattedDate
                                             }));
+                                           
                                         }}
                                     />
                                 </div>
@@ -207,6 +193,10 @@ export default function LinkCreationForm() {
                             <TextField onChange={(e) => setCreateLinkFromData((prev) => ({ ...prev, bannerText: e.target.value }))} value={createLinkFromData.bannerText} required label="Text" minRows={4} multiline disabled={createLinkFromData.bannerContent === "default"} />
                         </div>
                     </div>
+                </div>
+                <div className="mt-5 text-center" >
+            
+
                 </div>
                 <div className="flex flex-col gap-2 justify-center items-center pb-5 pt-5">
                     <div className="flex flex-row">
